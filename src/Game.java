@@ -38,7 +38,7 @@ class BackGround extends JComponent{
     private Image image;
 
     public BackGround(){
-        image = new ImageIcon("Sky.png").getImage();
+        image = new ImageIcon("Pics/Sky.png").getImage();
     }
 
     public void paintComponent(Graphics g){
