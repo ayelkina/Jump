@@ -1,7 +1,7 @@
+package jump.game;
 
 import java.awt.*;
 import javax.swing.*;
-
 
 public class Game {
 
@@ -24,7 +24,8 @@ class Window extends JFrame
     public Window()
     {
         add(new BackGround());
-        // pack();
+        add(new Sprite());
+        pack();
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         int screenWidth = screenSize.width;
@@ -38,12 +39,28 @@ class BackGround extends JComponent{
     private Image image;
 
     public BackGround(){
-        image = new ImageIcon("Pics/Sky.png").getImage();
+        image = new ImageIcon("Res/Pics/Sky.png").getImage();
     }
 
     public void paintComponent(Graphics g){
         if (image== null) return;
+        System.out.println("back?");
         g.drawImage(image, 0, 0, null);
+    }
+
+}
+
+class Sprite extends JComponent{
+    private Image sprite;
+
+    public Sprite(){
+        sprite = new ImageIcon("Res/Pics/Penguin3.png").getImage();
+    }
+
+    public void paintComponent(Graphics g){
+        if (sprite== null) return;
+        System.out.println("char?");
+        g.drawImage(sprite, 200, 400, null);
     }
 
 }
