@@ -3,28 +3,29 @@ package jump.game;
 import java.awt.*;
 import javax.swing.*;
 
-public class Game {
+public class Game extends Canvas {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->
         {
-            Window window = new Window();
-            window.setTitle("Jump!");
-            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            window.setVisible(true);
+            Frame frame = new Frame();
+            frame.setTitle("Jump!");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setResizable(false);
+            frame.setVisible(true);
         });
     }
 }
 
-class Window extends JFrame
+class Frame extends JFrame
 {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 800;
 
-    public Window()
+    public Frame()
     {
         add(new BackGround());
-        add(new Sprite());
+       // add(new Sprite());
         pack();
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
