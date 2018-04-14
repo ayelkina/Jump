@@ -3,65 +3,54 @@ package jump.game;
 import java.awt.*;
 import javax.swing.*;
 
-public class Game extends Canvas {
+public class Game extends Canvas implements Runnable {
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() ->
-        {
-            Frame frame = new Frame();
-            frame.setTitle("Jump!");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setResizable(false);
-            frame.setVisible(true);
-        });
+    public static void main(String[] args){
+        new Game().start();
     }
-}
 
-class Frame extends JFrame
-{
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 800;
+    private static final long serialVersionUID = 1L;
+    private JFrame frame;
 
-    public Frame()
-    {
-        add(new BackGround());
-       // add(new Sprite());
-        pack();
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 800;
+
+    public boolean running = false;
+
+    public Game(){
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         int screenWidth = screenSize.width;
         int screenHight = screenSize.height;
 
-        setBounds(screenWidth/3, screenHight/10, WIDTH, HEIGHT);
-    }
-}
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-class BackGround extends JComponent{
-    private Image image;
+        frame = new JFrame("Jump!");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    public BackGround(){
-        image = new ImageIcon("Res/Pics/Sky.png").getImage();
-    }
+        frame.setLayout(new BorderLayout());
+        frame.setContentPane(new JLabel(new ImageIcon("Res/Pics/Sky.png")));
 
-    public void paintComponent(Graphics g){
-        if (image== null) return;
-        System.out.println("back?");
-        g.drawImage(image, 0, 0, null);
+        frame.setBounds(screenWidth/3, screenHight/10, WIDTH, HEIGHT);
+        frame.pack();
+
+        frame.setResizable(false);
+        frame.setVisible(true);
     }
 
-}
-
-class Sprite extends JComponent{
-    private Image sprite;
-
-    public Sprite(){
-        sprite = new ImageIcon("Res/Pics/Penguin3.png").getImage();
+    public void run() {
+        while(running){
+            System.out.println("Boo!\n");
+        }
     }
 
-    public void paintComponent(Graphics g){
-        if (sprite== null) return;
-        System.out.println("char?");
-        g.drawImage(sprite, 200, 400, null);
+    public synchronized void start(){
+        running = true;
+        new Thread(this).start();
+    }
+
+    public synchronized void stop(){
+        running = false;
     }
 
 }
