@@ -2,15 +2,10 @@ package jump.game;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import java.net.URL;
-import java.nio.Buffer;
+
 
 public class Game extends Canvas implements Runnable {
 
@@ -26,19 +21,13 @@ public class Game extends Canvas implements Runnable {
 
     public boolean running = false;
     private Thread thread;
-/*
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-
-    public static Sprite hero;
-    private static int x = 0;
-    private static int y = 0;*/
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private BufferedImage sprite = null;
     private BufferedImage player;
 
     public void init(){
+        System.out.println("init()");
 
         ImageLoader loader = new ImageLoader();
 
@@ -48,7 +37,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         Sprite ss = new Sprite(sprite);
-        player = ss.grabImage(1,1,100,100);
+        player = ss.grabImage(100,50,400,100);
     }
 
 
@@ -65,9 +54,9 @@ public class Game extends Canvas implements Runnable {
 
         frame.setLayout(new BorderLayout());
         frame.add(this, BorderLayout.CENTER);
-        //frame.setContentPane(new JLabel(new ImageIcon("Res/Pics/Sky.png")));
+       // frame.setContentPane(new JLabel(new ImageIcon("Res/Pics/Sky.png")));
 
-        //frame.setBounds(screenWidth/3, screenHight/10, WIDTH, HEIGHT);
+       // frame.setBounds(screenWidth/3, screenHight/10, WIDTH, HEIGHT);
         frame.pack();
 
         frame.setResizable(false);
@@ -75,7 +64,6 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
-        init();
         long lastTime = System.currentTimeMillis();
         long delta;
 
@@ -100,9 +88,10 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
 
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this );
-        g.drawImage(player, 100, 100, this);
-
+        //g.drawImage(image, 0, 0, getWidth(), getHeight(), this );
+        Image img = new ImageIcon("Res/Pics/pengs4.png").getImage();
+        g.drawImage(img, 0, 0, null);
+       // g.drawImage(player, 0, 0, null);
         g.dispose();
         bs.show();
     }
@@ -137,27 +126,6 @@ public class Game extends Canvas implements Runnable {
         }
         System.exit(1);
     }
-
-/*    private class KeyInputHandler extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                leftPressed = true;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                rightPressed = true;
-            }
-        }
-
-        public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                leftPressed = false;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                rightPressed = false;
-            }
-        }
-    }*/
-
 }
 
 
