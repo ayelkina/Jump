@@ -3,11 +3,11 @@ package Game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
-@SuppressWarnings("serial")
 public class GamePanel extends JPanel
         implements Runnable, KeyListener{
 
@@ -19,16 +19,18 @@ public class GamePanel extends JPanel
     private int FPS = 60;
     private long targetTime = 1000 / FPS;
 
-    private BufferedImage image;
+    private BufferedImage background;
     private Graphics2D g;
+
+    private Player player;
 
 //    private GameStateManager gsm;
 
     public GamePanel() {
         super();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-//        setFocusable(true);
-//        requestFocus();
+        setFocusable(true);
+        requestFocus();
     }
 
     public void addNotify() {
@@ -37,6 +39,7 @@ public class GamePanel extends JPanel
         if(running)
             return;
 
+        System.out.println("addNotify");
         running = true;
 
         if(thread == null) {
@@ -47,9 +50,24 @@ public class GamePanel extends JPanel
     }
 
     private void init() {
+        System.out.println("Init");
 
-        image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
-        g = (Graphics2D) image.getGraphics();
+        background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        try {
+            background = ImageIO.read(getClass().getResourceAsStream("/Pics/Sky.png"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        g = (Graphics2D) background.getGraphics();
+
+        player = new Player();
+        player.setPosition(100, 100);
+/*    try {
+        imagep = ImageIO.read(getClass().getResourceAsStream("/Pics/pengs4.gif"));
+    }catch(IOException e){
+        e.printStackTrace();
+    }*/
+
 
 //        gsm = new GameStateManager();
 
@@ -63,6 +81,7 @@ public class GamePanel extends JPanel
         long start;
         long delta;
         long wait;
+        draw();
 
         while(running) {
 
@@ -70,7 +89,7 @@ public class GamePanel extends JPanel
 
 //            update();
 //            draw();
-            draw();
+
 
             delta = System.nanoTime() - start;
 
@@ -96,7 +115,11 @@ public class GamePanel extends JPanel
 
     private void draw() {
         Graphics g2 = getGraphics();
-        g2.drawImage(image, 0, 0, WIDTH , HEIGHT,null);
+
+        g2.drawImage(background, 0, 0, WIDTH , HEIGHT,null);
+        g2.drawImage(player.getImage(1,1), 0, 0, player.getWidth() , player.getHeight(),null);
+        player.draw(g2);
+
         g2.dispose();
     }
 

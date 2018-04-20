@@ -25,5 +25,6 @@ public class ImageLoader {
         image = ImageIO.read(getClass().getResource(path));
         return image;*/
     }
+
 }
 
