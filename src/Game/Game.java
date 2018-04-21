@@ -17,7 +17,6 @@ public class Game extends Canvas{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setLayout(new BorderLayout());
-//        frame.setContentPane(new JLabel(new ImageIcon("Res/Pics/Sky.png")));
         frame.setBounds(screenWidth/3, screenHeight/10, WIDTH, HEIGHT);
 
         frame.setResizable(false);

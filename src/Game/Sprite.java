@@ -1,4 +1,3 @@
-
 package Game;
 
 import java.awt.*;
@@ -12,6 +11,8 @@ public abstract class Sprite {
     protected double y;
     protected double dx;
     protected double dy;
+    protected double moveSpeed;
+    protected double maxSpeed;
 
     protected int width;
     protected int height;
@@ -27,7 +28,7 @@ public abstract class Sprite {
     public int getWidth() { return width; }
     public int getHeight() { return height; }
 
-    public void setPosition(double x, double y) {
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -35,7 +36,7 @@ public abstract class Sprite {
     public void setLeft(boolean b) { left = b; }
     public void setRight(boolean b) { right = b; }
 
-    public void draw(java.awt.Graphics graph){
+    public void draw(Graphics graph){
         graph.drawImage(sprite, (int)x, (int)y, width, height, null);
     }
 
