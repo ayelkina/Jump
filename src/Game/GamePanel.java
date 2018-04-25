@@ -43,7 +43,7 @@ public class GamePanel extends JPanel
 
     private void init() {
 
-        gameState = new GameState(GameState.State.MENU);
+        gameState = new GameState(GameState.State.LEVEL);
 
         background = new Background("/Pics/Sky.png");
         player = new Player();
@@ -88,6 +88,7 @@ public class GamePanel extends JPanel
 
         background.draw(graph);
         player.draw(graph);
+      //  Level.draw(graph);
 
         graph.dispose();
     }
