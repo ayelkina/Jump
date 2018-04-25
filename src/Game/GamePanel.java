@@ -1,12 +1,7 @@
 package Game;
 
 import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.awt.event.*;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel
@@ -17,13 +12,12 @@ public class GamePanel extends JPanel
 
     private Thread thread;
     private boolean running;
-    private int FPS = 60;
-    private long targetTime = 1000 / FPS;
+    private int frames = 40;
+    private long targetTime = 1000 / frames;
 
-    private BufferedImage background;
-    private Graphics2D graphics2D;
     private Player player;
-
+    private Background background;
+    private GameState gameState;
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -45,40 +39,35 @@ public class GamePanel extends JPanel
         running = true;
     }
 
+
+
     private void init() {
 
-        background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        try {
-            background = ImageIO.read(getClass().getResourceAsStream("/Pics/Sky.png"));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        gameState = new GameState(GameState.State.MENU);
 
-        graphics2D = (Graphics2D) getGraphics();
-
+        background = new Background("/Pics/Sky.png");
         player = new Player();
         player.setPosition(WIDTH/2 - player.width/2, HEIGHT - player.height);
     }
 
 
-
     public void run() {
-        init();
-
         long timeStart;
         long delta;
         long timeWait;
 
+        init();
+
         while(running) {
             timeStart = System.nanoTime();
 
-            draw(graphics2D);
+            draw();
             update();
 
             delta = System.nanoTime() - timeStart;
 
             timeWait = targetTime - delta / 1000000;
-            if(timeWait < 0) timeWait = 5;
+            if(timeWait < 0) timeWait = 1;
 
             try {
                 Thread.sleep(timeWait);
@@ -93,11 +82,11 @@ public class GamePanel extends JPanel
         player.update();
     }
 
-    private void draw(Graphics2D graph) {
-
+    private void draw() {
+        Graphics2D graph;
         graph = (Graphics2D) getGraphics();
 
-        graphics2D.drawImage(background, 0, 0, WIDTH , HEIGHT,null);
+        background.draw(graph);
         player.draw(graph);
 
         graph.dispose();
@@ -105,11 +94,8 @@ public class GamePanel extends JPanel
 
     public void keyTyped(KeyEvent key) {}
     public void keyPressed(KeyEvent key) {
-
        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
-//       if (key.getKeyCode() == KeyEvent.VK_UP) player.moveUp();
-//       if (key.getKeyCode() == KeyEvent.VK_DOWN) player.moveDown();
    }
 
     public void keyReleased(KeyEvent key) {

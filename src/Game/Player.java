@@ -1,13 +1,9 @@
 package Game;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.View;
-import javax.xml.transform.SourceLocator;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.sql.SQLOutput;
-
 
 public class Player extends Sprite {
 
@@ -20,10 +16,10 @@ public class Player extends Sprite {
     private boolean fall;
 
     private int count;
+    private double countMax;
     private double halfWidth;
 
-
-    public enum State {STAY, UP, DOWN, FALL};
+    public enum PlayerState {STAY, UP, DOWN, FALL};
 
     public Player() {
 
@@ -33,8 +29,10 @@ public class Player extends Sprite {
         height = 100;
         halfWidth = width/2;
 
-        dy = 7;
-        dx = 5;
+        dy = 6;
+        dx = dy;
+
+        countMax = 200/dy;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Pics/pengs4.png"));
@@ -74,7 +72,7 @@ public class Player extends Sprite {
 
     }*/
 
-    public BufferedImage getImage(State state){
+    public BufferedImage getImage(PlayerState state){
 
         int row = 1;
         int col = state.ordinal() + 1;
@@ -104,13 +102,13 @@ public class Player extends Sprite {
         up = down = false;
     }
 
-    public State getState(){
+    public PlayerState getState(){
 
-        State state;
-        state = State.valueOf("STAY");
-        if(up) { state = State.valueOf("UP"); }
-        if(down) { state = State.valueOf("DOWN"); }
-        if(fall) { state = State.valueOf("FALL"); }
+        PlayerState state;
+        state = PlayerState.valueOf("STAY");
+        if(up) { state = PlayerState.valueOf("UP"); }
+        if(down) { state = PlayerState.valueOf("DOWN"); }
+        if(fall) { state = PlayerState.valueOf("FALL"); }
 
         return state;
     }
@@ -126,7 +124,7 @@ public class Player extends Sprite {
         if(dy > 0) {setUp();}
               else {setDown();}
 
-        if(count > 40) {
+        if(count > countMax) {
             dy *= -1;
             count = 0;
         }
