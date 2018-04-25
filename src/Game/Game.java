@@ -2,6 +2,7 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas{
 
@@ -22,11 +23,7 @@ public class Game extends Canvas{
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
-
-
-
     }
-
 }
 
 

@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import java.io.IOException;
@@ -31,19 +32,17 @@ public class GamePanel extends JPanel
     }
 
     public void addNotify() {
-
         super.addNotify();
-
-        if(running)
-            return;
-
-        running = true;
-
         if(thread == null) {
             thread = new Thread(this);
             addKeyListener(this);
             thread.start();
         }
+
+        if(running)
+            return;
+
+        running = true;
     }
 
     private void init() {
@@ -54,35 +53,35 @@ public class GamePanel extends JPanel
         }catch(IOException e){
             e.printStackTrace();
         }
+
         graphics2D = (Graphics2D) getGraphics();
-//        graphics2D.drawImage(background, 0, 0, WIDTH , HEIGHT,null);
 
         player = new Player();
-//        player.setPosition(WIDTH/2 - player.width/2, HEIGHT - player.height);
-        player.setPosition(0, HEIGHT - player.height);
+        player.setPosition(WIDTH/2 - player.width/2, HEIGHT - player.height);
     }
 
-    public void run() {
 
+
+    public void run() {
         init();
 
-        long start;
+        long timeStart;
         long delta;
-        long wait;
+        long timeWait;
 
         while(running) {
+            timeStart = System.nanoTime();
 
             draw(graphics2D);
-            player.jump();
+            update();
 
-            start = System.nanoTime();
-            delta = System.nanoTime() - start;
+            delta = System.nanoTime() - timeStart;
 
-            wait = targetTime - delta / 1000000;
-            if(wait < 0) wait = 1;
+            timeWait = targetTime - delta / 1000000;
+            if(timeWait < 0) timeWait = 5;
 
             try {
-                Thread.sleep(wait);
+                Thread.sleep(timeWait);
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -91,29 +90,31 @@ public class GamePanel extends JPanel
     }
 
     private void update() {
+        player.update();
     }
 
     private void draw(Graphics2D graph) {
+
         graph = (Graphics2D) getGraphics();
 
         graphics2D.drawImage(background, 0, 0, WIDTH , HEIGHT,null);
-
         player.draw(graph);
 
         graph.dispose();
     }
 
     public void keyTyped(KeyEvent key) {}
+    public void keyPressed(KeyEvent key) {
 
-   public void keyPressed(KeyEvent key) {
-
-       if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.moveRight();
-       if (key.getKeyCode() == KeyEvent.VK_LEFT) player.moveLeft();
-       if (key.getKeyCode() == KeyEvent.VK_UP) player.moveUp();
-       if (key.getKeyCode() == KeyEvent.VK_DOWN) player.moveDown();
+       if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
+       if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
+//       if (key.getKeyCode() == KeyEvent.VK_UP) player.moveUp();
+//       if (key.getKeyCode() == KeyEvent.VK_DOWN) player.moveDown();
    }
+
     public void keyReleased(KeyEvent key) {
-//        gsm.keyReleased(key.getKeyCode());
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);
     }
 
 }
