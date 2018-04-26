@@ -41,37 +41,6 @@ public class Player extends Sprite {
         }
     }
 
-   /* public void setState(State st){
-
-        switch(st){
-            case STAY: {
-                stay = true;
-                up = down = fall = false;
-                break;
-            }
-
-            case UP: {
-                up = true;
-                stay = down = fall = false;
-                break;
-            }
-
-            case DOWN:{
-                down = true;
-                stay = up = fall = false;
-                break;
-            }
-
-            case FALL:{
-                fall = true;
-                stay = up = down = false;
-                break;
-            }
-            default: break;
-        }
-
-    }*/
-
     public BufferedImage getImage(PlayerState state){
 
         int row = 1;
