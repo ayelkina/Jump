@@ -9,6 +9,7 @@ public class Level extends GameState{
     private Player player;
     private Background background;
     private Vector<Tiles> tiles;
+    boolean toMoveTiles = false;
 
     public Level(){
         background = new Background("/Pics/Sky.png");
@@ -17,7 +18,6 @@ public class Level extends GameState{
         tiles = new Vector();
         for(int i = 0; i<=4; ++i)
             tiles.addElement(new Tiles());
-
 
         player.setPosition(GamePanel.WIDTH/2 - player.width /2, GamePanel.HEIGHT - player.height);
         tiles.get(4).setPosition(150,650);
@@ -43,18 +43,22 @@ public class Level extends GameState{
     }
 
     public void jumpFromTile(){
-        double dy = 0;
+        player.downYPrev = player.getDownY();
+        if (player.getState() == Player.PlayerState.DOWN) {
 
-        if (player.getState() == Player.PlayerState.DOWN)
             for (int i = 0; i < tiles.size(); ++i)
                 if (player.intersects(tiles.get(i)) && tiles.get(i) == nearestDownTile()) {
+                    toMoveTiles = true;
+                    
+                    System.out.println(player.getDownY() - tiles.get(i).gety());
                     player.setDownY(tiles.get(i).gety());
-                }
+                    if(player.downYPrev == player.getDownY()) toMoveTiles = false; //NIE ZNAU KAK DOBAWIC USLOWIE CZTOBY WSE TILESY NIE ZDWIGALIS
 
-                else if (player.distanceBetweenY(nearestDownTile()) > 10) player.setDownY(800); //ZMIENIC 10!!!!!! bo bez sensu
+                } else if (player.distanceBetweenY(nearestDownTile()) > 10) player.setDownY(800); //ZMIENIC 10!!!!!! bo bez sensu
+        }
 
 
-      //  if(player.getState() == Player.PlayerState.UP) changeTilesPosition(dy);
+        if(player.getState() == Player.PlayerState.UP && toMoveTiles) moveTiles();
     }
 
     public Sprite nearestDownTile(){
@@ -70,9 +74,9 @@ public class Level extends GameState{
         return nearestTile;
     }
 
-    public void changeTilesPosition(double dy){
+    public void moveTiles(){
         for (int i = 0; i < tiles.size(); ++i){
-            tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + (int) dy);
+            tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + 3);
         }
     }
 
