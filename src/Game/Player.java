@@ -7,8 +7,6 @@ import java.io.IOException;
 
 public class Player extends Sprite {
 
-    private BufferedImage image;
-
     private boolean up;
     private boolean down;
     private boolean left;
@@ -108,6 +106,9 @@ public class Player extends Sprite {
         if (x + halfWidth < 0){
             setPosition((int)(x + GamePanel.WIDTH), (int)y);
         }
+    }
+
+    public void jumpOnTile(){
     }
 
     public void update(){
