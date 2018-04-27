@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
+import static java.lang.Math.abs;
+
 public class Level extends GameState{
 
     private Player player;
@@ -19,10 +21,10 @@ public class Level extends GameState{
             tiles.addElement(new Tiles());
 
 
-        player.setPosition(GamePanel.WIDTH/2 - player.SpriteWidth /2, GamePanel.HEIGHT - player.SpriteHeight);
-        tiles.get(0).setPosition(100,300);
-        tiles.get(1).setPosition(250,700);
-        tiles.get(2).setPosition(300,200);
+        player.setPosition(GamePanel.WIDTH/2 - player.width /2, GamePanel.HEIGHT - player.height);
+        tiles.get(0).setPosition(100,600);
+        tiles.get(1).setPosition(250,350);
+        tiles.get(2).setPosition(300,450);
     }
 
     public void draw(Graphics2D graph) {
@@ -32,20 +34,51 @@ public class Level extends GameState{
           tiles.get(i).draw(graph);
 
         player.draw(graph);
-
         graph.dispose();
     }
 
     public void update() {
         player.update();
+        checkCollisionWithTiles();
+    }
 
-        if (player.getState() == Player.PlayerState.DOWN &&
-                player.gety() - tiles.get(1).gety() - tiles.get(1).getSpriteHeight() <= 1){
-            player.setDownY(tiles.get(1).gety()- tiles.get(1).getSpriteHeight());
-            System.out.println(tiles.get(1).gety());
-        }
-//        System.out.println( "player.gety() " + player.gety());
-//        System.out.println( "tiles " + (tiles.get(1).gety() - tiles.get(1).getSpriteHeight()));
+    public boolean intersectsX (Sprite s1, Sprite s2){
+        if (s1.getBoundsRight() - s1.getWidth()/3 > s2.getx() &&
+                s1.getx() + s1.getWidth()/3 < s2.getBoundsRight()) return true;
+        return false;
+    }
+
+    public boolean intersectsY (Sprite s1, Sprite s2){
+        if (s1.gety() < s2.getBoundsTop()) return true;
+        return false;
+    }
+
+    public boolean intersects(Sprite s1, Sprite s2){
+        if (intersectsX(s1, s2) && intersectsY(s1,s2)) return true;
+        return false;
+    }
+
+    public void checkCollisionWithTiles(){
+        if (player.getState() == Player.PlayerState.DOWN)
+            for (int i = 0; i < tiles.size(); ++i)
+                if (intersects(player, tiles.get(i)) && tiles.get(i) == nearestDownTile()) {
+                    player.setDownY(tiles.get(i).getBoundsTop());
+                } else if (distanceBetweenY(player, nearestDownTile()) > 100) player.setDownY(700);
+    }
+
+    public Sprite nearestDownTile(){
+        Sprite nearestTile = tiles.get(0);
+        double minDistance = 200;
+        for (int i = 0; i < tiles.size(); ++i)
+            if(distanceBetweenY(player, tiles.get(i))< minDistance && intersectsX(player, tiles.get(i))) {
+                minDistance = distanceBetweenY(player, tiles.get(i));
+                nearestTile = tiles.get(i);
+            }
+        return nearestTile;
+    }
+
+    public double distanceBetweenY (Sprite s1, Sprite s2){
+        return abs(s1.y - s2.getBoundsTop());
     }
 
     public void keyTyped(KeyEvent key) {}
