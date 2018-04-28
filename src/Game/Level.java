@@ -5,12 +5,14 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
+import static java.lang.Math.abs;
+
 public class Level extends GameState{
 
     private Player player;
     private Background background;
     private Vector<Tiles> tiles;
-    final Random random;
+    private final Random random;
 
     private int offTime;
     private int offset;
@@ -31,13 +33,23 @@ public class Level extends GameState{
         tiles.get(0).setPosition(random(300, 100), 700);
         int j= 0;
         for(int i = 1; i< tiles.size(); ++i, ++j) {
-            int prevY = tiles.get(j).gety();
-
-            int newX = random(500, 0);
-            int newY = random(100, prevY - 150);
-
-            tiles.get(i).setPosition(newX, newY);
+            setRandomPosition(i);
         }
+    }
+
+    public void setRandomPosition(int cur){
+        int prev;
+
+        if(cur == 0) prev = tiles.size() -1;
+        else prev = cur-1;
+
+        int prevY = tiles.get(prev).gety();
+        int prevX = tiles.get(prev).getx();
+
+        int newX = random(500, 0);
+        int newY = random(100, prevY - 150);
+
+        tiles.get(cur).setPosition(newX, newY);
     }
 
     public int random(int bound, int min){
@@ -55,8 +67,7 @@ public class Level extends GameState{
 
     public void update() {
         player.update();
-        for(int i = 0; i< tiles.size(); ++i)
-            tiles.get(i).update();
+
         jumpFromTile();
         moveTiles();
     }
@@ -70,13 +81,12 @@ public class Level extends GameState{
 
     public int nearestDownTile(){
        int  nearestTile = GamePanel.HEIGHT;
+
         for (int i = tiles.size()-1; i >= 0; --i)
-            if(player.distanceFromY(tiles.get(i)) < -player.getdy() &&
-                    player.distanceFromY(tiles.get(i)) > player.getdy() &&
+            if(abs(player.distanceFromY(tiles.get(i))) < abs(player.getdy()) &&
                     player.intersectsX(tiles.get(i))) {
                 return tiles.get(i).gety();
             }
-
         return nearestTile;
     }
 
@@ -84,32 +94,32 @@ public class Level extends GameState{
         if(player.getBoundsDown() - player.getDownY() > 0) offset =  offset();
         if (offset == 0) return;
 
-        if(player.gety() < GamePanel.HEIGHT/2){
+        if(player.gety() < GamePanel.maxPlayerHeight){
             ++offTime;
+
             if (offTime < offset/player.getdy()){
-                player.setPosition(player.getx(), GamePanel.HEIGHT/2);
+                player.setPosition(player.getx(), GamePanel.maxPlayerHeight);
 
                 for (int i = 0; i < tiles.size(); ++i) {
                     tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
+                    if(tiles.get(i).gety() > GamePanel.HEIGHT) setRandomPosition(i);
                 }
+
                 player.setDown();
                 player.setDownY(nearestDownTile());
             }
+
             else offTime = 0;
         }
     }
 
     public int offset(){
         int currentY = player.gety();
-        if(currentY - GamePanel.HEIGHT/2 < 200)
-            return 600 - currentY;
+        if(currentY - GamePanel.maxPlayerHeight < 200)
+            return GamePanel.maxPlayerHeight + 200 - currentY;
 
         return 0;
     }
-
-
-
-
 
 
     public void keyTyped(KeyEvent key) {}
