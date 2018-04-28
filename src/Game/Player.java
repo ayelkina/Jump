@@ -7,33 +7,33 @@ import java.io.IOException;
 
 public class Player extends Sprite {
 
-    private boolean up;
+    public boolean up;
     private boolean down;
     private boolean left;
     private boolean right;
     private boolean fall;
 
-    private int count;
-    private double countMax;
+    private double downY;
+    public double downYPrev;
     private double halfWidth;
 
     public enum PlayerState {STAY, UP, DOWN, FALL};
 
     public Player() {
 
-        count = 0;
+        width = 70;
+        height = 63;
+        halfWidth = width /2;
 
-        width = 100;
-        height = 100;
-        halfWidth = width/2;
+        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
-        dy = 6;
-        dx = dy;
+        downY = 800;
 
-        countMax = 200/dy;
+        dy = 7;
+        dx = 5;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/Pics/pengs4.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/Pics/peng.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class Player extends Sprite {
         int row = 1;
         int col = state.ordinal() + 1;
 
-        BufferedImage img = image.getSubimage(col*(100) - 100, row*(100) - 100, width, height );
+        BufferedImage img = image.getSubimage(col*(width) - width, row*(width) - width, width, height);
 
         return img;
     }
@@ -53,6 +53,7 @@ public class Player extends Sprite {
         graph.drawImage(getImage(getState()), (int) x, (int) y, width, height,null);
     }
 
+    public double getDownY(){return downY;}
     public void setLeft(boolean b) {left = b;}
     public void setRight(boolean b) {right = b;}
 
@@ -69,6 +70,11 @@ public class Player extends Sprite {
         up = down = false;
     }
 
+    public void setDownY(double newDownY){
+        downY = newDownY;
+
+    }
+
     public PlayerState getState(){
 
         PlayerState state;
@@ -80,39 +86,35 @@ public class Player extends Sprite {
         return state;
     }
 
-    public void jump(){
-
-        ++count;
+    public void jump(double downY){
         y -= dy;
 
         if (right) {x += dx;}
         if (left) {x -= dx;}
 
-        if(dy > 0) {setUp();}
-              else {setDown();}
-
-        if(count > countMax) {
+        if((getBoundsDown() > downY && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
-            count = 0;
         }
+
+        if(dy > 0) {setUp();}
+        else {setDown();}
     }
 
     public void changeLocationIfOut(){
 
         if (x + halfWidth > GamePanel.WIDTH){
-            setPosition((int)(-halfWidth), (int)y);
+            x = (-halfWidth);
+            setPosition((int)x, (int)y);
         }
 
         if (x + halfWidth < 0){
-            setPosition((int)(x + GamePanel.WIDTH), (int)y);
+            x += GamePanel.WIDTH;
+            setPosition((int)x, (int)y);
         }
-    }
-
-    public void jumpOnTile(){
     }
 
     public void update(){
         changeLocationIfOut();
-        jump();
+        jump(downY);
     }
 }

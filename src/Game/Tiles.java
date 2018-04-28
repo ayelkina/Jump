@@ -18,11 +18,8 @@ public class Tiles extends Sprite {
         }
     }
 
-
     public void update(){
         if(y > GamePanel.HEIGHT)
             y = 0;
     }
-
-
 }
