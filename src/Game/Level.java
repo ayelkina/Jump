@@ -12,22 +12,36 @@ public class Level extends GameState{
     private Vector<Tiles> tiles;
     final Random random;
 
-    private boolean toMoveTiles;
-    private boolean changeDownPos;
+    private int offTime;
+    private int offset;
 
     public Level(){
         random = new Random();;
-
         background = new Background("/Pics/sky1.png" );
-
         player = new Player();
         tiles = new Vector<Tiles>();
-        for(int i = 0; i<=13; ++i)
+        for(int i = 0; i<=10; ++i)
             tiles.addElement(new Tiles());
 
         setTilesPositions();
-        toMoveTiles = false;
-        changeDownPos = false;
+        offTime = 0;
+    }
+
+    public void setTilesPositions(){
+        tiles.get(0).setPosition(random(300, 100), 700);
+        int j= 0;
+        for(int i = 1; i< tiles.size(); ++i, ++j) {
+            int prevY = tiles.get(j).gety();
+
+            int newX = random(500, 0);
+            int newY = random(100, prevY - 150);
+
+            tiles.get(i).setPosition(newX, newY);
+        }
+    }
+
+    public int random(int bound, int min){
+        return random.nextInt(bound) + min;
     }
 
     public void draw(Graphics2D graph) {
@@ -44,17 +58,18 @@ public class Level extends GameState{
         for(int i = 0; i< tiles.size(); ++i)
             tiles.get(i).update();
         jumpFromTile();
-  //      moveTiles();
+        moveTiles();
     }
 
     public void jumpFromTile(){
         if (player.getState() == Player.PlayerState.DOWN) {
+            player.downYPrev = player.getDownY();
                  player.setDownY(nearestDownTile());
         }
     }
 
     public int nearestDownTile(){
-       int  nearestTile = 800;
+       int  nearestTile = GamePanel.HEIGHT;
         for (int i = tiles.size()-1; i >= 0; --i)
             if(player.distanceFromY(tiles.get(i)) < -player.getdy() &&
                     player.distanceFromY(tiles.get(i)) > player.getdy() &&
@@ -65,33 +80,36 @@ public class Level extends GameState{
         return nearestTile;
     }
 
-    public void setTilesPositions(){
-        tiles.get(0).setPosition(random(300, 100), 750);
-        int j= 0;
-        for(int i = 1; i< tiles.size(); ++i, ++j) {
-            int prevY = tiles.get(j).gety();
-
-            int newY = random(100, prevY - 150);
-            int newX = random(500, 0);
-
-            tiles.get(i).setPosition(newX, newY);
-        }
-    }
-
-    public int random(int bound, int min){
-        return random.nextInt(bound) + min;
-    }
-
     public void moveTiles(){
-    //    System.out.println(player.downYPrev - player.getDownY());
-        if(player.getState() == Player.PlayerState.UP &&
-                player.downYPrev - player.getDownY() > 0) {
+        if(player.getBoundsDown() - player.getDownY() > 0) offset =  offset();
+        if (offset == 0) return;
 
-            for (int i = 0; i < tiles.size(); ++i) {
-                tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + 7);
+        if(player.gety() < GamePanel.HEIGHT/2){
+            ++offTime;
+            if (offTime < offset/player.getdy()){
+                player.setPosition(player.getx(), GamePanel.HEIGHT/2);
+
+                for (int i = 0; i < tiles.size(); ++i) {
+                    tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
+                }
+                player.setDown();
+                player.setDownY(nearestDownTile());
             }
+            else offTime = 0;
         }
     }
+
+    public int offset(){
+        int currentY = player.gety();
+        if(currentY - GamePanel.HEIGHT/2 < 200)
+            return 600 - currentY;
+
+        return 0;
+    }
+
+
+
+
 
 
     public void keyTyped(KeyEvent key) {}

@@ -10,10 +10,10 @@ public abstract class Sprite {
 
     protected BufferedImage image;
 
-    protected double x;
-    protected double y;
-    protected double dx;
-    protected double dy;
+    protected int x;
+    protected int y;
+    protected int dx;
+    protected int dy;
 
     protected int width;
     protected int height;
@@ -27,20 +27,20 @@ public abstract class Sprite {
 
     public int getx() { return (int)x; }
     public int gety() { return (int)y; }
-    public double getdx() { return dx; }
-    public double getdy() { return dy; }
+    public int getdx() { return dx; }
+    public int getdy() { return dy; }
 
-    public void setdx(double newdx) { dx = newdx;}
-    public void setdy(double newdy) { y = newdy; }
+    public void setdx(int newdx) { dx = newdx;}
+    public void setdy(int newdy) { y = newdy; }
 
-    public void setx(double newx) { dx = newx;}
-    public void sety(double newy) { y = newy; }
+    public void setx(int newx) { dx = newx;}
+    public void sety(int newy) { y = newy; }
 
     public int getWidth() { return width; }
     public int getHeight() { return height; }
 
-    public double getBoundsRight() { return width + x; }
-    public double getBoundsDown() { return y + height; }
+    public int getBoundsRight() { return width + x; }
+    public int getBoundsDown() { return y + height; }
 
 //    public Point getPosition() { return (x,y); }
 

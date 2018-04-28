@@ -13,9 +13,11 @@ public class Player extends Sprite {
     private boolean right;
     private boolean fall;
 
-    private double downY;
-    public double downYPrev;
-    private double halfWidth;
+    private int downY;
+    public int downYPrev;
+    private int halfWidth;
+    private int time;
+    private int speed;
 
     public enum PlayerState {STAY, UP, DOWN, FALL};
 
@@ -25,12 +27,15 @@ public class Player extends Sprite {
         height = 63;
         halfWidth = width /2;
 
+        time = 0;
+        speed = 1;
+
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
         downY = 800;
 
-        dy = 7;
-        dx = 5;
+        dy = 8;
+        dx = 6;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Pics/peng.png"));
@@ -50,10 +55,10 @@ public class Player extends Sprite {
     }
 
     public void draw(Graphics2D graph) {
-        graph.drawImage(getImage(getState()), (int) x, (int) y, width, height,null);
+        graph.drawImage(getImage(getState()),  x,  y, width, height,null);
     }
 
-    public double getDownY(){return downY;}
+    public int getDownY(){return downY;}
     public void setLeft(boolean b) {left = b;}
     public void setRight(boolean b) {right = b;}
 
@@ -70,7 +75,7 @@ public class Player extends Sprite {
         up = down = false;
     }
 
-    public void setDownY(double newDownY){
+    public void setDownY(int newDownY){
         downY = newDownY;
 
     }
@@ -87,34 +92,38 @@ public class Player extends Sprite {
     }
 
     public void jump(double downY){
-        y -= dy;
+        y-= dy;
 
         if (right) {x += dx;}
         if (left) {x -= dx;}
 
-        if((getBoundsDown() > downY && down) || (downY-getBoundsDown() > 200 && up)) {
+        if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
 
         if(dy > 0) {setUp();}
         else {setDown();}
+
+
     }
 
     public void changeLocationIfOut(){
 
         if (x + halfWidth > GamePanel.WIDTH){
             x = (-halfWidth);
-            setPosition((int)x, (int)y);
+            setPosition(x, y);
         }
 
         if (x + halfWidth < 0){
             x += GamePanel.WIDTH;
-            setPosition((int)x, (int)y);
+            setPosition(x, y);
         }
     }
 
     public void update(){
         changeLocationIfOut();
         jump(downY);
+
+
     }
 }

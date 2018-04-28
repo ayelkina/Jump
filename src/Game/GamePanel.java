@@ -4,8 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel
-        implements Runnable, KeyListener{
+public class GamePanel extends JPanel implements Runnable, KeyListener{
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = 800;
@@ -15,8 +14,6 @@ public class GamePanel extends JPanel
     private int frames = 40;
     private long targetTime = 1000 / frames;
 
-    private Player player;
-    private Background background;
     private GameState gameState;
 
     public GamePanel() {
@@ -39,17 +36,9 @@ public class GamePanel extends JPanel
         running = true;
     }
 
-
-
     private void init() {
-
         gameState = new GameState(GameState.State.LEVEL);
-
-        background = new Background("/Pics/Sky.png");
-        player = new Player();
-        player.setPosition(WIDTH/2 - player.width/2, HEIGHT - player.height);
     }
-
 
     public void run() {
         long timeStart;
@@ -79,46 +68,25 @@ public class GamePanel extends JPanel
     }
 
     private void update() {
-        player.update();
+        gameState.update();
     }
 
     private void draw() {
         Graphics2D graph;
         graph = (Graphics2D) getGraphics();
 
-        background.draw(graph);
-        player.draw(graph);
-      //  Level.draw(graph);
+        gameState.draw(graph);
 
         graph.dispose();
     }
 
     public void keyTyped(KeyEvent key) {}
     public void keyPressed(KeyEvent key) {
-       if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
-       if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
+        gameState.keyPressed(key);
    }
 
     public void keyReleased(KeyEvent key) {
-        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
-        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);
+        gameState.keyReleased(key);
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
