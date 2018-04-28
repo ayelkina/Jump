@@ -13,10 +13,10 @@ public class Level extends GameState{
     final Random random;
 
     private boolean toMoveTiles;
-
+    private boolean changeDownPos;
 
     public Level(){
-        random = new Random();
+        random = new Random();;
 
         background = new Background("/Pics/sky1.png" );
 
@@ -27,6 +27,7 @@ public class Level extends GameState{
 
         setTilesPositions();
         toMoveTiles = false;
+        changeDownPos = false;
     }
 
     public void draw(Graphics2D graph) {
@@ -43,36 +44,24 @@ public class Level extends GameState{
         for(int i = 0; i< tiles.size(); ++i)
             tiles.get(i).update();
         jumpFromTile();
+  //      moveTiles();
     }
 
     public void jumpFromTile(){
-        player.downYPrev = player.getDownY();
         if (player.getState() == Player.PlayerState.DOWN) {
-
-            for (int i = 0; i < tiles.size(); ++i)
-                if (player.intersects(tiles.get(i)) && tiles.get(i) == nearestDownTile()) {
-                    toMoveTiles = true;
-
-//                    System.out.println(player.getDownY() - tiles.get(i).gety());
-                    player.setDownY(tiles.get(i).gety());
-                    if(player.downYPrev - player.getDownY() > 0) toMoveTiles = false; //NIE ZNAU KAK DOBAWIC USLOWIE CZTOBY WSE TILESY NIE ZDWIGALIS
-
-                } else if (player.distanceBetweenY(nearestDownTile()) > 10) player.setDownY(800); //ZMIENIC 10!!!!!! bo bez sensu
+                 player.setDownY(nearestDownTile());
         }
-
-
-        if(player.getState() == Player.PlayerState.UP && toMoveTiles) moveTiles();
     }
 
-    public Sprite nearestDownTile(){
-        Sprite nearestTile = tiles.get(0);
-        double minDistance = 200;
-
-        for (int i = 0; i < tiles.size(); ++i)
-            if(player.distanceBetweenY(tiles.get(i)) < minDistance && player.intersectsX(tiles.get(i))) {
-                minDistance = player.distanceBetweenY(tiles.get(i));
-                nearestTile = tiles.get(i);
+    public int nearestDownTile(){
+       int  nearestTile = 800;
+        for (int i = tiles.size()-1; i >= 0; --i)
+            if(player.distanceFromY(tiles.get(i)) < -player.getdy() &&
+                    player.distanceFromY(tiles.get(i)) > player.getdy() &&
+                    player.intersectsX(tiles.get(i))) {
+                return tiles.get(i).gety();
             }
+
         return nearestTile;
     }
 
@@ -82,7 +71,7 @@ public class Level extends GameState{
         for(int i = 1; i< tiles.size(); ++i, ++j) {
             int prevY = tiles.get(j).gety();
 
-            int newY = random(80, prevY - 130);
+            int newY = random(100, prevY - 150);
             int newX = random(500, 0);
 
             tiles.get(i).setPosition(newX, newY);
@@ -94,8 +83,13 @@ public class Level extends GameState{
     }
 
     public void moveTiles(){
-        for (int i = 0; i < tiles.size(); ++i){
-            tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + 3);
+    //    System.out.println(player.downYPrev - player.getDownY());
+        if(player.getState() == Player.PlayerState.UP &&
+                player.downYPrev - player.getDownY() > 0) {
+
+            for (int i = 0; i < tiles.size(); ++i) {
+                tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + 7);
+            }
         }
     }
 

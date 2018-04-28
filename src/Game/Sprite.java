@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Vector;
 
 import static java.lang.Math.abs;
 
@@ -41,6 +42,8 @@ public abstract class Sprite {
     public double getBoundsRight() { return width + x; }
     public double getBoundsDown() { return y + height; }
 
+//    public Point getPosition() { return (x,y); }
+
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -69,8 +72,8 @@ public abstract class Sprite {
         return false;
     }
 
-    public double distanceBetweenY (Sprite s2){
-        return abs(getBoundsDown() - s2.gety());
+    public double distanceFromY (Sprite s2){
+        return s2.gety() - getBoundsDown();
     }
 
 
