@@ -1,4 +1,10 @@
-package Game;
+package Game.States;
+
+
+import Game.Player;
+import Game.Background;
+import Game.Tiles;
+import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -6,6 +12,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import static java.lang.Math.abs;
+
 
 public class Level extends GameState{
 
