@@ -1,4 +1,9 @@
-package Game;
+package Game.States;
+
+import Game.Player;
+import Game.Background;
+import Game.Tiles;
+import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
