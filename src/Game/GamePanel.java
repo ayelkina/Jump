@@ -1,5 +1,7 @@
 package Game;
 
+import Game.States.GameState;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;

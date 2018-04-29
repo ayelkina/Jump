@@ -1,4 +1,7 @@
-package Game;
+package Game.States;
+
+import Game.Background;
+import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -56,7 +59,7 @@ public class Menu extends GameState{
                 graph.setColor(Color.BLACK);
             }
             else {
-                graph.setColor(Color.GRAY);
+                graph.setColor(Color.LIGHT_GRAY);
             }
             graph.drawString(choice[i], 250, GamePanel.HEIGHT/2 + i * 70);
         }
@@ -95,4 +98,3 @@ public class Menu extends GameState{
     public void keyReleased(KeyEvent key) {}
 
 }
-

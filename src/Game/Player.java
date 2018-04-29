@@ -63,6 +63,7 @@ public class Player extends Sprite {
     public int getDownY(){return downY;}
     public void setLeft(boolean b) {left = b; }
     public void setRight(boolean b) {right = b; }
+    public boolean getFall() {return fall;}
 
     public void setUp () {
         up = true;
@@ -95,14 +96,12 @@ public class Player extends Sprite {
     public void jump(double downY){
         y-= dy;
 
-
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
         if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
-
 
         if(dy > 0) {setUp();}
         else {setDown();}
@@ -123,14 +122,18 @@ public class Player extends Sprite {
 
     public void update(){
         changeLocationIfOut();
-        jump(downY);
+        checkFallDown();
+
+
+        if(!fall)
+         jump(downY);
     }
 
-    public boolean fallDown(){
-        if (getBoundsDown() >= GamePanel.HEIGHT){
-            System.out.println("Fall");
-            return true;
+    public void checkFallDown(){
+        if (getBoundsDown() >= GamePanel.HEIGHT+10){
+            y = 0;
+            setFall();
+
         }
-        return false;
     }
 }

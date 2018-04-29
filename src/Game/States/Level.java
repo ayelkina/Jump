@@ -1,6 +1,5 @@
 package Game.States;
 
-
 import Game.Player;
 import Game.Background;
 import Game.Tiles;
@@ -79,7 +78,10 @@ public class Level extends GameState{
     public void update() {
         player.update();
 
-        jumpFromTile();
+        if(!player.getFall()) {
+            jumpFromTile();
+
+        }
         moveTiles();
         checkGameover();
     }
@@ -92,7 +94,7 @@ public class Level extends GameState{
     }
 
     public int nearestDownTile(){
-        int  nearestTile = GamePanel.HEIGHT;
+        int  nearestTile = GamePanel.HEIGHT + 20;
 
         for (int i = tiles.size()-1; i >= 0; --i)
             if(abs(player.distanceFromY(tiles.get(i))) < abs(player.getdy()) &&
@@ -137,8 +139,17 @@ public class Level extends GameState{
     }
 
     public void checkGameover(){
-        if (player.fallDown()){
-            gameState.loadState(State.GAMEOVER);
+
+        if (player.getFall()){
+
+            player.sety(player.gety() - player.getdy());
+
+            for (int i = 0; i < tiles.size(); ++i) {
+                tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
+            }
+
+            if(tiles.get(0).gety() <=0)
+                gameState.loadState(State.GAMEOVER);
         }
     }
 

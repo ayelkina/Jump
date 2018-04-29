@@ -1,9 +1,6 @@
 package Game.States;
 
-import Game.Player;
 import Game.Background;
-import Game.Tiles;
-import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -67,7 +64,7 @@ public class GameOver extends GameState{
                 graph.setColor(Color.BLACK);
             }
             else {
-                graph.setColor(Color.GRAY);
+                graph.setColor(Color.LIGHT_GRAY);
             }
             graph.drawString(choice[i], 200  + i * 150, 450);
         }

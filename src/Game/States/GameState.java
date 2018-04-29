@@ -1,54 +1,58 @@
-package Game;
+package Game.States;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class GameState implements KeyListener {
 
-    public enum State {MENU, LEVEL, GAMEOVER};
+    public enum State {MENU, LEVEL, GAMEOVER}
     private GameState currentState;
 
-    public GameState(){}
-    public GameState(State state){
+    public GameState() {
+    }
+
+    public GameState(State state) {
         loadState(state);
     }
 
-    public void loadState(State state){
+    public void loadState(State state) {
 
-        if (state == State.MENU){
-            currentState  = new Menu(this);
+        if (state == State.MENU) {
+            currentState = new Menu(this);
         }
 
-        if (state == State.LEVEL){
-            currentState  = new Level(this);
+        if (state == State.LEVEL) {
+            currentState = new Level(this);
         }
 
-        if (state == State.GAMEOVER){
-            currentState  = new GameOver(this);
+        if (state == State.GAMEOVER) {
+            currentState = new GameOver(this);
         }
     }
 
     public void update() {
         try {
             currentState.update();
-        }catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public void draw(Graphics2D g) {
         try {
             currentState.draw(g);
-        }catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
-    public void keyTyped(KeyEvent key) {}
+    public void keyTyped(KeyEvent key) {
+    }
+
     public void keyPressed(KeyEvent key) {
         currentState.keyPressed(key);
     }
+
     public void keyReleased(KeyEvent key) {
         currentState.keyReleased(key);
     }
-
 }
