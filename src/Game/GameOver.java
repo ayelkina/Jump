@@ -4,21 +4,23 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-public class Menu extends GameState{
+public class GameOver extends GameState{
 
     private Background background;
     private Font font;
-    private int currentChoice;
-
-    private GameState gameState;
-    private String gameTitle;
+    private String gameOver;
+    private String nextTry;
     private String[] choice;
 
-    public Menu(GameState gameState){
+    private int currentChoice;
+    private GameState gameState;
 
+    public GameOver(GameState gameState){
         this.gameState = gameState;
-        gameTitle = "Jump!";
-        choice = new String[] {"Start", " Quit"};
+
+        gameOver = "Game Over";
+        nextTry = "Try again?";
+        choice = new String [] {"YES", "NO"};
 
         currentChoice = 0;
 
@@ -42,9 +44,13 @@ public class Menu extends GameState{
 
     public void drawTitle(Graphics2D graph){
         graph.setColor(Color.BLACK);
-        font = font.deriveFont(120f);
+        font = font.deriveFont(100f);
         graph.setFont(font);
-        graph.drawString(gameTitle, 150, GamePanel.HEIGHT/2 - 150);
+        graph.drawString(gameOver, 70, 250);
+
+        font = font.deriveFont(70f);
+        graph.setFont(font);
+        graph.drawString(nextTry, 150, 350);
     }
 
     public void drawOptions(Graphics2D graph){
@@ -58,7 +64,7 @@ public class Menu extends GameState{
             else {
                 graph.setColor(Color.GRAY);
             }
-            graph.drawString(choice[i], 250, GamePanel.HEIGHT/2 + i * 70);
+            graph.drawString(choice[i], 200  + i * 150, 450);
         }
     }
 
@@ -76,16 +82,16 @@ public class Menu extends GameState{
     public void keyTyped(KeyEvent key) {}
 
     public void keyPressed(KeyEvent key) {
-        if(key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE){
+        if(key.getKeyCode() == KeyEvent.VK_ENTER  || key.getKeyCode() == KeyEvent.VK_SPACE){
             select();
         }
-        if(key.getKeyCode() == KeyEvent.VK_UP) {
+        if(key.getKeyCode() == KeyEvent.VK_RIGHT) {
             currentChoice--;
             if(currentChoice == -1) {
                 currentChoice = choice.length - 1;
             }
         }
-        if(key.getKeyCode() == KeyEvent.VK_DOWN) {
+        if(key.getKeyCode() == KeyEvent.VK_LEFT) {
             currentChoice++;
             if(currentChoice == choice.length) {
                 currentChoice = 0;
@@ -93,6 +99,4 @@ public class Menu extends GameState{
         }
     }
     public void keyReleased(KeyEvent key) {}
-
 }
-

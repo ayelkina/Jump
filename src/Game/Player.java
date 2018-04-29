@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static java.lang.Math.abs;
+
 public class Player extends Sprite {
 
     public boolean up;
@@ -17,7 +19,7 @@ public class Player extends Sprite {
     public int downYPrev;
     private int halfWidth;
     private int time;
-    private int speed;
+    private int speedMin;
 
     public enum PlayerState {STAY, UP, DOWN, FALL};
 
@@ -28,13 +30,13 @@ public class Player extends Sprite {
         halfWidth = width /2;
 
         time = 0;
-        speed = 1;
+        speedMin = 4;
 
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
         downY = 800;
 
-        dy = 8;
+        dy = 6;
         dx = 6;
 
         try {
@@ -59,8 +61,8 @@ public class Player extends Sprite {
     }
 
     public int getDownY(){return downY;}
-    public void setLeft(boolean b) {left = b;}
-    public void setRight(boolean b) {right = b;}
+    public void setLeft(boolean b) {left = b; }
+    public void setRight(boolean b) {right = b; }
 
     public void setUp () {
         up = true;
@@ -77,12 +79,11 @@ public class Player extends Sprite {
 
     public void setDownY(int newDownY){
         downY = newDownY;
-
     }
 
     public PlayerState getState(){
-
         PlayerState state;
+
         state = PlayerState.valueOf("STAY");
         if(up) { state = PlayerState.valueOf("UP"); }
         if(down) { state = PlayerState.valueOf("DOWN"); }
@@ -94,17 +95,17 @@ public class Player extends Sprite {
     public void jump(double downY){
         y-= dy;
 
+
         if (right) {x += dx;}
-        if (left) {x -= dx;}
+        if (left) {x -= dx; }
 
         if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
 
+
         if(dy > 0) {setUp();}
         else {setDown();}
-
-
     }
 
     public void changeLocationIfOut(){
@@ -123,7 +124,13 @@ public class Player extends Sprite {
     public void update(){
         changeLocationIfOut();
         jump(downY);
+    }
 
-
+    public boolean fallDown(){
+        if (getBoundsDown() >= GamePanel.HEIGHT){
+            System.out.println("Fall");
+            return true;
+        }
+        return false;
     }
 }

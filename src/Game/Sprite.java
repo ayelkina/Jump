@@ -42,8 +42,6 @@ public abstract class Sprite {
     public int getBoundsRight() { return width + x; }
     public int getBoundsDown() { return y + height; }
 
-//    public Point getPosition() { return (x,y); }
-
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -53,7 +51,7 @@ public abstract class Sprite {
     public void setRight(boolean b) { right = b; }
 
     public void draw(Graphics graph){
-        graph.drawImage(image, (int)x, (int)y, width, height, null);
+        graph.drawImage(image, x, y, width, height, null);
     }
 
     public boolean intersectsX (Sprite s2){

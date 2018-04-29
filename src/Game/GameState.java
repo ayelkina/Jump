@@ -6,58 +6,49 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class GameState implements KeyListener, MouseListener{
+public class GameState implements KeyListener {
 
-    private GameState currentGameState;
+    public enum State {MENU, LEVEL, GAMEOVER};
+    private GameState currentState;
 
-    public enum State {MENU, LEVEL};
     public GameState(){}
-
     public GameState(State state){
         loadState(state);
     }
 
     public void loadState(State state){
+
         if (state == State.MENU){
-           currentGameState  = new Menu();
+            currentState  = new Menu(this);
         }
 
         if (state == State.LEVEL){
-            currentGameState  = new Level();
+            currentState  = new Level(this);
         }
 
+        if (state == State.GAMEOVER){
+            currentState  = new GameOver(this);
+        }
+    }
+
+    public void update() {
+        try {
+            currentState.update();
+        }catch (Exception e) {}
+    }
+
+    public void draw(Graphics2D g) {
+        try {
+            currentState.draw(g);
+        }catch (Exception e) {}
     }
 
     public void keyTyped(KeyEvent key) {}
     public void keyPressed(KeyEvent key) {
-        currentGameState.keyPressed(key);
+        currentState.keyPressed(key);
     }
     public void keyReleased(KeyEvent key) {
-        currentGameState.keyReleased(key);
-    }
-
-    public void update() {
-        currentGameState.update();
-    }
-
-    public void draw(Graphics2D graph) {
-        currentGameState.draw(graph);
-    }
-
-    public void mouseClicked(MouseEvent mouse) {
-        currentGameState.mouseClicked(mouse);
-    }
-    public void mousePressed(MouseEvent mouse) {
-        currentGameState.mousePressed(mouse);
-    }
-    public void mouseReleased(MouseEvent mouse) {
-        currentGameState.mouseReleased(mouse);
-    }
-    public void mouseEntered(MouseEvent mouse) {
-        currentGameState.mouseEntered(mouse);
-    }
-    public void mouseExited(MouseEvent mouse) {
-        currentGameState.mouseExited(mouse);
+        currentState.keyReleased(key);
     }
 
 }

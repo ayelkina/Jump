@@ -13,11 +13,15 @@ public class Level extends GameState{
     private Background background;
     private Vector<Tiles> tiles;
     private final Random random;
+    private GameState gameState;
 
-    private int offTime;
+    private double offTime;
     private int offset;
 
-    public Level(){
+    public Level(GameState gameState){
+
+        this.gameState = gameState;
+
         random = new Random();;
         background = new Background("/Pics/sky1.png" );
         player = new Player();
@@ -70,17 +74,18 @@ public class Level extends GameState{
 
         jumpFromTile();
         moveTiles();
+        checkGameover();
     }
 
     public void jumpFromTile(){
         if (player.getState() == Player.PlayerState.DOWN) {
             player.downYPrev = player.getDownY();
-                 player.setDownY(nearestDownTile());
+            player.setDownY(nearestDownTile());
         }
     }
 
     public int nearestDownTile(){
-       int  nearestTile = GamePanel.HEIGHT;
+        int  nearestTile = GamePanel.HEIGHT;
 
         for (int i = tiles.size()-1; i >= 0; --i)
             if(abs(player.distanceFromY(tiles.get(i))) < abs(player.getdy()) &&
@@ -94,7 +99,7 @@ public class Level extends GameState{
         if(player.getBoundsDown() - player.getDownY() > 0) offset =  offset();
         if (offset == 0) return;
 
-        if(player.gety() < GamePanel.maxPlayerHeight){
+        if(player.gety() <= GamePanel.maxPlayerHeight){
             ++offTime;
 
             if (offTime < offset/player.getdy()){
@@ -105,11 +110,14 @@ public class Level extends GameState{
                     if(tiles.get(i).gety() > GamePanel.HEIGHT) setRandomPosition(i);
                 }
 
-                player.setDown();
                 player.setDownY(nearestDownTile());
+                player.setDown();
             }
 
-            else offTime = 0;
+            else// (offTime >= offset/player.getdy()){
+            {
+                offTime = 0;
+            }
         }
     }
 
@@ -119,6 +127,12 @@ public class Level extends GameState{
             return GamePanel.maxPlayerHeight + 200 - currentY;
 
         return 0;
+    }
+
+    public void checkGameover(){
+        if (player.fallDown()){
+            gameState.loadState(State.GAMEOVER);
+        }
     }
 
 
