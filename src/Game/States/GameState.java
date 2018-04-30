@@ -19,7 +19,7 @@ public class GameState implements KeyListener {
     public void loadState(State state) {
 
         if (state == State.MENU) {
-            currentState = new Menu(this);
+            currentState = new StartMenu(this);
         }
 
         if (state == State.LEVEL) {

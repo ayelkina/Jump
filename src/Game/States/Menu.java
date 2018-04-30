@@ -5,49 +5,36 @@ import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 
-public class Menu extends GameState{
+public class Menu extends GameState {
 
-    private Background background;
-    private Font font;
-    private int currentChoice;
+    protected Background background;
+    protected Font font;
+    protected int currentChoice;
 
-    private GameState gameState;
-    private String gameTitle;
-    private String[] choice;
+    protected GameState gameState;
+    protected String[] choice;
 
-    public Menu(GameState gameState){
+    public Menu() {}
 
-        this.gameState = gameState;
-        gameTitle = "Jump!";
-        choice = new String[] {"Start", " Quit"};
+    public double middleX(Graphics2D graph, String text) {
+        FontRenderContext context = graph.getFontRenderContext();
+        Rectangle2D bounds = font.getStringBounds(text, context);
 
-        currentChoice = 0;
+        double x = (GamePanel.WIDTH - bounds.getWidth()) / 2;
 
-        background = new Background("/Pics/sky1.png");
-
-        try{
-            File fontFile = new File("Res/Fonts/orange.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        return x;
     }
 
-    public void draw(Graphics2D graph) {
-        background.draw(graph);
-        drawTitle(graph);
-        drawOptions(graph);
-
-        graph.dispose();
-    }
-
-    public void drawTitle(Graphics2D graph){
+    public void drawText(Graphics2D graph, String text, float size, double y){
         graph.setColor(Color.BLACK);
-        font = font.deriveFont(120f);
+        font = font.deriveFont(size);
         graph.setFont(font);
-        graph.drawString(gameTitle, 150, GamePanel.HEIGHT/2 - 150);
+
+        int x = (int) middleX(graph, text);
+        graph.drawString(text, x, (int)y);
     }
 
     public void drawOptions(Graphics2D graph){
@@ -61,40 +48,18 @@ public class Menu extends GameState{
             else {
                 graph.setColor(Color.LIGHT_GRAY);
             }
-            graph.drawString(choice[i], 250, GamePanel.HEIGHT/2 + i * 70);
+            int x = (int) middleX(graph, choice[i]);
+            graph.drawString(choice[i], x, GamePanel.HEIGHT/2 + i * 70);
         }
     }
 
     public void update(){}
-
-    private void select() {
-        if(currentChoice == 0) {
-            gameState.loadState(GameState.State.LEVEL);
-        }
-        if(currentChoice == 1) {
-            System.exit(0);
-        }
-    }
+    private void select() {}
+    public void draw(Graphics2D graph) {}
 
     public void keyTyped(KeyEvent key) {}
 
-    public void keyPressed(KeyEvent key) {
-        if(key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE){
-            select();
-        }
-        if(key.getKeyCode() == KeyEvent.VK_UP) {
-            currentChoice--;
-            if(currentChoice == -1) {
-                currentChoice = choice.length - 1;
-            }
-        }
-        if(key.getKeyCode() == KeyEvent.VK_DOWN) {
-            currentChoice++;
-            if(currentChoice == choice.length) {
-                currentChoice = 0;
-            }
-        }
-    }
+    public void keyPressed(KeyEvent key) {}
     public void keyReleased(KeyEvent key) {}
 
 }

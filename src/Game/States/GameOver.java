@@ -1,21 +1,16 @@
 package Game.States;
 
 import Game.Background;
+import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-public class GameOver extends GameState{
+public class GameOver extends Menu{
 
-    private Background background;
-    private Font font;
     private String gameOver;
     private String nextTry;
-    private String[] choice;
-
-    private int currentChoice;
-    private GameState gameState;
 
     public GameOver(GameState gameState){
         this.gameState = gameState;
@@ -38,21 +33,11 @@ public class GameOver extends GameState{
 
     public void draw(Graphics2D graph) {
         background.draw(graph);
-        drawTitle(graph);
+        drawText(graph, gameOver, 100f, 250);
+        drawText(graph, nextTry, 70f, 350);
         drawOptions(graph);
 
         graph.dispose();
-    }
-
-    public void drawTitle(Graphics2D graph){
-        graph.setColor(Color.BLACK);
-        font = font.deriveFont(100f);
-        graph.setFont(font);
-        graph.drawString(gameOver, 70, 250);
-
-        font = font.deriveFont(70f);
-        graph.setFont(font);
-        graph.drawString(nextTry, 150, 350);
     }
 
     public void drawOptions(Graphics2D graph){
@@ -70,8 +55,6 @@ public class GameOver extends GameState{
         }
     }
 
-    public void update(){}
-
     private void select() {
         if(currentChoice == 0) {
             gameState.loadState(GameState.State.LEVEL);
@@ -81,24 +64,20 @@ public class GameOver extends GameState{
         }
     }
 
-    public void keyTyped(KeyEvent key) {}
-
     public void keyPressed(KeyEvent key) {
         if(key.getKeyCode() == KeyEvent.VK_ENTER  || key.getKeyCode() == KeyEvent.VK_SPACE){
             select();
         }
         if(key.getKeyCode() == KeyEvent.VK_RIGHT) {
-            currentChoice--;
-            if(currentChoice == -1) {
-                currentChoice = choice.length - 1;
+
+            if(currentChoice != (choice.length-1)) {
+                ++currentChoice;
             }
         }
         if(key.getKeyCode() == KeyEvent.VK_LEFT) {
-            currentChoice++;
-            if(currentChoice == choice.length) {
-                currentChoice = 0;
+            if(currentChoice != 0) {
+                --currentChoice;
             }
         }
     }
-    public void keyReleased(KeyEvent key) {}
 }
