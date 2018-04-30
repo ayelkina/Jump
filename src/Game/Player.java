@@ -93,13 +93,13 @@ public class Player extends Sprite {
         return state;
     }
 
-    public void jump(double downY){
+    public void jump(int downY){
         y-= dy;
 
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
-        if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
+        if((getBoundsDown() - downY >= 0 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
 
@@ -133,7 +133,6 @@ public class Player extends Sprite {
         if (getBoundsDown() >= GamePanel.HEIGHT+10){
             y = 0;
             setFall();
-
         }
     }
 }

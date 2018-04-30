@@ -13,46 +13,22 @@ public class GameOver extends Menu{
     private String nextTry;
 
     public GameOver(GameState gameState){
+        super();
         this.gameState = gameState;
 
         gameOver = "Game Over";
         nextTry = "Try again?";
         choice = new String [] {"YES", "NO"};
 
-        currentChoice = 0;
-
-        background = new Background("/Pics/sky1.png");
-
-        try{
-            File fontFile = new File("Res/Fonts/orange.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     public void draw(Graphics2D graph) {
         background.draw(graph);
         drawText(graph, gameOver, 100f, 250);
-        drawText(graph, nextTry, 70f, 350);
-        drawOptions(graph);
+        drawText(graph, nextTry, 60f, 350);
+        drawOptionsHorizontal(graph, 40,200, 450);
 
         graph.dispose();
-    }
-
-    public void drawOptions(Graphics2D graph){
-        font = font.deriveFont(48f);
-        graph.setFont(font);
-
-        for(int i = 0; i < choice.length; ++i) {
-            if (i == currentChoice) {
-                graph.setColor(Color.BLACK);
-            }
-            else {
-                graph.setColor(Color.LIGHT_GRAY);
-            }
-            graph.drawString(choice[i], 200  + i * 150, 450);
-        }
     }
 
     private void select() {

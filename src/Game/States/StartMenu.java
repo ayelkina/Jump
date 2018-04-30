@@ -1,6 +1,7 @@
 package Game.States;
 
 import Game.Background;
+import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,21 +12,11 @@ public class StartMenu extends Menu {
     private String gameTitle;
 
     public StartMenu(GameState gameState) {
+        super();
         this.gameState = gameState;
 
         gameTitle = "Jump!";
         choice = new String[]{"Start", "Quit"};
-
-        currentChoice = 0;
-
-        background = new Background("/Pics/sky1.png");
-
-        try {
-            File fontFile = new File("Res/Fonts/orange.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void select() {
@@ -39,8 +30,8 @@ public class StartMenu extends Menu {
 
     public void draw(Graphics2D graph) {
         background.draw(graph);
-        drawText(graph, gameTitle, 120f, 250);
-        drawOptions(graph);
+        drawText(graph, gameTitle, 120f, 300);
+        drawOptionsVertical(graph, 48f, GamePanel.HEIGHT / 2);
 
         graph.dispose();
     }

@@ -7,6 +7,7 @@ import Game.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Random;
 import java.util.Vector;
 
@@ -15,18 +16,33 @@ import static java.lang.Math.abs;
 
 public class Level extends GameState{
 
+    private final Random random;
+    private GameState gameState;
+    private Font font;
+
     private Player player;
     private Background background;
     private Vector<Tiles> tiles;
-    private final Random random;
-    private GameState gameState;
 
     private double offTime;
     private int offset;
+    private int heightCount;
+    private int plusCount;
+
 
     public Level(GameState gameState){
 
         this.gameState = gameState;
+        heightCount = 0;
+        plusCount = 0;
+
+        try{
+            File fontFile = new File("Res/Fonts/orange.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         random = new Random();;
         background = new Background("/Pics/sky1.png" );
@@ -68,14 +84,26 @@ public class Level extends GameState{
 
     public void draw(Graphics2D graph) {
         background.draw(graph);
+
         for(int i = 0; i< tiles.size(); ++i)
             tiles.get(i).draw(graph);
 
         player.draw(graph);
+        drawCount(graph);
         graph.dispose();
     }
 
+    public void drawCount(Graphics2D graph){
+
+        graph.setColor(Color.BLACK);
+        font = font.deriveFont(40f);
+        graph.setFont(font);
+
+        graph.drawString(Integer.toString(heightCount), 10, 40);
+    }
+
     public void update() {
+        System.out.println(player.downYPrev);
         player.update();
 
         if(!player.getFall()) {
@@ -83,13 +111,18 @@ public class Level extends GameState{
 
         }
         moveTiles();
-        checkGameover();
+        checkGameOver();
     }
 
     public void jumpFromTile(){
         if (player.getState() == Player.PlayerState.DOWN) {
-            player.downYPrev = player.getDownY();
             player.setDownY(nearestDownTile());
+        }
+    }
+
+    public void setCount(){
+        if (player.getState() == Player.PlayerState.UP && player.downYPrev!= 820) {
+        heightCount += player.downYPrev - player.getDownY();
         }
     }
 
@@ -138,17 +171,16 @@ public class Level extends GameState{
         return 0;
     }
 
-    public void checkGameover(){
+    public void checkGameOver(){
 
         if (player.getFall()){
-
             player.sety(player.gety() - player.getdy());
 
             for (int i = 0; i < tiles.size(); ++i) {
                 tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
             }
 
-            if(tiles.get(0).gety() <=0)
+            if(player.gety() > GamePanel.HEIGHT - 200)
                 gameState.loadState(State.GAMEOVER);
         }
     }
