@@ -20,8 +20,6 @@ public abstract class Sprite {
 
     protected boolean left;
     protected boolean right;
-    protected boolean toDraw;
-    protected boolean falling;
 
     public Sprite(){}
 

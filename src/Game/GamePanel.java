@@ -19,7 +19,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private GameState gameState;
     private Image doubleBuffer;
-    private Graphics2D graphics;
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));

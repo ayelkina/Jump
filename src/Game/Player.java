@@ -9,17 +9,16 @@ import static java.lang.Math.abs;
 
 public class Player extends Sprite {
 
-    public boolean up;
+    private boolean up;
     private boolean down;
     private boolean left;
     private boolean right;
     private boolean fall;
 
     private int downY;
-    public int downYPrev;
     private int halfWidth;
-    private int time;
-    private int speedMin;
+
+    public int count;
 
     public enum PlayerState {STAY, UP, DOWN, FALL};
 
@@ -29,8 +28,7 @@ public class Player extends Sprite {
         height = 63;
         halfWidth = width /2;
 
-        time = 0;
-        speedMin = 4;
+        count = 0;
 
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
@@ -46,18 +44,18 @@ public class Player extends Sprite {
         }
     }
 
-    public BufferedImage getImage(PlayerState state){
+    public BufferedImage loadImage(PlayerState state){
 
         int row = 1;
         int col = state.ordinal() + 1;
 
-        BufferedImage img = image.getSubimage(col*(width) - width, row*(width) - width, width, height);
+        BufferedImage img = image.getSubimage(col*(width) - width, row*(height) - height, width, height);
 
         return img;
     }
 
     public void draw(Graphics2D graph) {
-        graph.drawImage(getImage(getState()),  x,  y, width, height,null);
+        graph.drawImage(loadImage(getState()),  x,  y, width, height,null);
     }
 
     public int getDownY(){return downY;}
@@ -76,6 +74,10 @@ public class Player extends Sprite {
     public void setFall () {
         fall = true;
         up = down = false;
+    }
+
+    public void changeDy(){
+        dy *= -1;
     }
 
     public void setDownY(int newDownY){
@@ -99,7 +101,7 @@ public class Player extends Sprite {
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
-        if((getBoundsDown() - downY >= 0 && down) || (downY-getBoundsDown() > 200 && up)) {
+        if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
 

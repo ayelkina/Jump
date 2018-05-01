@@ -4,6 +4,7 @@ import Game.Player;
 import Game.Background;
 import Game.Tiles;
 import Game.GamePanel;
+import Game.Tools.Bounce;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,12 +24,12 @@ public class Level extends GameState{
     private Player player;
     private Background background;
     private Vector<Tiles> tiles;
+    private Vector<Bounce> bounces;
 
     private double offTime;
     private int offset;
     private int heightCount;
     private int plusCount;
-
 
     public Level(GameState gameState){
 
@@ -48,26 +49,40 @@ public class Level extends GameState{
         background = new Background("/Pics/sky1.png" );
         player = new Player();
         tiles = new Vector<Tiles>();
-        for(int i = 0; i<=10; ++i)
+        for(int i = 0; i<=15; ++i)
             tiles.addElement(new Tiles());
 
+        bounces = new Vector<Bounce>();
+        for(int i = 0; i<=2; ++i)
+            bounces.addElement(new Bounce());
+
         setTilesPositions();
+//        setBouncePosition();
+
         offTime = 0;
+    }
+
+    public void setBouncePosition(){
+
+//        bounces.get(0).setPosition(tiles.get(3).getx(),tiles.get(3).gety() - bounces.get(3).getBoundsDown() +5);
+       /* for(int i =0; i<bounces.size(); ++i)
+             setRandomBounce(i);*/
+
     }
 
     public void setTilesPositions(){
         tiles.get(0).setPosition(random(300, 100), 700);
         int j= 0;
         for(int i = 1; i< tiles.size(); ++i, ++j) {
-            setRandomPosition(i);
+            setRandomTile(i);
         }
     }
 
-    public void setRandomPosition(int cur){
+    public void setRandomTile(int currentTile){
         int prev;
 
-        if(cur == 0) prev = tiles.size() -1;
-        else prev = cur-1;
+        if(currentTile == 0) prev = tiles.size() -1;
+        else prev = currentTile-1;
 
         int prevY = tiles.get(prev).gety();
         int prevX = tiles.get(prev).getx();
@@ -75,18 +90,29 @@ public class Level extends GameState{
         int newX = random(500, 0);
         int newY = random(100, prevY - 150);
 
-        tiles.get(cur).setPosition(newX, newY);
+        tiles.get(currentTile).setPosition(newX, newY);
     }
 
     public int random(int bound, int min){
         return random.nextInt(bound) + min;
     }
 
-    public void draw(Graphics2D graph) {
+    public void setRandomBounce(int i) {
+
+        bounces.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() - bounces.get(i).getBoundsDown() +5);
+
+    }
+
+
+
+        public void draw(Graphics2D graph) {
         background.draw(graph);
 
         for(int i = 0; i< tiles.size(); ++i)
             tiles.get(i).draw(graph);
+
+        /*for(int i = 0; i< bounces.size(); ++i)
+            bounces.get(i).draw(graph);*/
 
         player.draw(graph);
         drawCount(graph);
@@ -103,13 +129,13 @@ public class Level extends GameState{
     }
 
     public void update() {
-        System.out.println(player.downYPrev);
         player.update();
 
         if(!player.getFall()) {
             jumpFromTile();
 
         }
+
         moveTiles();
         checkGameOver();
     }
@@ -121,9 +147,9 @@ public class Level extends GameState{
     }
 
     public void setCount(){
-        if (player.getState() == Player.PlayerState.UP && player.downYPrev!= 820) {
-        heightCount += player.downYPrev - player.getDownY();
-        }
+       /* if (player.getState() == Player.PlayerState.UP && player.downYPrev!= 820) {
+            heightCount += player.downYPrev - player.getDownY();
+        }*/
     }
 
     public int nearestDownTile(){
@@ -149,9 +175,13 @@ public class Level extends GameState{
 
                 for (int i = 0; i < tiles.size(); ++i) {
                     tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
-                    if(tiles.get(i).gety() > GamePanel.HEIGHT) setRandomPosition(i);
+                    if(tiles.get(i).gety() > GamePanel.HEIGHT) setRandomTile(i);
                 }
-
+                /*for (int i = 0; i < bounces.size(); ++i) {
+                    bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy() + 10);
+                    if(bounces.get(i).gety() > GamePanel.HEIGHT) setRandomBounce(i);
+                }
+*/
                 player.setDownY(nearestDownTile());
                 player.setDown();
             }
@@ -159,6 +189,7 @@ public class Level extends GameState{
             else// (offTime >= offset/player.getdy()){
             {
                 offTime = 0;
+
             }
         }
     }

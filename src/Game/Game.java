@@ -6,7 +6,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class Game extends Canvas{
-    public static JFrame frame;
 
     public static void main(String[] args) {
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -14,7 +13,7 @@ public class Game extends Canvas{
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
-        frame = new JFrame("Jump!");
+        JFrame frame = new JFrame("Jump!");
         frame.setContentPane(new GamePanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
