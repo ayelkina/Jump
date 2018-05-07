@@ -18,6 +18,8 @@ public class Player extends Sprite {
     private int downY;
     private int halfWidth;
 
+    public int prevDownY;
+
     public int count;
 
     public enum PlayerState {STAY, UP, DOWN, FALL};
@@ -27,6 +29,8 @@ public class Player extends Sprite {
         width = 70;
         height = 63;
         halfWidth = width /2;
+
+        prevDownY = 820;
 
         count = 0;
 
@@ -81,8 +85,11 @@ public class Player extends Sprite {
     }
 
     public void setDownY(int newDownY){
-        downY = newDownY;
+        if(down)             //NIE PODOBA MI SIE
+             downY = newDownY;
     }
+    public boolean getUp(){return up;}
+    public boolean getDown(){return down;}
 
     public PlayerState getState(){
         PlayerState state;
@@ -101,7 +108,7 @@ public class Player extends Sprite {
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
-        if((getBoundsDown() - downY > 1 && down) || (downY-getBoundsDown() > 200 && up)) {
+        if((getBoundsDown() - downY > 0 && down) || (downY-getBoundsDown() > 200 && up)) {
             dy *= -1;
         }
 
