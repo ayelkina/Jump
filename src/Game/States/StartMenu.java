@@ -1,6 +1,5 @@
 package Game.States;
 
-import Game.Background;
 import Game.GamePanel;
 
 import java.awt.*;

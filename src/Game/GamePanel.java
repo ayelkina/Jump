@@ -17,6 +17,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private int frames = 60;
     private long targetTime = 1000 / frames;
 
+    private long prevTime;
+    private long deltaTime = 100000;
+
     private GameState gameState;
     private Image doubleBuffer;
 
@@ -24,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+        prevTime = System.nanoTime();
     }
 
     public void addNotify() {
@@ -44,28 +48,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void run() {
-        long timeStart;
-        long delta;
-        long timeWait;
-
-
         init();
 
         while (running) {
-            timeStart = System.nanoTime();
-
             update();
-
-            delta = System.nanoTime() - timeStart;
-
-            timeWait = targetTime - delta / 1000000;
-            if (timeWait < 0) timeWait = 1;
-
-            try {
-                Thread.sleep(timeWait);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 

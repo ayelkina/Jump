@@ -33,6 +33,6 @@ public class Bounce extends Sprite{
     }
 
     public void draw(Graphics2D graph) {
-        graph.drawImage(loadImage(),  x,  y, width, height,null);
+        graph.drawImage(loadImage(),  (int)x,  (int)y, width, height,null);
     }
 }

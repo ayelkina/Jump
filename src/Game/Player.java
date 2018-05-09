@@ -15,10 +15,10 @@ public class Player extends Sprite {
     private boolean right;
     private boolean fall;
 
-    private int downY;
-    private int halfWidth;
+    private double downY;
+    private double halfWidth;
 
-    public int prevDownY;
+    public double prevDownY;
 
     public int count;
 
@@ -38,8 +38,8 @@ public class Player extends Sprite {
 
         downY = 800;
 
-        dy = 6;
-        dx = 6;
+        dy = 0.7;
+        dx = dy;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Pics/peng.png"));
@@ -59,10 +59,10 @@ public class Player extends Sprite {
     }
 
     public void draw(Graphics2D graph) {
-        graph.drawImage(loadImage(getState()),  x,  y, width, height,null);
+        graph.drawImage(loadImage(getState()),  (int)x, (int) y, width, height,null);
     }
 
-    public int getDownY(){return downY;}
+    public double getDownY(){return downY;}
     public void setLeft(boolean b) {left = b; }
     public void setRight(boolean b) {right = b; }
     public boolean getFall() {return fall;}
@@ -84,7 +84,7 @@ public class Player extends Sprite {
         dy *= -1;
     }
 
-    public void setDownY(int newDownY){
+    public void setDownY(double newDownY){
         if(down)             //NIE PODOBA MI SIE
              downY = newDownY;
     }
@@ -102,7 +102,7 @@ public class Player extends Sprite {
         return state;
     }
 
-    public void jump(int downY){
+    public void jump(double downY){
         y-= dy;
 
         if (right) {x += dx;}
@@ -120,12 +120,12 @@ public class Player extends Sprite {
 
         if (x + halfWidth > GamePanel.WIDTH){
             x = (-halfWidth);
-            setPosition(x, y);
+            setPosition((int)x, (int)y);
         }
 
         if (x + halfWidth < 0){
             x += GamePanel.WIDTH;
-            setPosition(x, y);
+            setPosition((int)x, (int)y);
         }
     }
 

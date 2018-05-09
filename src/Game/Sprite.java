@@ -10,10 +10,10 @@ public abstract class Sprite {
 
     protected BufferedImage image;
 
-    protected int x;
-    protected int y;
-    protected int dx;
-    protected int dy;
+    protected double x;
+    protected double y;
+    protected double dx;
+    protected double dy;
 
     protected int width;
     protected int height;
@@ -23,24 +23,24 @@ public abstract class Sprite {
 
     public Sprite(){}
 
-    public int getx() { return (int)x; }
-    public int gety() { return (int)y; }
-    public int getdx() { return dx; }
-    public int getdy() { return dy; }
+    public double getx() { return x; }
+    public double gety() { return y; }
+    public double getdx() { return dx; }
+    public double getdy() { return dy; }
 
-    public void setdx(int newdx) { dx = newdx;}
-    public void setdy(int newdy) { y = newdy; }
+    public void setdx(double newdx) { dx = newdx;}
+    public void setdy(double newdy) { y = newdy; }
 
-    public void setx(int newx) { dx = newx;}
-    public void sety(int newy) { y = newy; }
+    public void setx(double newx) { dx = newx;}
+    public void sety(double newy) { y = newy; }
 
     public int getWidth() { return width; }
     public int getHeight() { return height; }
 
-    public int getBoundsRight() { return width + x; }
-    public int getBoundsDown() { return y + height; }
+    public double getBoundsRight() { return width + x; }
+    public double getBoundsDown() { return y + height; }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -49,7 +49,7 @@ public abstract class Sprite {
     public void setRight(boolean b) { right = b; }
 
     public void draw(Graphics graph){
-        graph.drawImage(image, x, y, width, height, null);
+        graph.drawImage(image, (int)x, (int)y, width, height, null);
     }
 
     public boolean intersectsX (Sprite s2){
