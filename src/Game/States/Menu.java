@@ -1,7 +1,7 @@
 package Game.States;
 
 import Game.Tools.Background;
-import Game.GamePanel;
+import Game.GameManagement.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -22,7 +22,10 @@ public class Menu extends GameState {
         currentChoice = 0;
 
         background = new Background("/Pics/sky1.png");
+        loadFont();
+    }
 
+    public void loadFont(){
         try {
             File fontFile = new File("Res/Fonts/orange.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);

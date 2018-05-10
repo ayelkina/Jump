@@ -1,13 +1,9 @@
 package Game.Sprites;
 
-import Game.GamePanel;
+import Game.GameManagement.GamePanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import static java.lang.Math.abs;
 
 public class Player extends Sprite {
 
@@ -17,19 +13,23 @@ public class Player extends Sprite {
     private boolean right;
     private boolean fall;
 
+    public boolean jumpedFromBounce;
+
     private double downY;
     private double halfWidth;
 
     public double prevDownY;
     private double maxJump;
 
-
-    public int count;
-
     public enum PlayerState {STAY, UP, DOWN, FALL};
 
     public Player() {
+        loadSprite("/Pics/peng.png");
+        setVariables();
+        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
+    }
 
+    private void setVariables(){
         width = 70;
         height = 63;
         halfWidth = width /2;
@@ -37,30 +37,19 @@ public class Player extends Sprite {
         prevDownY = 820;
         maxJump = 200;
 
-        count = 0;
-
-        setPosition(Game.GamePanel.WIDTH/2 - width /2, Game.GamePanel.HEIGHT - height);
-
+        jumpedFromBounce = false;
         downY = 800;
 
         dy = 0.7;
         dx = 0.7;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/Pics/peng.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    public BufferedImage loadImage(PlayerState state){
+    private BufferedImage loadImage(PlayerState state){
 
         int row = 1;
         int col = state.ordinal() + 1;
 
-        BufferedImage img = image.getSubimage(col*(width) - width, row*(height) - height, width, height);
-
-        return img;
+        return image.getSubimage(col*(width) - width, row*(height) - height, width, height);
     }
 
     public void draw(Graphics2D graph) {
@@ -119,7 +108,7 @@ public class Player extends Sprite {
         return state;
     }
 
-    public void jump(double downY){
+    private void jump(double downY){
         y-= dy;
 
         if (right) {x += dx;}
@@ -133,15 +122,15 @@ public class Player extends Sprite {
         else {setDown();}
     }
 
-    public void changeLocationIfOut(){
+    private void changeLocationIfOut(){
 
-        if (x + halfWidth > Game.GamePanel.WIDTH){
+        if (x + halfWidth > GamePanel.WIDTH){
             x = (-halfWidth);
             setPosition((int)x, (int)y);
         }
 
         if (x + halfWidth < 0){
-            x += Game.GamePanel.WIDTH;
+            x += GamePanel.WIDTH;
             setPosition((int)x, (int)y);
         }
     }
@@ -150,13 +139,12 @@ public class Player extends Sprite {
         changeLocationIfOut();
         checkFallDown();
 
-
         if(!fall)
          jump(downY);
     }
 
-    public void checkFallDown(){
-        if (getBoundsDown() >= Game.GamePanel.HEIGHT+10){
+    private void checkFallDown(){
+        if (getBoundsDown() >= GamePanel.HEIGHT+10){
             y = 0;
             setFall();
         }

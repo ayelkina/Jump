@@ -14,28 +14,18 @@ public class Bounce extends Sprite{
     public Bounce(){
         width = 65;
         height = 35;
-
         playerJumped = false;
 
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/Pics/bounce.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadSprite("/Pics/bounce.png");
     }
 
-
-
     public BufferedImage loadImage(){
-
         int row = 1;
         int col = 1;
         /*int col = state.ordinal() + 1;
-
         BufferedImage img = image.getSubimage(col*(width) - width, row*(height) - height, width, height);*/
-        BufferedImage img = image.getSubimage(0, 0, width, height);
 
-        return img;
+        return image.getSubimage(0, 0, width, height);
     }
 
     public void draw(Graphics2D graph) {

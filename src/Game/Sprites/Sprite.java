@@ -1,7 +1,9 @@
 package Game.Sprites;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import static java.lang.Math.abs;
 
@@ -21,6 +23,16 @@ public abstract class Sprite {
     protected boolean right;
 
     public Sprite(){}
+
+    protected void loadSprite(String path){
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setVariables(){}
 
     public double getx() { return x; }
     public double gety() { return y; }

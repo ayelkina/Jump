@@ -1,10 +1,9 @@
 package Game.States;
 
-import Game.GamePanel;
+import Game.GameManagement.GamePanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 public class StartMenu extends Menu {
 

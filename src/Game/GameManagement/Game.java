@@ -1,16 +1,16 @@
-package Game;
+package Game.GameManagement;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Game extends Canvas{
 
     public static void main(String[] args) {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
+
         GamePanel gamePanel = new GamePanel();
+        Engine engine = new Engine(gamePanel);
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
@@ -24,8 +24,6 @@ public class Game extends Canvas{
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
-
-        Engine engine = new Engine(gamePanel);
     }
 }
 

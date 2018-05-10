@@ -1,22 +1,28 @@
-package Game;
+package Game.GameManagement;
 
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JPanel;
 
-public class GamePanel extends JPanel {
-
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 800;
+public class View extends JComponent {
 
     private Image doubleBuffer;
 
-    public GamePanel() {
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setFocusable(true);
-        requestFocus();
+
+    public View(){}
+
+   /* private void draw(Graphics2D graph) {
+        gameState.draw(graph);
+        graph.dispose();
     }
 
-    /*public void updateDraw() {
+    public void drawcurrentState(Graphics2D g) {
+        try {
+            currentState.draw(g);
+        } catch (Exception e) {
+        }
+    }
+
+    public void bufforImage() {
         Graphics2D g = (Graphics2D) getGraphics();
         Dimension size = getSize();
         if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
@@ -33,5 +39,4 @@ public class GamePanel extends JPanel {
             draw(g);
         }
     }*/
-
 }

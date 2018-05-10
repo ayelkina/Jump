@@ -2,15 +2,13 @@ package Game.States;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class GameState implements KeyListener {
+public class GameState {
 
     public enum State {MENU, LEVEL, GAMEOVER}
     private GameState currentState;
 
-    public GameState() {
-    }
+    public GameState() {}
 
     public GameState(State state) {
         loadState(state);
@@ -32,21 +30,10 @@ public class GameState implements KeyListener {
     }
 
     public void update() {
-        try {
-            currentState.update();
-        } catch (Exception e) {
-        }
+        currentState.update();
     }
     public void draw(Graphics2D g) {
-        try {
-            currentState.draw(g);
-        } catch (Exception e) {
-        }
-
-    }
-
-
-    public void keyTyped(KeyEvent key) {
+        currentState.draw(g);
     }
 
     public void keyPressed(KeyEvent key) {

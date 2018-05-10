@@ -1,4 +1,4 @@
-package Game;
+package Game.GameManagement;
 
 import Game.States.GameState;
 
@@ -10,11 +10,8 @@ public class ActionListener extends Component implements KeyListener {
 
     private GameState gameState;
 
-    public ActionListener(GameState gameState){
-
-        this.gameState = gameState;
-        addKeyListener(this);
-
+    public ActionListener(GameState gs){
+        this.gameState = gs;
     }
 
     public void keyTyped(KeyEvent key) {
