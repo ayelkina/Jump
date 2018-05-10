@@ -39,7 +39,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
 
         if (running) return;
-
         running = true;
     }
 
@@ -51,7 +50,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         init();
 
         while (running) {
-            update();
+            long curTime = System.nanoTime();
+            deltaTime = prevTime - curTime;
+
+            if (curTime - prevTime >= deltaTime) {
+                update();
+                prevTime = curTime;
+            }
+
         }
     }
 
@@ -65,25 +71,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         graph.dispose();
     }
 
-    public void updateDraw(){
+    public void updateDraw() {
         Graphics2D g = (Graphics2D) getGraphics();
         Dimension size = getSize();
-        if(doubleBuffer == null ||
-                doubleBuffer.getWidth(this) != size.width ||
-                doubleBuffer.getHeight(this) != size.height){
+        if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
             doubleBuffer = createImage(size.width, size.height);
         }
 
-        if (doubleBuffer != null){
+        if (doubleBuffer != null) {
             Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
-              draw(g2);
+            draw(g2);
 
-            g.drawImage(doubleBuffer, 0 ,0, null);
+            g.drawImage(doubleBuffer, 0, 0, null);
             g2.dispose();
-        }
-
-        else {
-               draw(g);
+        } else {
+            draw(g);
         }
     }
 
@@ -91,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void keyPressed(KeyEvent key) {
-        if(key.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
+        if (key.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
         gameState.keyPressed(key);
     }
 

@@ -9,9 +9,13 @@ import java.io.IOException;
 
 public class Bounce extends Sprite{
 
+    private boolean playerJumped;
+
     public Bounce(){
         width = 65;
         height = 35;
+
+        playerJumped = false;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Pics/bounce.png"));
@@ -19,6 +23,8 @@ public class Bounce extends Sprite{
             e.printStackTrace();
         }
     }
+
+
 
     public BufferedImage loadImage(){
 
@@ -34,5 +40,13 @@ public class Bounce extends Sprite{
 
     public void draw(Graphics2D graph) {
         graph.drawImage(loadImage(),  (int)x,  (int)y, width, height,null);
+    }
+
+    public boolean getPlayerJumped() {
+        return playerJumped;
+    }
+
+    public void setPlayerJumped(boolean b) {
+        playerJumped = b;
     }
 }

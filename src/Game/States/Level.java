@@ -104,7 +104,13 @@ public class Level extends GameState {
 
     public void setRandomBounce(int i) {
         int k = random(14, 0);
-        bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getBoundsDown() + 5);
+        if(tiles.get(k).gety() < 0 && !tiles.get(k).getWithBounce()) {
+            bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getHeight() + 5);
+            tiles.get(k).setWithBounce(true);
+
+            return;
+        }
+        else setRandomBounce(i);
     }
 
     public void draw(Graphics2D graph) {
@@ -135,6 +141,7 @@ public class Level extends GameState {
 
         if (!player.getFall()) {
             jumpFromTile();
+            jumpFromBounce();
         }
 
         moveTiles();
@@ -146,6 +153,15 @@ public class Level extends GameState {
     public void jumpFromTile() {
         player.setDownY(nearestDownTile());
     }
+//ZMIENIC! sprawdzic bounce w nearestdowntile
+    public void jumpFromBounce() {
+        for(int i = 0; i < bounces.size(); ++i)
+        if (player.intersects(bounces.get(i)) && !bounces.get(i).getPlayerJumped()) {
+            player.setDy(1.2);
+            player.setMaxJump(800);
+            bounces.get(i).setPlayerJumped(true);
+        }
+    }
 
     public void setCount() {
         if (player.getState() == Player.PlayerState.UP) {
@@ -156,7 +172,7 @@ public class Level extends GameState {
 
                 heightCount += player.prevDownY - player.getDownY();
                 maxReachedTile = player.getDownY(); //ZMIENIC
-                System.out.println(maxReachedTile);
+//                System.out.println(maxReachedTile);
             }
 
             player.prevDownY = player.getDownY();
@@ -185,15 +201,19 @@ public class Level extends GameState {
 
                 for (int i = 0; i < tiles.size(); ++i) {
                     tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
-                    if (tiles.get(i).gety() > GamePanel.HEIGHT) setRandomTile(i);
+                    if (tiles.get(i).gety() > GamePanel.HEIGHT) {
+                        setRandomTile(i);
+                        tiles.get(i).setWithBounce(false);
+                    }
                 }
+
                 for (int i = 0; i < bounces.size(); ++i) {
                     bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
                     if(bounces.get(i).gety() > GamePanel.HEIGHT) setRandomBounce(i);
                 }
 
             } else {
-                if (player.getdy() > 0) player.changeDy();
+                if (player.getdy() > 0) player.switchDy();
                 player.setDownY(nearestDownTile());
 
                 offTime = 0;
@@ -203,7 +223,7 @@ public class Level extends GameState {
 
     public double offset() {
         double currentY = player.gety();
-        if (currentY - GamePanel.maxPlayerHeight < 200) return GamePanel.maxPlayerHeight + 200 - currentY;
+        if (currentY - GamePanel.maxPlayerHeight < player.getMaxJump()) return GamePanel.maxPlayerHeight + player.getMaxJump() - currentY;
 
         return 0;
     }
@@ -217,7 +237,11 @@ public class Level extends GameState {
                 tiles.get(i).setPosition(tiles.get(i).getx(),  (tiles.get(i).gety() + player.getdy()));
             }
 
-            if (player.gety() > GamePanel.HEIGHT - 200) gameState.loadState(State.GAMEOVER);
+            for (int i = 0; i < bounces.size(); ++i) {
+                bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
+            }
+
+            if (player.gety() > GamePanel.HEIGHT - 100) gameState.loadState(State.GAMEOVER);
         }
     }
 

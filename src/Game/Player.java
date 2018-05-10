@@ -19,6 +19,8 @@ public class Player extends Sprite {
     private double halfWidth;
 
     public double prevDownY;
+    private double maxJump;
+
 
     public int count;
 
@@ -31,6 +33,7 @@ public class Player extends Sprite {
         halfWidth = width /2;
 
         prevDownY = 820;
+        maxJump = 200;
 
         count = 0;
 
@@ -80,7 +83,11 @@ public class Player extends Sprite {
         up = down = false;
     }
 
-    public void changeDy(){
+    public void setDy(double m){
+        dy = m;
+    }
+
+    public void switchDy(){
         dy *= -1;
     }
 
@@ -90,6 +97,14 @@ public class Player extends Sprite {
     }
     public boolean getUp(){return up;}
     public boolean getDown(){return down;}
+
+    public double getMaxJump() {
+        return maxJump;
+    }
+
+    public void setMaxJump(double maxJump) {
+        this.maxJump = maxJump;
+    }
 
     public PlayerState getState(){
         PlayerState state;
@@ -108,7 +123,7 @@ public class Player extends Sprite {
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
-        if((getBoundsDown() - downY > 0 && down) || (downY-getBoundsDown() > 200 && up)) {
+        if((getBoundsDown() - downY > 0 && down) || (downY-getBoundsDown() > maxJump && up)) {
             dy *= -1;
         }
 
