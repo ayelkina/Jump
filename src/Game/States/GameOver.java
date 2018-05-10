@@ -1,11 +1,7 @@
 package Game.States;
 
-import Game.Background;
-import Game.GamePanel;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 public class GameOver extends Menu{
 

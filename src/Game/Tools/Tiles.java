@@ -1,4 +1,6 @@
-package Game;
+package Game.Tools;
+
+import Game.Sprites.Sprite;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package Game.States;
 
-import Game.Player;
-import Game.Background;
-import Game.Tiles;
+import Game.Sprites.Player;
+import Game.Tools.Background;
+import Game.Tools.Tiles;
 import Game.GamePanel;
 import Game.Tools.Bounce;
 
@@ -13,7 +13,6 @@ import java.util.Random;
 import java.util.Vector;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.max;
 
 public class Level extends GameState {
 
@@ -33,6 +32,7 @@ public class Level extends GameState {
 
     private double nearestTile;
     private double maxReachedTile;
+    public final int maxPlayerHeight = 400;
 
     public Level(GameState gameState) {
 
@@ -153,6 +153,7 @@ public class Level extends GameState {
     public void jumpFromTile() {
         player.setDownY(nearestDownTile());
     }
+
 //ZMIENIC! sprawdzic bounce w nearestdowntile
     public void jumpFromBounce() {
         for(int i = 0; i < bounces.size(); ++i)
@@ -193,11 +194,11 @@ public class Level extends GameState {
         if (player.getBoundsDown() - player.getDownY() > 0) offset = offset();
         if (offset == 0) return;
 
-        if (player.gety() <= GamePanel.maxPlayerHeight) {
+        if (player.gety() <= maxPlayerHeight) {
             ++offTime;
 
             if (offTime < offset / player.getdy()) {
-                player.setPosition(player.getx(), GamePanel.maxPlayerHeight);
+                player.setPosition(player.getx(), maxPlayerHeight);
 
                 for (int i = 0; i < tiles.size(); ++i) {
                     tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
@@ -223,7 +224,7 @@ public class Level extends GameState {
 
     public double offset() {
         double currentY = player.gety();
-        if (currentY - GamePanel.maxPlayerHeight < player.getMaxJump()) return GamePanel.maxPlayerHeight + player.getMaxJump() - currentY;
+        if (currentY - maxPlayerHeight < player.getMaxJump()) return maxPlayerHeight + player.getMaxJump() - currentY;
 
         return 0;
     }

@@ -1,4 +1,7 @@
-package Game;
+package Game.Tools;
+
+import Game.Game;
+import Game.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

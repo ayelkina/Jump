@@ -10,11 +10,12 @@ public class Game extends Canvas{
     public static void main(String[] args) {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
+        GamePanel gamePanel = new GamePanel();
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
         JFrame frame = new JFrame("Jump!");
-        frame.setContentPane(new GamePanel());
+        frame.setContentPane(gamePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setLayout(new BorderLayout());
@@ -23,6 +24,8 @@ public class Game extends Canvas{
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
+
+        Engine engine = new Engine(gamePanel);
     }
 }
 

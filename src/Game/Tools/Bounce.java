@@ -1,6 +1,6 @@
 package Game.Tools;
 
-import Game.Sprite;
+import Game.Sprites.Sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

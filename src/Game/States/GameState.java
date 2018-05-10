@@ -37,13 +37,14 @@ public class GameState implements KeyListener {
         } catch (Exception e) {
         }
     }
-
     public void draw(Graphics2D g) {
         try {
             currentState.draw(g);
         } catch (Exception e) {
         }
+
     }
+
 
     public void keyTyped(KeyEvent key) {
     }

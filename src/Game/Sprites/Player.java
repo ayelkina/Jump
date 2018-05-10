@@ -1,4 +1,6 @@
-package Game;
+package Game.Sprites;
+
+import Game.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -37,12 +39,12 @@ public class Player extends Sprite {
 
         count = 0;
 
-        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
+        setPosition(Game.GamePanel.WIDTH/2 - width /2, Game.GamePanel.HEIGHT - height);
 
         downY = 800;
 
         dy = 0.7;
-        dx = dy;
+        dx = 0.7;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Pics/peng.png"));
@@ -133,13 +135,13 @@ public class Player extends Sprite {
 
     public void changeLocationIfOut(){
 
-        if (x + halfWidth > GamePanel.WIDTH){
+        if (x + halfWidth > Game.GamePanel.WIDTH){
             x = (-halfWidth);
             setPosition((int)x, (int)y);
         }
 
         if (x + halfWidth < 0){
-            x += GamePanel.WIDTH;
+            x += Game.GamePanel.WIDTH;
             setPosition((int)x, (int)y);
         }
     }
@@ -154,7 +156,7 @@ public class Player extends Sprite {
     }
 
     public void checkFallDown(){
-        if (getBoundsDown() >= GamePanel.HEIGHT+10){
+        if (getBoundsDown() >= Game.GamePanel.HEIGHT+10){
             y = 0;
             setFall();
         }

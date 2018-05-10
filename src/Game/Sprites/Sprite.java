@@ -1,8 +1,7 @@
-package Game;
+package Game.Sprites;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Vector;
 
 import static java.lang.Math.abs;
 
