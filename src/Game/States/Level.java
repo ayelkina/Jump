@@ -31,12 +31,14 @@ public class Level extends GameState {
     private int heightCount;
     private int plusCount;
 
-    private double bounceDy = 1.2;
-    private double bounceJumpHeight = 800;
+    private boolean longJump;
+
+    private double bouncedDy = 8;
+    private double bouncedJumpHeight = 800;
 
     private double nearestTileY;
     private double maxReachedTile;
-    private final int playerHeightLimit = 400;
+    private int playerHeightLimit;
 
     public Level(GameState gameState) {
 
@@ -56,8 +58,10 @@ public class Level extends GameState {
         nearestTileY = 820;
         maxReachedTile = 820;
         playerSuspendedTime = 0;
+        playerHeightLimit = 400;
 
         timeLongJump = 0;
+        longJump = false;
 
     }
 
@@ -85,7 +89,7 @@ public class Level extends GameState {
     }
 
     private void setTilesPositions() {
-        tiles.get(0).setPosition(random(300, 100), 700);
+        tiles.get(0).setPosition(random(100, 200), 700);
         for (int i = 1; i < tiles.size(); ++i) {
             setRandomTile(i);
         }
@@ -118,7 +122,7 @@ public class Level extends GameState {
         int k = random.nextInt(14);
 
         if(tiles.get(k).gety() < 0 && !tiles.get(k).getWithBounce()) {
-            bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getHeight() + 5);
+            bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getHeight());
             tiles.get(k).setWithBounce(true);
         }
         else setRandomBounce(i);
@@ -152,8 +156,8 @@ public class Level extends GameState {
 
         if (!player.getFall()) {
             jumpFromTile();
-//            jumpFromBounce();
-//            stopLongJump();
+            jumpFromBounce();
+            stopLongJump();
         }
 
         moveMap();
@@ -168,24 +172,37 @@ public class Level extends GameState {
 
     private void jumpFromBounce() {
         for(int i = 0; i < bounces.size(); ++i)
-        if (player.intersects(bounces.get(i)) && !bounces.get(i).getPlayerJumped()) {
-
-            player.setDy(bounceDy);
-            player.setMaxJump(bounceJumpHeight);
+        if (player.getDown() && player.intersects(bounces.get(i)) && !bounces.get(i).getPlayerJumped()) {
             bounces.get(i).setPlayerJumped(true);
-            player.jumpedFromBounce = true;
+            longJump = true;
         }
+        if (longJump && player.getUp()){
+                player.setDy(player.getdy()*2);
+                player.setMaxJump(bouncedJumpHeight);
+
+                player.jumpedFromBounce = true;
+                longJump = false;
+            }
+//        }
     }
 
     private void stopLongJump(){
-       if(player.jumpedFromBounce) ++timeLongJump;
+       if(player.jumpedFromBounce && player.getDown()) {
 
-        if(timeLongJump >= bounceJumpHeight / bounceDy) {
-            player.setDy(0.7);
-            player.setMaxJump(200);
-            player.jumpedFromBounce = false;
-            timeLongJump = 0;
-        }
+           player.setDy(player.getdy() / 2);
+           player.setMaxJump(200);
+           player.jumpedFromBounce = false;
+           /*++timeLongJump;
+//        if(timeLongJump!= 0)System.out.println( player.getdy());
+
+           if (timeLongJump >= abs(bouncedJumpHeight / player.getdy())) {
+               System.out.println("down");
+               player.setDy(player.getdy() / 2);
+               player.setMaxJump(200);
+               player.jumpedFromBounce = false;
+               timeLongJump = 0;
+           }*/
+       }
     }
 
     private void setCount() {
@@ -208,7 +225,7 @@ public class Level extends GameState {
         nearestTileY = GamePanel.HEIGHT + 20;
 
         for (int i = tiles.size() - 1; i >= 0; --i)
-            if (abs(player.distanceFromY(tiles.get(i))) < abs(player.getdy()) && player.intersectsX(tiles.get(i))) {
+            if (abs(player.distanceFromY(tiles.get(i))) <= abs(player.getdy()) && player.intersectsX(tiles.get(i))) {
                 return tiles.get(i).gety();
             }
         return nearestTileY;
@@ -234,7 +251,9 @@ public class Level extends GameState {
         }
     }
     
-    private boolean playerIntersectsTile(){ return player.getBoundsDown() > player.getDownY(); }
+    private boolean playerIntersectsTile(){
+        return player.getBoundsDown() > player.getDownY();
+    }
 
     private double predicMaxHeightMinusLimitHeight() {
         double currentY = player.gety();
@@ -268,8 +287,6 @@ public class Level extends GameState {
         player.setDownY(nearestDownTileY());
     }
 
-
-
     private void checkGameOver() {
 
         if (player.getFall()) {
@@ -285,10 +302,6 @@ public class Level extends GameState {
 
             if (player.getBoundsDown() > GamePanel.HEIGHT ) gameState.loadState(State.GAMEOVER);
         }
-    }
-
-
-    public void keyTyped(KeyEvent key) {
     }
 
     public void keyPressed(KeyEvent key) {

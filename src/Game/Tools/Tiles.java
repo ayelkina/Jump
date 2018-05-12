@@ -13,7 +13,7 @@ public class Tiles extends Sprite {
 
     private void setVariables(){
         width = 100;
-        height = 30;
+        height = 25;
 
         withBounce = false;
     }

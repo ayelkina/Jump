@@ -10,11 +10,10 @@ public class Engine implements Runnable {
     private boolean running;
 
     private long prevTime;
-    private long deltaTime = 20000000;
+    private long deltaTime;// = 30;
+    private long sleepTime;
 
-    private final static int    MAX_FPS = 50;
-    private final static int    MAX_FRAME_SKIPS = 5;
-    private final static int    FRAME_PERIOD = 1000 / MAX_FPS;
+    private long targetTime = 1000000000 / 60;
 
     private GameState gameState;
     private GamePanel gamePanel;
@@ -25,11 +24,12 @@ public class Engine implements Runnable {
     public Engine(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
-        prevTime = System.nanoTime();
+//        prevTime = System.nanoTime();
+        deltaTime = System.nanoTime();
         createThread();
     }
 
-    public void createThread() {
+    private void createThread() {
         if (running) return;
         running = true;
 
@@ -39,47 +39,37 @@ public class Engine implements Runnable {
         }
     }
 
+    @Override
     public void run() {
         init();
 
-        long beginTime;     // the time when the cycle begun
-        long timeDiff;      // the time it took for the cycle to execute
-        int sleepTime;      // ms to sleep (<0 if we're behind)
-        int framesSkipped;
+        long curTime;
+        /*while (running) {
 
-        while (running) {
-            long curTime = System.nanoTime();
-//            update();
-
-            beginTime = System.currentTimeMillis();
-            framesSkipped = 0;
-
+            prevTime = System.nanoTime();
             update();
-            timeDiff = System.currentTimeMillis() - beginTime;
-            sleepTime = (int)(FRAME_PERIOD - timeDiff);
-            if (sleepTime > 0) {
+            curTime = System.nanoTime();
+            deltaTime = curTime - prevTime;
+            while (deltaTime < targetTime) {
+                sleepTime = (targetTime - deltaTime) / 1000000;
                 try {
+                   if(sleepTime!=0) System.out.println(sleepTime);
                     Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {}
-            }
-
-            while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
-                update();
-                sleepTime += FRAME_PERIOD;
-                framesSkipped++;
-            }
-
-
-
-           /* if (curTime - prevTime >= deltaTime) {
-//                System.out.println(curTime - prevTime);
-                try {
-                    Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                prevTime = curTime;
+                deltaTime = System.nanoTime() - prevTime;
+            }
             }*/
+
+
+        while (running) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            update();
         }
     }
 

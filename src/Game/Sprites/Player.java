@@ -40,8 +40,8 @@ public class Player extends Sprite {
         jumpedFromBounce = false;
         downY = 800;
 
-        dy = 0.7;
-        dx = 0.7;
+        dy = 1.2;
+        dx = dy;
     }
 
     private BufferedImage loadImage(PlayerState state){
@@ -83,7 +83,7 @@ public class Player extends Sprite {
     }
 
     public void setDownY(double newDownY){
-        if(down)             //NIE PODOBA MI SIE
+        if(down)
              downY = newDownY;
     }
     public boolean getUp(){return up;}

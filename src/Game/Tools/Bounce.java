@@ -19,6 +19,7 @@ public class Bounce extends Sprite{
         loadSprite("/Pics/bounce.png");
     }
 
+
     public BufferedImage loadImage(){
         int row = 1;
         int col = 1;

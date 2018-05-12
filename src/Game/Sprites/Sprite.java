@@ -70,7 +70,7 @@ public abstract class Sprite {
     }
 
     public boolean intersectsY (Sprite s2){
-        if (getBoundsDown() - s2.y < 10) return true;
+        if (getBoundsDown() < s2.y) return true;
         return false;
     }
 

@@ -1,5 +1,7 @@
 package Game.States;
 
+import Game.GameManagement.Game;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -7,6 +9,9 @@ public class GameState {
 
     public enum State {MENU, LEVEL, GAMEOVER}
     private GameState currentState;
+    private StartMenu startMenu;
+    private Level level;
+    private GameOver gameOver;
 
     public GameState() {}
 
@@ -17,15 +22,18 @@ public class GameState {
     public void loadState(State state) {
 
         if (state == State.MENU) {
-            currentState = new StartMenu(this);
+            startMenu = new StartMenu(this);
+            currentState = startMenu;
         }
 
         if (state == State.LEVEL) {
-            currentState = new Level(this);
+            level = new Level(this);
+            currentState = level;
         }
 
         if (state == State.GAMEOVER) {
-            currentState = new GameOver(this);
+            gameOver = new GameOver(this);
+            currentState = gameOver;
         }
     }
 
