@@ -10,7 +10,11 @@ public class Engine implements Runnable {
     private boolean running;
 
     private long prevTime;
-    private long deltaTime = 2000000;
+    private long deltaTime = 20000000;
+
+    private final static int    MAX_FPS = 50;
+    private final static int    MAX_FRAME_SKIPS = 5;
+    private final static int    FRAME_PERIOD = 1000 / MAX_FPS;
 
     private GameState gameState;
     private GamePanel gamePanel;
@@ -38,14 +42,44 @@ public class Engine implements Runnable {
     public void run() {
         init();
 
+        long beginTime;     // the time when the cycle begun
+        long timeDiff;      // the time it took for the cycle to execute
+        int sleepTime;      // ms to sleep (<0 if we're behind)
+        int framesSkipped;
+
         while (running) {
             long curTime = System.nanoTime();
-            deltaTime = prevTime - curTime;
+//            update();
 
-            if (curTime - prevTime >= deltaTime) {
-                update();
-                prevTime = curTime;
+            beginTime = System.currentTimeMillis();
+            framesSkipped = 0;
+
+            update();
+            timeDiff = System.currentTimeMillis() - beginTime;
+            sleepTime = (int)(FRAME_PERIOD - timeDiff);
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {}
             }
+
+            while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
+                update();
+                sleepTime += FRAME_PERIOD;
+                framesSkipped++;
+            }
+
+
+
+           /* if (curTime - prevTime >= deltaTime) {
+//                System.out.println(curTime - prevTime);
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                prevTime = curTime;
+            }*/
         }
     }
 
