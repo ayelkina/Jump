@@ -83,7 +83,6 @@ public class Player extends Sprite {
     }
 
     public void setDownY(double newDownY){
-        if(down)
              downY = newDownY;
     }
     public boolean getUp(){return up;}
