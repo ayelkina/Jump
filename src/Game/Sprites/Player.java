@@ -21,7 +21,7 @@ public class Player extends Sprite {
     public double prevDownY;
     private double maxJump;
 
-    public enum PlayerState {STAY, UP, DOWN, FALL};
+    private enum PlayerState {UP, DOWN, FALL};
 
     public Player() {
         loadSprite("/Pics/peng.png");
@@ -34,11 +34,11 @@ public class Player extends Sprite {
         height = 63;
         halfWidth = width /2;
 
-        prevDownY = 820;
-        maxJump = 200;
+        prevDownY = GamePanel.HEIGHT +50;
+        maxJump = GamePanel.HEIGHT/4;
 
         jumpedFromBounce = false;
-        downY = 800;
+        downY = GamePanel.HEIGHT;
 
         dy = 1.2;
         dx = dy;
@@ -46,10 +46,10 @@ public class Player extends Sprite {
 
     private BufferedImage loadImage(PlayerState state){
 
-        int row = 1;
-        int col = state.ordinal() + 1;
+        int row = 0;
+        int col = state.ordinal();
 
-        return image.getSubimage(col*(width) - width, row*(height) - height, width, height);
+        return image.getSubimage(col*width, row*height, width, height);
     }
 
     public void draw(Graphics2D graph) {
@@ -100,8 +100,7 @@ public class Player extends Sprite {
     public PlayerState getState(){
         PlayerState state;
 
-        state = PlayerState.valueOf("STAY");
-        if(up) { state = PlayerState.valueOf("UP"); }
+        state = PlayerState.valueOf("UP");
         if(down) { state = PlayerState.valueOf("DOWN"); }
         if(fall) { state = PlayerState.valueOf("FALL"); }
 

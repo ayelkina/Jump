@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 public class GameOver extends Menu{
 
     private String gameOver;
+    private String score;
     private String nextTry;
 
     public GameOver(GameState gameState){
@@ -13,6 +14,7 @@ public class GameOver extends Menu{
         this.gameState = gameState;
 
         gameOver = "Game Over";
+        score = "Score: " + Level.getCount();
         nextTry = "Try again?";
         choice = new String [] {"YES", "NO"};
 
@@ -21,8 +23,9 @@ public class GameOver extends Menu{
     public void draw(Graphics2D graph) {
         background.draw(graph);
         drawText(graph, gameOver, 100f, 250);
-        drawText(graph, nextTry, 60f, 350);
-        drawOptionsHorizontal(graph, 40,200, 450);
+        drawText(graph, score, 60, 350);
+        drawText(graph, nextTry, 60f, 450);
+        drawOptionsHorizontal(graph, 40,200, 500);
 
         graph.dispose();
     }
