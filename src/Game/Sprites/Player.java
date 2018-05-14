@@ -25,9 +25,6 @@ public class Player extends Sprite {
     public enum State {UP, DOWN, FALL};
 
     public Player() {
-
-//        loadSprite("/Pics/peng.png");
-
         setVariables();
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
     }
@@ -43,20 +40,8 @@ public class Player extends Sprite {
         jumpedFromBounce = false;
         downY = GamePanel.HEIGHT;
 
-        dy = 1.2;
+        dy = 6;
         dx = dy;
-    }
-
-    private BufferedImage loadImage(State state){
-
-        int row = 0;
-        int col = state.ordinal();
-
-        return image.getSubimage(col*width, row*height, width, height);
-    }
-
-    public void draw(Graphics2D graph) {
-        graph.drawImage(loadImage(getState()),  (int)x, (int) y, width, height,null);
     }
 
     public double getDownY(){return downY;}

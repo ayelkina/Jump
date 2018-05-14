@@ -65,10 +65,6 @@ public class Level extends GameState {
     }
 
     private void loadEntity() {
-
-//        loadFont();
-//        background = new Background("/Pics/sky1.png");
-
         player = new Player();
         tiles = new Vector<Tiles>();
         for (int i = 0; i <= 15; ++i)
@@ -87,13 +83,28 @@ public class Level extends GameState {
         return player.gety();
     }
 
-    private void loadFont() {
-        try {
-            File fontFile = new File("Res/Fonts/orange.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static double getBounceX(int i) {
+        return bounces.get(i).getx();
+    }
+
+    public static double getBounceY(int i) {
+        return bounces.get(i).gety();
+    }
+
+    public static double getTilesX(int i) {
+        return tiles.get(i).getx();
+    }
+
+    public static double getTilesY(int i) {
+        return tiles.get(i).gety();
+    }
+
+    public static Vector<Tiles> getTiles(){
+        return tiles;
+    }
+
+    public static Vector<Bounce> getBounces(){
+        return bounces;
     }
 
     private void setTilesPositions() {
@@ -134,29 +145,6 @@ public class Level extends GameState {
             bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getHeight());
             tiles.get(k).setWithBounce(true);
         } else setRandomBounce(i);
-    }
-
-    public void draw(Graphics2D graph) {
-        background.draw(graph);
-
-        for (int i = 0; i < tiles.size(); ++i)
-            tiles.get(i).draw(graph);
-
-        for (int i = 0; i < bounces.size(); ++i)
-            bounces.get(i).draw(graph);
-
-        player.draw(graph);
-        drawCount(graph);
-        graph.dispose();
-    }
-
-    private void drawCount(Graphics2D graph) {
-
-        graph.setColor(Color.BLACK);
-        font = font.deriveFont(40f);
-        graph.setFont(font);
-
-        graph.drawString(Integer.toString(heightCount), 10, 40);
     }
 
     public void update(long time) {

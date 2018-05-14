@@ -22,15 +22,7 @@ public abstract class ViewSprite extends View {
         }
     }
 
-        public void drawSprite(Graphics graph){
+    public void drawSprite(Graphics graph){
         graph.drawImage(image, (int)x, (int)y, width, height, null);
-    }
-
-    public  int getSpriteWidth() { return width; }
-    public  int getSpriteHeight() { return height; }
-
-    public void setSpritePosition(double x, double y) {
-        this.x = x;
-        this.y = y;
     }
 }

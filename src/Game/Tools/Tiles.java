@@ -8,7 +8,6 @@ public class Tiles extends Sprite {
 
     public Tiles(){
         setVariables();
-        loadSprite("/Pics/tile.png");
     }
 
     private void setVariables(){

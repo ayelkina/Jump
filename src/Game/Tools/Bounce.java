@@ -11,30 +11,18 @@ public class Bounce extends Sprite{
     private static final int downHeight = 25;
     private static final int upHeight = 65;
 
-    private boolean stay;
-    private boolean down;
-    private boolean up;
+    private static boolean stay;
+    private static boolean down;
+    private static boolean up;
 
     public Bounce(){
         down = false;
 
         width = 70;
         height = downHeight;
-        loadSprite("/Pics/bounce.png");
     }
 
-    public BufferedImage loadImage(State state){
-        int row = 0;
-        int col = state.ordinal();
-
-        return image.getSubimage(col*width, row*height, width, height);
-    }
-
-    public void draw(Graphics2D graph) {
-        graph.drawImage(loadImage(getState()),  (int)x,  (int)y, width, height,null);
-    }
-
-    public State getState(){
+    public static State getState(){
         State state;
 
         state = State.valueOf("DOWN");
@@ -47,6 +35,12 @@ public class Bounce extends Sprite{
     public boolean getDown() {
         return down;
     }
+    public boolean getUp() {
+        return up;
+    }
+    public boolean getStay() {
+        return stay;
+    }
 
     public void setDown(boolean b) {
         down = b;
@@ -55,7 +49,7 @@ public class Bounce extends Sprite{
 
     public void setStay(boolean b) {
         stay = b;
-        height = downHeight;
+//        height = downHeight;
         y += height - downHeight;
         up = down = !b;
     }

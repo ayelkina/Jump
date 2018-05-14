@@ -21,12 +21,13 @@ public class ViewPlayer extends ViewSprite {
         width = 70;
         height = 63;
 
-        setSpritePosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
+        x = Level.getPlayerX();
+        y = Level.getPlayerY();
     }
 
-    private  BufferedImage loadImage(Player.State state){
-        state = Player.getState();
 
+
+    private  BufferedImage loadImage(Player.State state){
         int row = 0;
         int col = state.ordinal();
 

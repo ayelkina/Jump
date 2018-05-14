@@ -24,14 +24,6 @@ public abstract class Sprite {
 
     public Sprite(){}
 
-    protected void loadSprite(String path){
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setVariables(){}
 
     public double getx() { return x; }
@@ -59,23 +51,16 @@ public abstract class Sprite {
     public void setLeft(boolean b) { left = b; }
     public void setRight(boolean b) { right = b; }
 
-    public void draw(Graphics graph){
-        graph.drawImage(image, (int)x, (int)y, width, height, null);
-    }
-
     public boolean intersectsX (Sprite s2){
-        if (getBoundsRight() - width/3 > s2.getx() &&
-                x + width/3  < s2.getBoundsRight()) return true;
-        return false;
+        return (getBoundsRight() - width/3 > s2.getx() &&
+                x + width/3  < s2.getBoundsRight());
     }
 
     public boolean intersectsY (Sprite s2){
-        if ((getBoundsDown() <= s2.y + 3) && (getBoundsDown() >= s2.y - 3)) return true;
-        return false;
+        return ((getBoundsDown() <= s2.y + 3) && (getBoundsDown() >= s2.y - 3));
     }
 
-    public boolean intersects(Sprite s2){
-        if (intersectsX(s2) && intersectsY(s2)) return true;
-        return false;
+    public boolean intersects(Sprite s2) {
+        return (intersectsX(s2) && intersectsY(s2));
     }
 }
