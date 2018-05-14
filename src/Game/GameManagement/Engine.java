@@ -10,10 +10,13 @@ public class Engine implements Runnable {
     private boolean running;
 
     private long prevTime;
-    private long deltaTime;// = 30;
+    public static long deltaTime;// = 30;
     private long sleepTime;
 
-    private long targetTime = 1000000000 / 60;
+    private int FPS = 60;
+    private long targetTime = 10000000;//1000 / FPS;
+
+    private long time;
 
     private static GameState gameState;
     private GamePanel gamePanel;
@@ -24,8 +27,10 @@ public class Engine implements Runnable {
     public Engine(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
+//        time = 5;
+
 //        prevTime = System.nanoTime();
-        deltaTime = System.nanoTime();
+//        deltaTime = 5000000;
         createThread();
     }
 
@@ -39,28 +44,35 @@ public class Engine implements Runnable {
         }
     }
 
+/*    public static long getDelta(long delta){
+        return
+    }*/
+
     @Override
     public void run() {
         init();
 
-        long curTime;
-        /*while (running) {
-
+       /* long curTime;
+        while (running) {
             prevTime = System.nanoTime();
-            update();
+//            System.out.println(time);
+
+            update(time);
+
             curTime = System.nanoTime();
             deltaTime = curTime - prevTime;
+            time = deltaTime/1000000;
+
             while (deltaTime < targetTime) {
                 sleepTime = (targetTime - deltaTime) / 1000000;
                 try {
-                   if(sleepTime!=0) System.out.println(sleepTime);
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 deltaTime = System.nanoTime() - prevTime;
             }
-            }*/
+        }*/
 
 
         while (running) {
@@ -69,8 +81,33 @@ public class Engine implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            update();
+            time = 5;
+            update(time);
         }
+
+ /*
+        long start;
+        long delta;
+        long wait;
+
+        // game loop
+        while (running) {
+
+            start = System.nanoTime();
+
+            update();
+
+            delta = System.nanoTime() - start;
+
+            wait = targetTime - delta / 1000000;
+            if (wait < 0) wait = 5;
+
+            try {
+                Thread.sleep(wait);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }*/
     }
 
     private void init() {
@@ -79,13 +116,19 @@ public class Engine implements Runnable {
         gamePanel.addKeyListener(actionListener);
     }
 
-    private void update() {
-        gameState.update();
+    private void update(long time) {
+        gameState.update(time);
         gamePanel.update();
     }
 
-   public static GameState getState(){
-       return gameState;
-   }
+    public static GameState getState(){
+        return gameState;
+    }
+
+    public static void draw(Graphics2D graph) {
+        gameState.draw(graph);
+        graph.dispose();
+    }
+
 
 }

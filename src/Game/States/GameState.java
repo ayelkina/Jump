@@ -8,10 +8,10 @@ import java.awt.event.KeyEvent;
 public class GameState {
 
     public enum State {MENU, LEVEL, GAMEOVER}
-    private GameState currentState;
-    private StartMenu startMenu;
-    private Level level;
-    private GameOver gameOver;
+    private  static  GameState currentState;
+    private  static  StartMenu startMenu;
+    private static   Level level;
+    private  static  GameOver gameOver;
 
     public GameState() {}
 
@@ -37,8 +37,20 @@ public class GameState {
         }
     }
 
-    public void update() {
-        currentState.update();
+    public static State getCurrentState() {
+        if(currentState == startMenu)
+            return State.MENU;
+
+        if(currentState == level)
+            return State.LEVEL;
+
+        else
+            return State.GAMEOVER;
+    }
+
+    public void update(long time) {
+        if(currentState == level)
+            level.update(time);
     }
     public void draw(Graphics2D g) {
         currentState.draw(g);

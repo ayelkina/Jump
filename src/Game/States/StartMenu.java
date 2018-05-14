@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 
 public class StartMenu extends Menu {
 
-    private String gameTitle;
+    private static String gameTitle;
 
     public StartMenu(GameState gameState) {
         super();
@@ -24,6 +24,14 @@ public class StartMenu extends Menu {
         if (currentChoice == 1) {
             System.exit(0);
         }
+    }
+
+    public static String getGameTitle(){
+        return gameTitle;
+    }
+
+    public static int getCurrentChoice(){
+        return currentChoice;
     }
 
     public void draw(Graphics2D graph) {
@@ -51,4 +59,3 @@ public class StartMenu extends Menu {
     }
 
 }
-

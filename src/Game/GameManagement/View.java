@@ -18,15 +18,15 @@ import java.io.IOException;
 
 public class View extends JPanel {
 
-    private static Background background;
-    private static Font font;
+    protected static Background background;
+    protected static Font font;
 
     public View() { }
 
     public static void draw(Graphics2D graph) {
         drawGameState(graph);
 //        Engine.getState().draw(graph);
-         graph.dispose();
+        graph.dispose();
     }
 
 
@@ -34,7 +34,7 @@ public class View extends JPanel {
         GameState.State state = GameState.getCurrentState();
 
         if(state == GameState.State.MENU)
-            ViewMenu.drawMenu(graph);
+            drawMenu(graph);
 
         if(state == GameState.State.LEVEL)
             drawLevel(graph);
@@ -43,7 +43,8 @@ public class View extends JPanel {
             drawGameOver(graph);
     }
 
-    /*public static void drawMenu(Graphics2D graph) {
+
+    public static void drawMenu(Graphics2D graph) {
         background = new Background("/Pics/sky1.png");
         loadFont();
 
@@ -122,7 +123,7 @@ public class View extends JPanel {
             }
             graph.drawString(Menu.getChoice()[i], (int)x + i * 130, (int)y );
         }
-    }*/
+    }
 
     public static void drawLevel(Graphics2D graph) {
 

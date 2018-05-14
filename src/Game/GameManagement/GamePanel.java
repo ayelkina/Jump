@@ -34,9 +34,8 @@ public class GamePanel extends JPanel {
             g.drawImage(doubleBuffer, 0, 0, null);
             g2.dispose();
         } else {
-//            if(g!= null)// System.out.println("panel");
-                View.draw(g);
-       }
+            View.draw(g);
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package Game.Sprites;
 
+import Game.GameManagement.Engine;
 import Game.GameManagement.GamePanel;
 
 import java.awt.*;
@@ -83,7 +84,7 @@ public class Player extends Sprite {
     }
 
     public void setDownY(double newDownY){
-             downY = newDownY;
+        downY = newDownY;
     }
     public boolean getUp(){return up;}
     public boolean getDown(){return down;}
@@ -106,8 +107,9 @@ public class Player extends Sprite {
         return state;
     }
 
-    private void jump(double downY){
+    private void jump(double downY, long time){
         y-= dy;
+//        System.out.println(time);
 
         if (right) {x += dx;}
         if (left) {x -= dx; }
@@ -133,12 +135,12 @@ public class Player extends Sprite {
         }
     }
 
-    public void update(){
+    public void update(long time){
         changeLocationIfOut();
         checkFallDown();
 
         if(!fall)
-         jump(downY);
+            jump(downY, time);
     }
 
     private void checkFallDown(){

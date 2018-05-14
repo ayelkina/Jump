@@ -28,4 +28,3 @@ public class Game extends Canvas{
         frame.setVisible(true);
     }
 }
-

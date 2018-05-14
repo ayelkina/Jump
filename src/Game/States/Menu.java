@@ -13,10 +13,10 @@ public class Menu extends GameState {
 
     protected Background background;
     protected Font font;
-    protected int currentChoice;
+    protected static int currentChoice;
 
     protected GameState gameState;
-    protected String[] choice;
+    protected static String[] choice;
 
     public Menu() {
         currentChoice = 0;
@@ -24,6 +24,11 @@ public class Menu extends GameState {
         background = new Background("/Pics/sky1.png");
         loadFont();
     }
+    public static String[] getChoice(){
+        return choice;
+    }
+
+
 
     public void loadFont(){
         try {

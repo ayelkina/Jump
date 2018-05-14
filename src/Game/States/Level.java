@@ -150,8 +150,8 @@ public class Level extends GameState {
         graph.drawString(Integer.toString(heightCount), 10, 40);
     }
 
-    public void update() {
-        player.update();
+    public void update(long time) {
+        player.update(time);
 
         if (!player.getFall()) {
             jumpFromTile();
@@ -166,7 +166,7 @@ public class Level extends GameState {
 
     private void jumpFromTile() {
         if(player.getDown())
-          player.setDownY(nearestDownTileY());
+            player.setDownY(nearestDownTileY());
     }
 
     private void jumpFromBounce() {
@@ -178,13 +178,14 @@ public class Level extends GameState {
             }
 
             if (longJump && player.getUp()) {
+                heightCount+=800;
                 player.setDy(player.getdy() * 2);
                 player.setMaxJump(player.getMaxJump()*4);
                 player.jumpedFromBounce = true;
                 jumpedBounce.setUp(true);
-                diff = 800;
-                count = true;
-                count(diff);
+//                diff = 800;
+//                count = true;
+//                count(diff);
 
                 longJump = false;
             }
@@ -203,10 +204,10 @@ public class Level extends GameState {
 
         if(currNearestTile != null && prevJumpedTile !=null) {
             if (prevJumpedTile.gety() > currNearestTile.gety()) {
-                diff = prevJumpedTile.gety() - currNearestTile.gety();
-                System.out.println(diff);
-                count = true;
-//                heightCount += prevJumpedTile.gety() - currNearestTile.gety();
+//                diff = prevJumpedTile.gety() - currNearestTile.gety();
+//                System.out.println(diff);
+//                count = true;
+                heightCount += prevJumpedTile.gety() - currNearestTile.gety();
             }
         }
         count(diff);
@@ -218,10 +219,10 @@ public class Level extends GameState {
             startCount = true;
         }
         if(startCount )
-        if(player.getDown() && startCount) {
-            count = false;
-            startCount = false;
-        }
+            if(player.getDown() && startCount) {
+                count = false;
+                startCount = false;
+            }
     }
 
     public static int getCount() {
