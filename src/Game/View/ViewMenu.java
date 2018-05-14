@@ -1,15 +1,12 @@
-package Game.GameManagement;
+package Game.View;
 
-import Game.States.GameState;
 import Game.States.Menu;
 import Game.States.StartMenu;
-import Game.Tools.Background;
 import Game.GameManagement.GamePanel;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class ViewMenu extends View {

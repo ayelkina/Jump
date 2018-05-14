@@ -1,4 +1,4 @@
-package Game.GameManagement;
+package Game.View;
 
 import Game.States.Level;
 

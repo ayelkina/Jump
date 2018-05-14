@@ -1,21 +1,10 @@
-package Game.GameManagement;
+package Game.View;
 
-import Game.States.GameState;
 import Game.States.Level;
-import Game.States.Menu;
-import Game.States.StartMenu;
 import Game.Tools.Background;
-import Game.GameManagement.GamePanel;
-import Game.Sprites.Player;
-import Game.Tools.Tiles;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Vector;
 
 public class ViewLevel extends View {

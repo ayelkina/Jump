@@ -1,4 +1,4 @@
-package Game.GameManagement;
+package Game.View;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,11 +1,6 @@
-package Game.GameManagement;
+package Game.View;
 
-import Game.States.GameState;
 import Game.States.Level;
-import Game.States.Menu;
-import Game.States.StartMenu;
-import Game.Tools.Background;
-import Game.GameManagement.GamePanel;
 import Game.Sprites.Player;
 
 import java.awt.*;

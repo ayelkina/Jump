@@ -1,7 +1,6 @@
-package Game.GameManagement;
+package Game.View;
 
 import Game.States.Level;
-import Game.Tools.Bounce;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
