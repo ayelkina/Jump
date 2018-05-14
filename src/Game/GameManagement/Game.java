@@ -9,7 +9,9 @@ public class Game extends Canvas{
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
+//        View view = new View();
         GamePanel gamePanel = new GamePanel();
+
         Engine engine = new Engine(gamePanel);
 
         int screenWidth = screenSize.width;
@@ -26,5 +28,4 @@ public class Game extends Canvas{
         frame.setVisible(true);
     }
 }
-
 

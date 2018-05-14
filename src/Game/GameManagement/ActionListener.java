@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ActionListener extends Component implements KeyListener {
+public class ActionListener extends View implements KeyListener {
 
     private GameState gameState;
 

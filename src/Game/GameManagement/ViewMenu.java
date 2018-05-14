@@ -6,44 +6,21 @@ import Game.States.StartMenu;
 import Game.Tools.Background;
 import Game.GameManagement.GamePanel;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-public class View extends JPanel {
+public class ViewMenu extends View {
 
     private static Background background;
     private static Font font;
 
-    public View() { }
 
-    public static void draw(Graphics2D graph) {
-        drawGameState(graph);
-//        Engine.getState().draw(graph);
-         graph.dispose();
-    }
+    public ViewMenu() {}
 
-
-    public static void drawGameState(Graphics2D graph) {
-        GameState.State state = GameState.getCurrentState();
-
-        if(state == GameState.State.MENU)
-            ViewMenu.drawMenu(graph);
-
-        if(state == GameState.State.LEVEL)
-            drawLevel(graph);
-
-        if(state == GameState.State.GAMEOVER)
-            drawGameOver(graph);
-    }
-
-    /*public static void drawMenu(Graphics2D graph) {
+    public static void drawMenu(Graphics2D graph) {
         background = new Background("/Pics/sky1.png");
         loadFont();
 
@@ -122,16 +99,5 @@ public class View extends JPanel {
             }
             graph.drawString(Menu.getChoice()[i], (int)x + i * 130, (int)y );
         }
-    }*/
-
-    public static void drawLevel(Graphics2D graph) {
-
     }
-
-    public static void drawGameOver(Graphics2D graph) {
-
-    }
-
-
-
 }

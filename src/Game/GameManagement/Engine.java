@@ -15,7 +15,7 @@ public class Engine implements Runnable {
 
     private long targetTime = 1000000000 / 60;
 
-    private GameState gameState;
+    private static GameState gameState;
     private GamePanel gamePanel;
     private ActionListener actionListener;
 
@@ -81,30 +81,11 @@ public class Engine implements Runnable {
 
     private void update() {
         gameState.update();
-        updateImage();
+        gamePanel.update();
     }
 
-    public void updateImage() {
-        Graphics2D g = (Graphics2D) gamePanel.getGraphics();
-        Dimension size = gamePanel.getSize();
-        if (doubleBuffer == null || doubleBuffer.getWidth(gamePanel) != size.width || doubleBuffer.getHeight(gamePanel) != size.height) {
-            doubleBuffer = gamePanel.createImage(size.width, size.height);
-        }
-
-        if (doubleBuffer != null) {
-            Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
-            draw(g2);
-
-            g.drawImage(doubleBuffer, 0, 0, null);
-            g2.dispose();
-        } else {
-            draw(g);
-        }
-    }
-
-    private void draw(Graphics2D graph) {
-        gameState.draw(graph);
-        graph.dispose();
-    }
+   public static GameState getState(){
+       return gameState;
+   }
 
 }
