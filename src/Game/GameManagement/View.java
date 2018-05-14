@@ -1,6 +1,7 @@
 package Game.GameManagement;
 
 import Game.States.GameState;
+import Game.States.Level;
 import Game.States.Menu;
 import Game.States.StartMenu;
 import Game.Tools.Background;
@@ -18,46 +19,57 @@ import java.io.IOException;
 
 public class View extends JPanel {
 
-    protected static Background background;
-    protected static Font font;
+    protected  Background background;
+    private ViewMenu viewMenu;
+    private ViewLevel viewLevel;
+    protected  Font font;
 
-    public View() { }
+    public View() {
+        background = new Background("/Pics/sky1.png");
+    }
 
-    public static void draw(Graphics2D graph) {
+    public  void draw(Graphics2D graph) {
         drawGameState(graph);
 //        Engine.getState().draw(graph);
         graph.dispose();
     }
 
 
-    public static void drawGameState(Graphics2D graph) {
-        GameState.State state = GameState.getCurrentState();
+    public  void drawGameState(Graphics2D graph) {
+        if(GameState.getCurState() == GameState.getstartMenu()) {
+          if(viewMenu == null) viewMenu = new ViewMenu();
+                    viewMenu.drawMenu(graph);
+        }
 
-        if(state == GameState.State.MENU)
-            drawMenu(graph);
+        if(GameState.getCurState() == GameState.getlevel()) {
+            if (viewLevel == null) viewLevel = new ViewLevel();
+            viewLevel.drawLevel(graph);
+        }
 
-        if(state == GameState.State.LEVEL)
-            drawLevel(graph);
-
-        if(state == GameState.State.GAMEOVER)
+        if(GameState.getCurState() == GameState.getgameOver())
             drawGameOver(graph);
     }
 
+    public  void drawBackground(Graphics2D graph) {
+        graph.drawImage(background.getImage(), 0,0, GamePanel.WIDTH, GamePanel.HEIGHT,null);
+    }
+
+/*
 
     public static void drawMenu(Graphics2D graph) {
         background = new Background("/Pics/sky1.png");
         loadFont();
 
-        drawBackground(graph);
-        drawText(graph, StartMenu.getGameTitle(), 120f, 300);
-        drawOptionsVertical(graph, 48f, GamePanel.HEIGHT / 2);
+        String gameTitle = "Jump!";
+
+//        drawBackground(graph);
+//        drawText(graph, gameTitle, 120f, 300);
+//        drawOptionsVertical(graph, 48f, 400);
 
         graph.dispose();
     }
 
-    public static void drawBackground(Graphics2D graph) {
-        graph.drawImage(background.getImage(), 0,0, GamePanel.WIDTH, GamePanel.HEIGHT,null);
-    }
+
 
     public static void loadFont(){
         try {
@@ -127,7 +139,7 @@ public class View extends JPanel {
 
     public static void drawLevel(Graphics2D graph) {
 
-    }
+    }*/
 
     public static void drawGameOver(Graphics2D graph) {
 

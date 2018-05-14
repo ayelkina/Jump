@@ -9,8 +9,8 @@ public class Game extends Canvas{
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
-//        View view = new View();
-        GamePanel gamePanel = new GamePanel();
+        View view = new View();
+        GamePanel gamePanel = new GamePanel(view);
 
         Engine engine = new Engine(gamePanel);
 

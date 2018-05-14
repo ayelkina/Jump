@@ -1,4 +1,3 @@
-/*
 package Game.GameManagement;
 
 import Game.States.GameState;
@@ -22,34 +21,34 @@ public class ViewLevel extends View {
     protected BufferedImage playerSprite;
     protected BufferedImage tileSprite;
     protected BufferedImage bounceSprite;
+   private  ViewPlayer viewPlayer;
 
-    public ViewLevel(){}
-
-    public static void drawLevel(Graphics2D graph) {
+    public ViewLevel(){
         background = new Background("/Pics/sky1.png");
-        drawBackground(graph);
+        viewPlayer = new ViewPlayer();
         loadFont();
+    }
+    public  void drawLevel(Graphics2D graph) {
 
-        ViewPlayer viewPlayer = new ViewPlayer();
+        background.draw(graph);
 
-        */
-/*for (int i = 0; i < Level.getTiles().size(); ++i)
+
+
+
+        /*for (int i = 0; i < Level.getTiles().size(); ++i)
             Level.getTiles().get(i).draw(graph);
 
         for (int i = 0; i < bounces.size(); ++i)
-            bounces.get(i).draw(graph);*//*
+            bounces.get(i).draw(graph);*/
 
 
-//        viewPlayer.drawPlayer(graph);
+
+        viewPlayer.drawPlayer(graph);
         drawCount(graph);
         graph.dispose();
     }
 
-
-
-
-
-    private static void loadFont() {
+    private  void loadFont() {
         try {
             File fontFile = new File("Res/Fonts/orange.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -58,7 +57,7 @@ public class ViewLevel extends View {
         }
     }
 
-    private static void drawCount(Graphics2D graph) {
+    private  void drawCount(Graphics2D graph) {
 
         graph.setColor(Color.BLACK);
         font = font.deriveFont(40f);
@@ -67,6 +66,4 @@ public class ViewLevel extends View {
         graph.drawString(Integer.toString(Level.getCount()), 10, 40);
     }
 
-
 }
-*/

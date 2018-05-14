@@ -8,11 +8,11 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Sprite {
 
-    private boolean up;
-    private boolean down;
+    private static boolean up;
+    private static boolean down;
+    private static boolean fall;
     private boolean left;
     private boolean right;
-    private boolean fall;
 
     public boolean jumpedFromBounce;
 
@@ -22,10 +22,12 @@ public class Player extends Sprite {
     public double prevDownY;
     private double maxJump;
 
-    private enum PlayerState {UP, DOWN, FALL};
+    public enum State {UP, DOWN, FALL};
 
     public Player() {
-        loadSprite("/Pics/peng.png");
+
+//        loadSprite("/Pics/peng.png");
+
         setVariables();
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
     }
@@ -45,7 +47,7 @@ public class Player extends Sprite {
         dx = dy;
     }
 
-    private BufferedImage loadImage(PlayerState state){
+    private BufferedImage loadImage(State state){
 
         int row = 0;
         int col = state.ordinal();
@@ -97,12 +99,12 @@ public class Player extends Sprite {
         this.maxJump = maxJump;
     }
 
-    public PlayerState getState(){
-        PlayerState state;
+    public static State getState(){
+        State state;
 
-        state = PlayerState.valueOf("UP");
-        if(down) { state = PlayerState.valueOf("DOWN"); }
-        if(fall) { state = PlayerState.valueOf("FALL"); }
+        state = State.valueOf("UP");
+        if(down) { state = State.valueOf("DOWN"); }
+        if(fall) { state = State.valueOf("FALL"); }
 
         return state;
     }

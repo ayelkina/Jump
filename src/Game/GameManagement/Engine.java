@@ -1,6 +1,7 @@
 package Game.GameManagement;
 
 import Game.States.GameState;
+import Game.States.Level;
 
 import java.awt.*;
 
@@ -77,7 +78,7 @@ public class Engine implements Runnable {
 
         while (running) {
             try {
-                Thread.sleep(1);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -119,6 +120,7 @@ public class Engine implements Runnable {
     private void update(long time) {
         gameState.update(time);
         gamePanel.update();
+
     }
 
     public static GameState getState(){

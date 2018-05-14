@@ -1,4 +1,3 @@
-/*
 package Game.GameManagement;
 
 import Game.States.GameState;
@@ -25,7 +24,7 @@ public class ViewPlayer extends ViewSprite {
         setSpritePosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
     }
 
-    private static BufferedImage loadImage(Player.State state){
+    private  BufferedImage loadImage(Player.State state){
         state = Player.getState();
 
         int row = 0;
@@ -34,10 +33,9 @@ public class ViewPlayer extends ViewSprite {
         return image.getSubimage(col*width, row*height, width, height);
     }
 
-    public static void drawPlayer(Graphics2D graph) {
+    public  void drawPlayer(Graphics2D graph) {
+        x = Level.getPlayerX();
+        y = Level.getPlayerY();
         graph.drawImage(loadImage(Player.getState()),  (int)x, (int) y, width, height,null);
     }
-
-
 }
-*/

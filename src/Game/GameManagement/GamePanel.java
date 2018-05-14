@@ -13,14 +13,17 @@ public class GamePanel extends JPanel {
     private Image doubleBuffer;
     private View view;
 
-    public GamePanel() {
-//        this.view = view;
+    public GamePanel(View view) {
+        this.view = view;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
     }
-
     public void update() {
+        paint();
+    }
+
+    public void paint() {
         Graphics2D g = (Graphics2D) getGraphics();
         Dimension size = getSize();
         if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
@@ -29,17 +32,13 @@ public class GamePanel extends JPanel {
 
         if (doubleBuffer != null) {
             Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
-            View.draw(g2);
+            view.draw(g2);
 
             g.drawImage(doubleBuffer, 0, 0, null);
             g2.dispose();
         } else {
-            View.draw(g);
+            if (g != null) //System.out.println("no null");
+            view.draw(g);
         }
     }
-
-
-
-
-
 }

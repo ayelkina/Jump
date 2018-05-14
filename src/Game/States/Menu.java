@@ -21,8 +21,8 @@ public class Menu extends GameState {
     public Menu() {
         currentChoice = 0;
 
-        background = new Background("/Pics/sky1.png");
-        loadFont();
+//        background = new Background("/Pics/sky1.png");
+//        loadFont();
     }
     public static String[] getChoice(){
         return choice;

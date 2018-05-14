@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Background {
 
-    private static BufferedImage image;
+    private BufferedImage image;
 
     public Background(String path){
         image = new BufferedImage(GamePanel.WIDTH, GamePanel.HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -21,10 +21,11 @@ public class Background {
     }
 
     public void draw(Graphics2D graph) {
+        if(graph == null) System.out.println("null");
         graph.drawImage(image, 0,0, GamePanel.WIDTH, GamePanel.HEIGHT,null);
     }
 
-    public static BufferedImage getImage(){
+    public BufferedImage getImage(){
         return image;
     }
 }

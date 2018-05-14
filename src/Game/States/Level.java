@@ -20,9 +20,9 @@ public class Level extends GameState {
     private Font font;
     private Background background;
 
-    private Player player;
-    private Vector<Tiles> tiles;
-    private Vector<Bounce> bounces;
+    private static Player player;
+    private static Vector<Tiles> tiles;
+    private static Vector<Bounce> bounces;
 
     private double playerSuspendedTime;
     private double offset;
@@ -65,9 +65,10 @@ public class Level extends GameState {
     }
 
     private void loadEntity() {
-        loadFont();
 
-        background = new Background("/Pics/sky1.png");
+//        loadFont();
+//        background = new Background("/Pics/sky1.png");
+
         player = new Player();
         tiles = new Vector<Tiles>();
         for (int i = 0; i <= 15; ++i)
@@ -76,6 +77,14 @@ public class Level extends GameState {
         bounces = new Vector<Bounce>();
         for (int i = 0; i <= 2; ++i)
             bounces.addElement(new Bounce());
+    }
+
+    public static double getPlayerX(){
+        return player.getx();
+    }
+
+    public static double getPlayerY(){
+        return player.gety();
     }
 
     private void loadFont() {

@@ -1,4 +1,3 @@
-/*
 package Game.GameManagement;
 
 import javax.imageio.ImageIO;
@@ -8,12 +7,12 @@ import java.io.IOException;
 
 public abstract class ViewSprite extends View {
 
-    protected static BufferedImage image;
+    protected  BufferedImage image;
 
-    protected static double x;
-    protected static double y;
-    protected static int width;
-    protected static int height;
+    protected  double x;
+    protected  double y;
+    protected  int width;
+    protected  int height;
 
     protected void loadSprite(String path){
         try {
@@ -27,12 +26,11 @@ public abstract class ViewSprite extends View {
         graph.drawImage(image, (int)x, (int)y, width, height, null);
     }
 
-    public static int getSpriteWidth() { return width; }
-    public static int getSpriteHeight() { return height; }
+    public  int getSpriteWidth() { return width; }
+    public  int getSpriteHeight() { return height; }
 
     public void setSpritePosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
 }
-*/

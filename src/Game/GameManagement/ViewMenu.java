@@ -14,28 +14,28 @@ import java.io.File;
 
 public class ViewMenu extends View {
 
-    private static Background background;
-    private static Font font;
+//    private Background background;
+    private Font font;
 
 
-    public ViewMenu() {}
-
-    public static void drawMenu(Graphics2D graph) {
-        background = new Background("/Pics/sky1.png");
+    public ViewMenu() {
+//        background = new Background("/Pics/sky1.png");
         loadFont();
+    }
 
-        drawBackground(graph);
+    public void drawMenu(Graphics2D graph) {
+
+        background.draw(graph);
+
+//        drawBackground(graph);
         drawText(graph, StartMenu.getGameTitle(), 120f, 300);
         drawOptionsVertical(graph, 48f, GamePanel.HEIGHT / 2);
 
         graph.dispose();
     }
 
-    public static void drawBackground(Graphics2D graph) {
-        graph.drawImage(background.getImage(), 0,0, GamePanel.WIDTH, GamePanel.HEIGHT,null);
-    }
 
-    public static void loadFont(){
+    public void loadFont(){
         try {
             File fontFile = new File("Res/Fonts/orange.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -44,7 +44,7 @@ public class ViewMenu extends View {
         }
     }
 
-    public static void drawText(Graphics2D graph, String text, float size, double y){
+    public  void drawText(Graphics2D graph, String text, float size, double y){
         Color color = new Color(187, 128,68);
         graph.setColor(Color.BLACK);
         font = font.deriveFont(size);
@@ -54,7 +54,7 @@ public class ViewMenu extends View {
         graph.drawString(text, x, (int)y);
     }
 
-    public static double middleX(Graphics2D graph, String text) {
+    public  double middleX(Graphics2D graph, String text) {
         FontRenderContext context = graph.getFontRenderContext();
         Rectangle2D bounds = font.getStringBounds(text, context);
 
@@ -62,7 +62,7 @@ public class ViewMenu extends View {
     }
 
 
-    public static void drawOptionsVertical(Graphics2D graph, float size, double y){
+    public  void drawOptionsVertical(Graphics2D graph, float size, double y){
         Color color = new Color(121, 117,116);
         graph.setColor(color);
 

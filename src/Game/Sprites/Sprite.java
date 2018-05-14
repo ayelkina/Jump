@@ -78,10 +78,4 @@ public abstract class Sprite {
         if (intersectsX(s2) && intersectsY(s2)) return true;
         return false;
     }
-
-    public double distanceFromY (Sprite s2){
-        return s2.gety() - getBoundsDown();
-    }
-
-
 }
