@@ -2,6 +2,7 @@ package Game.GameManagement;
 
 import Game.States.GameState;
 import Game.States.Level;
+import Game.View.View;
 
 import java.awt.*;
 
@@ -53,6 +54,7 @@ public class Engine implements Runnable {
     public void run() {
         init();
 
+
        /* long curTime;
         while (running) {
             prevTime = System.nanoTime();
@@ -77,13 +79,16 @@ public class Engine implements Runnable {
 
 
         while (running) {
+            time = 5;
+            update(time);
             try {
-                Thread.sleep(20);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            time = 5;
-            update(time);
+
+
+
         }
 
  /*
@@ -123,14 +128,10 @@ public class Engine implements Runnable {
 
     }
 
-    public static GameState getState(){
-        return gameState;
-    }
-
-    public static void draw(Graphics2D graph) {
+    /*public static void draw(Graphics2D graph) {
         gameState.draw(graph);
         graph.dispose();
-    }
+    }*/
 
 
 }

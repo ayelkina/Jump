@@ -1,4 +1,4 @@
-package Game.Tools;
+package Game.View;
 
 import Game.GameManagement.GamePanel;
 

@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class Bounce extends Sprite{
 
-    public enum State {STAY, DOWN, UP};
     private static final int downHeight = 25;
     private static final int upHeight = 65;
 
@@ -20,16 +19,6 @@ public class Bounce extends Sprite{
 
         width = 70;
         height = downHeight;
-    }
-
-    public static State getState(){
-        State state;
-
-        state = State.valueOf("DOWN");
-        if(up) { state = State.valueOf("UP"); }
-        if(stay) { state = State.valueOf("DOWN"); }
-
-        return state;
     }
 
     public boolean getDown() {
@@ -49,7 +38,7 @@ public class Bounce extends Sprite{
 
     public void setStay(boolean b) {
         stay = b;
-//        height = downHeight;
+        height = downHeight;
         y += height - downHeight;
         up = down = !b;
     }

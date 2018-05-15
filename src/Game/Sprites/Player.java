@@ -22,9 +22,8 @@ public class Player extends Sprite {
     public double prevDownY;
     private double maxJump;
 
-    public enum State {UP, DOWN, FALL};
-
     public Player() {
+        System.out.println("new player");
         setVariables();
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
     }
@@ -34,13 +33,15 @@ public class Player extends Sprite {
         height = 63;
         halfWidth = width /2;
 
+        up = true;
+
         prevDownY = GamePanel.HEIGHT +50;
         maxJump = GamePanel.HEIGHT/4;
 
         jumpedFromBounce = false;
         downY = GamePanel.HEIGHT;
 
-        dy = 6;
+        dy = 1.2;
         dx = dy;
     }
 
@@ -82,16 +83,6 @@ public class Player extends Sprite {
 
     public void setMaxJump(double maxJump) {
         this.maxJump = maxJump;
-    }
-
-    public static State getState(){
-        State state;
-
-        state = State.valueOf("UP");
-        if(down) { state = State.valueOf("DOWN"); }
-        if(fall) { state = State.valueOf("FALL"); }
-
-        return state;
     }
 
     private void jump(double downY, long time){

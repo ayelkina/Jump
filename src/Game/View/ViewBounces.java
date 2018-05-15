@@ -38,8 +38,8 @@ public class ViewBounces extends ViewSprite {
     }
 
     public void draw(Graphics2D graph, int i) {
-        x = Level.getBounceX(i);
-        y = Level.getBounceY(i);
+        x = Level.getBounces().get(i).getx();
+        y = Level.getBounces().get(i).gety();
         graph.drawImage(loadImage(getState(i)),  (int)x,  (int)y, width, height,null);
     }
 }

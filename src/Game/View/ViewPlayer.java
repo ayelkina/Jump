@@ -1,7 +1,6 @@
 package Game.View;
 
 import Game.States.Level;
-import Game.Sprites.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,13 +15,21 @@ public class ViewPlayer extends ViewSprite {
         width = 70;
         height = 63;
 
-        x = Level.getPlayerX();
-        y = Level.getPlayerY();
+        x = Level.getPlayer().getx();
+        y = Level.getPlayer().gety();
     }
 
+    public static State getState(){
+        State state;
 
+        state = State.valueOf("UP");
+        if(Level.getPlayer().getUp()) { state = State.valueOf("DOWN"); }
+        if(Level.getPlayer().getFall()) { state = State.valueOf("FALL"); }
 
-    private  BufferedImage loadImage(Player.State state){
+        return state;
+    }
+
+    private  BufferedImage loadImage(State state){
         int row = 0;
         int col = state.ordinal();
 
@@ -30,8 +37,8 @@ public class ViewPlayer extends ViewSprite {
     }
 
     public  void drawPlayer(Graphics2D graph) {
-        x = Level.getPlayerX();
-        y = Level.getPlayerY();
-        graph.drawImage(loadImage(Player.getState()),  (int)x, (int) y, width, height,null);
+        x = Level.getPlayer().getx();
+        y = Level.getPlayer().gety();
+        graph.drawImage(loadImage(getState()),  (int)x, (int) y, width, height,null);
     }
 }

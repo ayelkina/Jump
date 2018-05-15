@@ -1,7 +1,6 @@
 package Game.View;
 
 import Game.States.Level;
-import Game.Tools.Background;
 
 import java.awt.*;
 import java.io.File;
@@ -42,8 +41,6 @@ public class ViewLevel extends View {
 
         for (int i = 0; i < bouncesVector.size(); ++i)
             bouncesVector.get(i).draw(graph, i);
-
-
 
         viewPlayer.drawPlayer(graph);
         drawCount(graph);

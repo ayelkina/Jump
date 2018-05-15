@@ -3,7 +3,7 @@ package Game.GameManagement;
 import java.awt.*;
 import javax.swing.JPanel;
 
-import Game.GameManagement.View;
+import Game.View.View;
 
 public class GamePanel extends JPanel {
 
@@ -25,20 +25,21 @@ public class GamePanel extends JPanel {
 
     public void paint() {
         Graphics2D g = (Graphics2D) getGraphics();
-        Dimension size = getSize();
-        if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
-            doubleBuffer = createImage(size.width, size.height);
-        }
+            Dimension size = getSize();
+            if(size.height > 0 && size.width>0)
+            if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
+                doubleBuffer = createImage(size.width, size.height);
+            }
 
-        if (doubleBuffer != null) {
-            Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
-            view.draw(g2);
+            if (doubleBuffer != null) {
+                Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
+                view.draw(g2);
 
-            g.drawImage(doubleBuffer, 0, 0, null);
-            g2.dispose();
-        } else {
-            if (g != null) //System.out.println("no null");
-            view.draw(g);
-        }
+                g.drawImage(doubleBuffer, 0, 0, null);
+                g2.dispose();
+            } else {
+                if(g!=null) //System.out.println("no null");
+                view.draw(g);
+            }
     }
 }

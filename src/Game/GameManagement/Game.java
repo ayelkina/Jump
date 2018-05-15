@@ -1,5 +1,7 @@
 package Game.GameManagement;
 
+import Game.View.View;
+
 import javax.swing.*;
 import java.awt.*;
 

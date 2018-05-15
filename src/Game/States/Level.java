@@ -1,14 +1,13 @@
 package Game.States;
 
 import Game.Sprites.Player;
-import Game.Tools.Background;
+import Game.View.Background;
 import Game.Tools.Tiles;
 import Game.GameManagement.GamePanel;
 import Game.Tools.Bounce;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.Random;
 import java.util.Vector;
 
@@ -75,29 +74,7 @@ public class Level extends GameState {
             bounces.addElement(new Bounce());
     }
 
-    public static double getPlayerX(){
-        return player.getx();
-    }
-
-    public static double getPlayerY(){
-        return player.gety();
-    }
-
-    public static double getBounceX(int i) {
-        return bounces.get(i).getx();
-    }
-
-    public static double getBounceY(int i) {
-        return bounces.get(i).gety();
-    }
-
-    public static double getTilesX(int i) {
-        return tiles.get(i).getx();
-    }
-
-    public static double getTilesY(int i) {
-        return tiles.get(i).gety();
-    }
+    public static Player getPlayer() { return player;}
 
     public static Vector<Tiles> getTiles(){
         return tiles;

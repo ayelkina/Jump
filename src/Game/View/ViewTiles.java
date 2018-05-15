@@ -14,8 +14,8 @@ public class ViewTiles extends  ViewSprite {
     }
 
     public void draw(Graphics2D graph, int i) {
-        x = Level.getTilesX(i);
-        y = Level.getTilesY(i);
+        x = Level.getTiles().get(i).getx();
+        y = Level.getTiles().get(i).gety();
         graph.drawImage(image,  (int)x,  (int)y, width, height,null);
     }
 }

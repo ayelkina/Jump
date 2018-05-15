@@ -1,7 +1,6 @@
 package Game.View;
 
-import Game.States.Menu;
-import Game.States.StartMenu;
+import Game.States.Menu;;
 import Game.GameManagement.GamePanel;
 
 import java.awt.*;
@@ -11,28 +10,11 @@ import java.io.File;
 
 public class ViewMenu extends View {
 
-//    private Background background;
     private Font font;
 
+    public ViewMenu() { }
 
-    public ViewMenu() {
-//        background = new Background("/Pics/sky1.png");
-        loadFont();
-    }
-
-    public void drawMenu(Graphics2D graph) {
-
-        background.draw(graph);
-
-//        drawBackground(graph);
-        drawText(graph, StartMenu.getGameTitle(), 120f, 300);
-        drawOptionsVertical(graph, 48f, GamePanel.HEIGHT / 2);
-
-        graph.dispose();
-    }
-
-
-    public void loadFont(){
+    protected void loadFont(){
         try {
             File fontFile = new File("Res/Fonts/orange.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -41,7 +23,7 @@ public class ViewMenu extends View {
         }
     }
 
-    public  void drawText(Graphics2D graph, String text, float size, double y){
+    protected   void drawText(Graphics2D graph, String text, float size, double y){
         Color color = new Color(187, 128,68);
         graph.setColor(Color.BLACK);
         font = font.deriveFont(size);
@@ -51,7 +33,7 @@ public class ViewMenu extends View {
         graph.drawString(text, x, (int)y);
     }
 
-    public  double middleX(Graphics2D graph, String text) {
+    private  double middleX(Graphics2D graph, String text) {
         FontRenderContext context = graph.getFontRenderContext();
         Rectangle2D bounds = font.getStringBounds(text, context);
 
@@ -59,14 +41,14 @@ public class ViewMenu extends View {
     }
 
 
-    public  void drawOptionsVertical(Graphics2D graph, float size, double y){
+    protected   void drawOptionsVertical(Graphics2D graph, float size, double y){
         Color color = new Color(121, 117,116);
         graph.setColor(color);
 
         font = font.deriveFont(size);
         graph.setFont(font);
 
-        int currentChoice = StartMenu.getCurrentChoice();
+        int currentChoice = Menu.getCurrentChoice();
 
         for(int i = 0; i < Menu.getChoice().length; ++i) {
             if (i == currentChoice) {
@@ -81,11 +63,11 @@ public class ViewMenu extends View {
         }
     }
 
-    public void drawOptionsHorizontal(Graphics2D graph, float size, double x, double y){
+    protected void drawOptionsHorizontal(Graphics2D graph, float size, double x, double y){
         font = font.deriveFont(size);
         graph.setFont(font);
 
-        int currentChoice = 0;
+        int currentChoice = Menu.getCurrentChoice();
 
         for(int i = 0; i < Menu.getChoice().length; ++i) {
             if (i == currentChoice) {

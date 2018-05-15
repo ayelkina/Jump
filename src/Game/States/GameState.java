@@ -36,7 +36,6 @@ public class GameState {
     }
 
     public void loadState(State state) {
-
         if (state == State.MENU) {
             startMenu = new StartMenu(this);
             currentState = startMenu;
@@ -67,17 +66,6 @@ public class GameState {
     public void update(long time) {
         if(currentState == level)
             level.update(time);
-    }
-    public void draw(Graphics2D g) {
-        /*if(currentState == startMenu)
-            startMenu.draw(g);
-
-        if(currentState == level)
-            level.draw(g);
-
-        else
-            gameOver.draw(g);*/
-        currentState.draw(g);
     }
 
     public void keyPressed(KeyEvent key) {

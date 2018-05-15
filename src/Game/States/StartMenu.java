@@ -1,19 +1,14 @@
 package Game.States;
 
-import Game.GameManagement.GamePanel;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class StartMenu extends Menu {
 
-    private static String gameTitle;
-
     public StartMenu(GameState gameState) {
         super();
         this.gameState = gameState;
 
-        gameTitle = "Jump!";
         choice = new String[]{"Start", "Quit"};
     }
 
@@ -24,22 +19,6 @@ public class StartMenu extends Menu {
         if (currentChoice == 1) {
             System.exit(0);
         }
-    }
-
-    public static String getGameTitle(){
-        return gameTitle;
-    }
-
-    public static int getCurrentChoice(){
-        return currentChoice;
-    }
-
-    public void draw(Graphics2D graph) {
-        background.draw(graph);
-        drawText(graph, gameTitle, 120f, 300);
-        drawOptionsVertical(graph, 48f, GamePanel.HEIGHT / 2);
-
-        graph.dispose();
     }
 
     public void keyPressed(KeyEvent key) {
