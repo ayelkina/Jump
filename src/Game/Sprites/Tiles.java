@@ -1,6 +1,5 @@
-package Game.Tools;
+package Game.Sprites;
 
-import Game.Sprites.Sprite;
 
 public class Tiles extends Sprite {
 

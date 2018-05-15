@@ -15,7 +15,8 @@ public class GameOver extends Menu{
 
     private void select() {
         if(currentChoice == 0) {
-            gameState.loadState(GameState.State.LEVEL);
+//            gameState.loadState(GameState.State.LEVEL);
+            gameState.loadNewLevel();
         }
         if(currentChoice == 1) {
             System.exit(0);

@@ -1,12 +1,10 @@
 package Game.States;
 
 import Game.Sprites.Player;
-import Game.View.Background;
-import Game.Tools.Tiles;
+import Game.Sprites.Tiles;
 import Game.GameManagement.GamePanel;
-import Game.Tools.Bounce;
+import Game.Sprites.Bounce;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
@@ -16,51 +14,31 @@ public class Level extends GameState {
     private final Random random;
     private GameState gameState;
 
-    private Font font;
-    private Background background;
-
-    private static Player player;
-    private static Vector<Tiles> tiles;
-    private static Vector<Bounce> bounces;
+    private Player player;
+    private Vector<Tiles> tiles;
+    private Vector<Bounce> bounces;
+    private Bounce jumpedBounce;
+    private Tiles currNearestTile;
+    private Tiles prevJumpedTile;
 
     private double playerSuspendedTime;
     private double offset;
-    private static int heightCount;
     private double diff;
-
-    private boolean longJump; //ZROBIC COS Z TYM
-    private Bounce jumpedBounce;
-
     private double nearestTileY;
-    private Tiles currNearestTile;
-    private Tiles prevJumpedTile;
-    private int playerHeightLimit;
 
+    private int playerHeightLimit = 400;
+    private int heightCount;
+
+    private boolean longJump;
     private boolean count;
     private boolean startCount;
 
     public Level(GameState gameState) {
-
         this.gameState = gameState;
         random = new Random();
 
-        loadVariables();
         loadEntity();
-
-        setTilesPositions();
-        setBouncePosition();
-    }
-
-    private void loadVariables() {
-        jumpedBounce = null;
-        heightCount = 0;
-        nearestTileY = 820;
-        currNearestTile = prevJumpedTile = null;
-        playerSuspendedTime = 0;
-        diff = 0;
-        playerHeightLimit = 400;
-
-        longJump = false;
+        loadNew();
     }
 
     private void loadEntity() {
@@ -74,14 +52,17 @@ public class Level extends GameState {
             bounces.addElement(new Bounce());
     }
 
-    public static Player getPlayer() { return player;}
+    public void loadNew() {
+        player.setPlayer();
+        loadVariables();
 
-    public static Vector<Tiles> getTiles(){
-        return tiles;
+        setTilesPositions();
+        setBouncePosition();
     }
 
-    public static Vector<Bounce> getBounces(){
-        return bounces;
+    private void loadVariables() {
+        heightCount = 0;
+        nearestTileY = 820;
     }
 
     private void setTilesPositions() {
@@ -130,7 +111,6 @@ public class Level extends GameState {
         if (!player.getFall()) {
             jumpFromTile();
             jumpFromBounce();
-            stopLongJump();
             setCount();
         }
 
@@ -147,6 +127,7 @@ public class Level extends GameState {
         for (int i = 0; i < bounces.size(); ++i) {
             if (player.getDown() && player.intersects(bounces.get(i))) {
                 jumpedBounce = bounces.get(i);
+
                 jumpedBounce.setDown(true);
                 longJump = true;
             }
@@ -155,39 +136,40 @@ public class Level extends GameState {
                 heightCount+=800;
                 player.setDy(player.getdy() * 2);
                 player.setMaxJump(player.getMaxJump()*4);
-                player.jumpedFromBounce = true;
+                player.setJumpedFromBounce(true);
                 jumpedBounce.setUp(true);
-//                diff = 800;
-//                count = true;
-//                count(diff);
+                diff = 800;
+                count = true;
+                count(diff);
 
                 longJump = false;
             }
         }
+        stopLongJump();
     }
 
     private void stopLongJump() {
-        if (player.jumpedFromBounce && player.getDown()) {
+        if (player.isJumpedFromBounce() && player.getDown()) {
             player.setDy(player.getdy() / 2);
             player.setMaxJump(player.getMaxJump()/4);
-            player.jumpedFromBounce = false;
+            player.setJumpedFromBounce(false);
         }
     }
 
     private void setCount() {
-
         if(currNearestTile != null && prevJumpedTile !=null) {
             if (prevJumpedTile.gety() > currNearestTile.gety()) {
-//                diff = prevJumpedTile.gety() - currNearestTile.gety();
-//                System.out.println(diff);
-//                count = true;
-                heightCount += prevJumpedTile.gety() - currNearestTile.gety();
+                diff = prevJumpedTile.gety() - currNearestTile.gety();
+                System.out.println(diff);
+                count = true;
+//                heightCount += prevJumpedTile.gety() - currNearestTile.gety();
             }
         }
+
         count(diff);
     }
 
-    public void count(double diff){
+    private void count(double diff){
         if(player.getUp() && count) {
             ++heightCount;
             startCount = true;
@@ -197,10 +179,6 @@ public class Level extends GameState {
                 count = false;
                 startCount = false;
             }
-    }
-
-    public static int getCount() {
-        return heightCount;
     }
 
     private double nearestDownTileY() {
@@ -287,6 +265,11 @@ public class Level extends GameState {
             if (player.getBoundsDown() > GamePanel.HEIGHT) gameState.loadState(State.GAMEOVER);
         }
     }
+
+    public  Player getPlayer() { return player;}
+    public  Vector<Tiles> getTiles(){return tiles; }
+    public  Vector<Bounce> getBounces(){ return bounces; }
+    public  int getCount() { return heightCount; }
 
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);

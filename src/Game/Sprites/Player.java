@@ -13,32 +13,24 @@ public class Player extends Sprite {
     private static boolean fall;
     private boolean left;
     private boolean right;
-
-    public boolean jumpedFromBounce;
+    private boolean jumpedFromBounce;
 
     private double downY;
-    private double halfWidth;
-
-    public double prevDownY;
     private double maxJump;
 
     public Player() {
-        System.out.println("new player");
-        setVariables();
-        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
+//        setPlayer();
     }
 
-    private void setVariables(){
+    public void setPlayer(){
+        setUp();
+
         width = 70;
         height = 63;
-        halfWidth = width /2;
 
-        up = true;
+        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
-        prevDownY = GamePanel.HEIGHT +50;
         maxJump = GamePanel.HEIGHT/4;
-
-        jumpedFromBounce = false;
         downY = GamePanel.HEIGHT;
 
         dy = 1.2;
@@ -102,12 +94,12 @@ public class Player extends Sprite {
 
     private void changeLocationIfOut(){
 
-        if (x + halfWidth > GamePanel.WIDTH){
-            x = (-halfWidth);
+        if (x + width/2 > GamePanel.WIDTH){
+            x = (-width/2);
             setPosition((int)x, (int)y);
         }
 
-        if (x + halfWidth < 0){
+        if (x + width/2 < 0){
             x += GamePanel.WIDTH;
             setPosition((int)x, (int)y);
         }
@@ -126,5 +118,13 @@ public class Player extends Sprite {
             y = 0;
             setFall();
         }
+    }
+
+    public boolean isJumpedFromBounce() {
+        return jumpedFromBounce;
+    }
+
+    public void setJumpedFromBounce(boolean jumpedFromBounce) {
+        this.jumpedFromBounce = jumpedFromBounce;
     }
 }

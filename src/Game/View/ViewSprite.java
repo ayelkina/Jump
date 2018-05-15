@@ -21,8 +21,4 @@ public abstract class ViewSprite extends View {
             e.printStackTrace();
         }
     }
-
-    public void drawSprite(Graphics graph){
-        graph.drawImage(image, (int)x, (int)y, width, height, null);
-    }
 }

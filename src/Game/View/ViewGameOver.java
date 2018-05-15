@@ -1,5 +1,6 @@
 package Game.View;
 
+import Game.States.GameState;
 import Game.States.Level;
 
 import java.awt.*;
@@ -10,13 +11,16 @@ public class ViewGameOver extends ViewMenu {
     private String score;
     private String nextTry;
 
-    public ViewGameOver() {
-        gameOver = "Game Over";
-        score = "Score: " + Level.getCount();
-        nextTry = "Try again?";
+    private Level level;
 
+    public ViewGameOver() {
+        level = GameState.getlevel();
         background = new Background("/Pics/sky1.png");
         loadFont();
+
+        gameOver = "Game Over";
+        score = "Score: " + level.getCount();
+        nextTry = "Try again?";
     }
 
     public void drawGameOver(Graphics2D graph) {

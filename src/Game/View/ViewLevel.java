@@ -1,6 +1,7 @@
 package Game.View;
 
 import Game.States.Level;
+import Game.States.GameState;
 
 import java.awt.*;
 import java.io.File;
@@ -13,22 +14,26 @@ public class ViewLevel extends View {
     private Vector<ViewTiles> tilesVector;
     private Vector<ViewBounces> bouncesVector;
 
+    private Level level;
+
     public ViewLevel(){
         background = new Background("/Pics/sky1.png");
         viewPlayer = new ViewPlayer();
 
+        level = GameState.getlevel();
+
         tilesVector = new Vector<>();
-        for (int i = 0; i < Level.getTiles().size(); ++i) {
+        for (int i = 0; i < level.getTiles().size(); ++i) {
             tilesVector.addElement(new ViewTiles());
-            tilesVector.get(i).x = Level.getTiles().get(i).getx();
-            tilesVector.get(i).y = Level.getTiles().get(i).gety();
+            tilesVector.get(i).x = level.getTiles().get(i).getx();
+            tilesVector.get(i).y = level.getTiles().get(i).gety();
         }
 
         bouncesVector = new Vector<>();
-        for (int i = 0; i < Level.getBounces().size(); ++i) {
+        for (int i = 0; i < level.getBounces().size(); ++i) {
             bouncesVector.addElement(new ViewBounces());
-            bouncesVector.get(i).x = Level.getBounces().get(i).getx();
-            bouncesVector.get(i).y = Level.getBounces().get(i).gety();
+            bouncesVector.get(i).x = level.getBounces().get(i).getx();
+            bouncesVector.get(i).y = level.getBounces().get(i).gety();
         }
 
         loadFont();
@@ -61,7 +66,7 @@ public class ViewLevel extends View {
         font = font.deriveFont(40f);
         graph.setFont(font);
 
-        graph.drawString(Integer.toString(Level.getCount()), 10, 40);
+        graph.drawString(Integer.toString(level.getCount()), 10, 40);
     }
 
 

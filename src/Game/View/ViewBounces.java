@@ -1,45 +1,39 @@
 package Game.View;
 
+import Game.States.GameState;
 import Game.States.Level;
+import Game.Sprites.Bounce;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ViewBounces extends ViewSprite {
 
-    public enum State {STAY, DOWN, UP};
+    private Level level;
+
 
     public ViewBounces(){
         width = 70;
         height = 25;
-
+        level = GameState.getlevel();
         loadSprite("/Pics/bounce.png");
     }
 
-    public State getState(int i){
-        State state;
+   private BufferedImage loadImage(Bounce.State state){
+       int row = 0;
+       int col = state.ordinal();
 
-        state = State.valueOf("DOWN");
-        if(Level.getBounces().get(i).getUp()) { state = State.valueOf("UP"); }
-        if(Level.getBounces().get(i).getStay()) { state = State.valueOf("DOWN"); }
+       if(state == Bounce.State.UP)
+           height = 65;
+       else height = 25;
 
-        return state;
-    }
-
-    public BufferedImage loadImage(State state){
-        int row = 0;
-        int col = state.ordinal();
-
-        if (state == State.UP)
-            height = 65;
-        else height = 25;
-
-        return image.getSubimage(col*width, row*height, width, height);
-    }
+       return image.getSubimage(col*width, row*height, width, height);
+   }
 
     public void draw(Graphics2D graph, int i) {
-        x = Level.getBounces().get(i).getx();
-        y = Level.getBounces().get(i).gety();
-        graph.drawImage(loadImage(getState(i)),  (int)x,  (int)y, width, height,null);
+        x = level.getBounces().get(i).getx();
+        y = level.getBounces().get(i).gety();
+        graph.drawImage(loadImage(level.getBounces().get(i).getState()),  (int)x,  (int)y, width, height,null);
     }
+
 }

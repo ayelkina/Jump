@@ -10,7 +10,7 @@ public class GameState {
     public enum State {MENU, LEVEL, GAMEOVER}
     private  static  GameState currentState;
     private  static  StartMenu startMenu;
-    private static   Level level;
+    private  static  Level level;
     private  static  GameOver gameOver;
 
     public GameState() {}
@@ -23,15 +23,15 @@ public class GameState {
         return currentState;
     }
 
-    public static GameState getstartMenu(){
+    public static StartMenu getstartMenu(){
         return startMenu;
     }
 
-    public static GameState getlevel(){
+    public static Level getlevel(){
         return level;
     }
 
-    public static GameState getgameOver(){
+    public static GameOver getgameOver(){
         return gameOver;
     }
 
@@ -50,6 +50,11 @@ public class GameState {
             gameOver = new GameOver(this);
             currentState = gameOver;
         }
+    }
+
+    public void loadNewLevel(){
+        level.loadNew();
+        currentState = level;
     }
 
     public static State getCurrentState() {

@@ -1,5 +1,6 @@
 package Game.View;
 
+import Game.States.GameState;
 import Game.States.Level;
 
 import java.awt.*;
@@ -8,23 +9,26 @@ import java.awt.image.BufferedImage;
 public class ViewPlayer extends ViewSprite {
 
     public enum State {UP, DOWN, FALL};
+    private Level level;
 
     public ViewPlayer(){
         loadSprite("/Pics/peng.png");
 
+        level = GameState.getlevel();
+
         width = 70;
         height = 63;
 
-        x = Level.getPlayer().getx();
-        y = Level.getPlayer().gety();
+        x = level.getPlayer().getx();
+        y = level.getPlayer().gety();
     }
 
-    public static State getState(){
+    private State getState(){
         State state;
 
-        state = State.valueOf("UP");
-        if(Level.getPlayer().getUp()) { state = State.valueOf("DOWN"); }
-        if(Level.getPlayer().getFall()) { state = State.valueOf("FALL"); }
+        state = State.valueOf("DOWN");
+        if(level.getPlayer().getUp()) { state = State.valueOf("UP"); }
+        if(level.getPlayer().getFall()) { state = State.valueOf("FALL"); }
 
         return state;
     }
@@ -37,8 +41,8 @@ public class ViewPlayer extends ViewSprite {
     }
 
     public  void drawPlayer(Graphics2D graph) {
-        x = Level.getPlayer().getx();
-        y = Level.getPlayer().gety();
+        x = level.getPlayer().getx();
+        y = level.getPlayer().gety();
         graph.drawImage(loadImage(getState()),  (int)x, (int) y, width, height,null);
     }
 }

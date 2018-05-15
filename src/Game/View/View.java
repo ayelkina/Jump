@@ -8,20 +8,21 @@ import java.awt.*;
 
 public class View extends JPanel {
 
-    protected  Background background;
+    protected Background background;
+    protected Font font;
+
     private ViewStartMenu viewMenu;
     private ViewLevel viewLevel;
     private ViewGameOver viewGameOver;
-    protected   Font font;
 
     public View() { }
 
-    public  void draw(Graphics2D graph) {
+    public void draw(Graphics2D graph) {
         drawGameState(graph);
         graph.dispose();
     }
 
-    private   void drawGameState(Graphics2D graph) {
+    private void drawGameState(Graphics2D graph) {
         if(GameState.getCurState() == GameState.getstartMenu()) {
           if(viewMenu == null) viewMenu = new ViewStartMenu();
                     viewMenu.drawStartMenu(graph);
