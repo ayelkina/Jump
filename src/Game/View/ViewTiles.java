@@ -7,8 +7,6 @@ import java.awt.*;
 
 public class ViewTiles extends  ViewSprite {
 
-    private Level level;
-
     public ViewTiles() {
         width = 100;
         height = 25;

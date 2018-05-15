@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
-
 public class Level extends GameState {
 
     public static final double GRID = 1.2;
@@ -25,17 +24,14 @@ public class Level extends GameState {
     private Tiles prevJumpedTile;
 
     private double playerSuspendedTime;
-    private double offset;
-    private double diff;
+    private double offset;;
     private double nearestTileY;
-    private int heightFromStart;
 
+    private int heightFromStart;
     private int playerHeightLimit = 400;
     private int heightCount;
 
     private boolean longJump;
-    private boolean count;
-    private boolean startCount;
 
     public Level(GameState gameState) {
         this.gameState = gameState;
@@ -47,6 +43,7 @@ public class Level extends GameState {
 
     private void loadEntity() {
         player = new Player();
+
         tiles = new Vector<Tiles>();
         for (int i = 0; i <= 15; ++i)
             tiles.addElement(new Tiles());
@@ -160,16 +157,19 @@ public class Level extends GameState {
     }
 
     private void setCount() {
-        if (prevJumpedTile == null) {
-            if(player.getDown())
-                heightCount = heightFromStart = 100;
-        }
+        setCountInFirstJump();
 
-        else {
+        if (prevJumpedTile != null) {
             if (prevJumpedTile.gety() - currNearestTile.gety() > -200) {
                 heightFromStart += prevJumpedTile.gety() - currNearestTile.gety();
-                heightCount = maxCount(heightCount, (int) heightFromStart);
+                heightCount = maxCount(heightCount, heightFromStart);
             }
+        }
+    }
+
+    private void setCountInFirstJump() {
+        if (prevJumpedTile == null) {
+            if (player.getDown()) heightCount = heightFromStart = 100;
         }
     }
 

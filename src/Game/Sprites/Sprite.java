@@ -10,9 +10,6 @@ import java.io.IOException;
 import static java.lang.Math.abs;
 
 public abstract class Sprite {
-
-    protected BufferedImage image;
-
     protected double x;
     protected double y;
     protected double dx;

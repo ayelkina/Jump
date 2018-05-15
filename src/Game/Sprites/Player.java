@@ -20,15 +20,12 @@ public class Player extends Sprite {
     private double maxJump;
 
     public Player() {
-//        setPlayer();
+        width = 70;
+        height = 63;
     }
 
     public void setPlayer(){
         setUp();
-
-        width = 70;
-        height = 63;
-
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
         maxJump = GamePanel.HEIGHT/4;

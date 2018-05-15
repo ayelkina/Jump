@@ -9,9 +9,6 @@ import java.awt.image.BufferedImage;
 
 public class ViewBounces extends ViewSprite {
 
-    private Level level;
-
-
     public ViewBounces(){
         width = 70;
         height = 25;

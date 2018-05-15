@@ -1,8 +1,5 @@
 package Game.States;
 
-import Game.GameManagement.Game;
-
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class GameState {
@@ -55,17 +52,6 @@ public class GameState {
     public void loadNewLevel(){
         level.loadNew();
         currentState = level;
-    }
-
-    public static State getCurrentState() {
-        if(currentState == startMenu)
-            return State.MENU;
-
-        if(currentState == level)
-            return State.LEVEL;
-
-        else
-            return State.GAMEOVER;
     }
 
     public void update(long time) {

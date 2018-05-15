@@ -8,11 +8,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
-public class ViewMenu extends View {
+abstract class ViewMenu extends View {
 
     private Font font;
-
-    public ViewMenu() { }
 
     protected void loadFont(){
         try {
@@ -23,7 +21,7 @@ public class ViewMenu extends View {
         }
     }
 
-    protected   void drawText(Graphics2D graph, String text, float size, double y){
+    protected void drawText(Graphics2D graph, String text, float size, double y){
         Color color = new Color(187, 128,68);
         graph.setColor(Color.BLACK);
         font = font.deriveFont(size);
@@ -41,7 +39,7 @@ public class ViewMenu extends View {
     }
 
 
-    protected   void drawOptionsVertical(Graphics2D graph, float size, double y){
+    protected void drawOptionsVertical(Graphics2D graph, float size, double y){
         Color color = new Color(121, 117,116);
         graph.setColor(color);
 

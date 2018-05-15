@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 public class ViewPlayer extends ViewSprite {
 
     public enum State {UP, DOWN, FALL};
-    private Level level;
 
     public ViewPlayer(){
         loadSprite("/Pics/peng.png");
