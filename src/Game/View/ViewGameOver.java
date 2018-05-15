@@ -19,14 +19,14 @@ public class ViewGameOver extends ViewMenu {
         loadFont();
 
         gameOver = "Game Over";
-        score = "Score: " + level.getCount();
+        score = "Score: ";
         nextTry = "Try again?";
     }
 
     public void drawGameOver(Graphics2D graph) {
         background.draw(graph);
         drawText(graph, gameOver, 100f, 250);
-        drawText(graph, score, 60, 350);
+        drawText(graph, score + level.getCount(), 60, 350);
         drawText(graph, nextTry, 60f, 450);
         drawOptionsHorizontal(graph, 40,200, 500);
 

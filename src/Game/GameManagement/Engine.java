@@ -86,9 +86,6 @@ public class Engine implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
-
         }
 
  /*
@@ -127,11 +124,4 @@ public class Engine implements Runnable {
         gamePanel.update();
 
     }
-
-    /*public static void draw(Graphics2D graph) {
-        gameState.draw(graph);
-        graph.dispose();
-    }*/
-
-
 }

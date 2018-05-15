@@ -2,6 +2,7 @@ package Game.Sprites;
 
 import Game.GameManagement.Engine;
 import Game.GameManagement.GamePanel;
+import Game.States.Level;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,7 +34,7 @@ public class Player extends Sprite {
         maxJump = GamePanel.HEIGHT/4;
         downY = GamePanel.HEIGHT;
 
-        dy = 1.2;
+        dy = Level.GRID;
         dx = dy;
     }
 

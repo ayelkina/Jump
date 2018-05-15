@@ -1,5 +1,7 @@
 package Game.Sprites;
 
+import Game.States.Level;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -57,7 +59,7 @@ public abstract class Sprite {
     }
 
     public boolean intersectsY (Sprite s2){
-        return ((getBoundsDown() <= s2.y + 3) && (getBoundsDown() >= s2.y - 3));
+        return ((getBoundsDown() <= s2.y + Level.GRID/2) && (getBoundsDown() >= s2.y - Level.GRID/2));
     }
 
     public boolean intersects(Sprite s2) {
