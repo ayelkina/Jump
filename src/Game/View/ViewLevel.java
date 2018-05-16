@@ -1,26 +1,31 @@
 package Game.View;
 
 import Game.States.Level;
-import Game.States.GameState;
+import Game.GameManagement.StateController;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Vector;
 
-public class ViewLevel extends ViewGame {
+public class ViewLevel {
 
     private ViewPlayer viewPlayer;
+    private Background background;
+    private Font font;
 
     private Vector<ViewTiles> tilesVector;
     private Vector<ViewBounces> bouncesVector;
 
     private Level level;
 
-    public ViewLevel(){
+    public ViewLevel() {
+        level = StateController.getlevel();
+
         background = new Background("/Pics/sky1.png");
         viewPlayer = new ViewPlayer();
 
-        level = GameState.getlevel();
+
 
         tilesVector = new Vector<>();
         for (int i = 0; i < level.getTiles().size(); ++i) {
@@ -66,8 +71,19 @@ public class ViewLevel extends ViewGame {
         font = font.deriveFont(40f);
         graph.setFont(font);
 
-        graph.drawString(Integer.toString(level.getCount()), 10, 40);
+        graph.drawString(Integer.toString(Level.getCount()), 10, 40);
     }
+
+    public void keyPressed(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(true);
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(true);
+    }
+
+    public void keyReleased(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(false);
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(false);
+    }
+
 
 
 }

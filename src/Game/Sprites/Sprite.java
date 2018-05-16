@@ -2,11 +2,6 @@ package Game.Sprites;
 
 import Game.States.Level;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import static java.lang.Math.abs;
 
 public abstract class Sprite {

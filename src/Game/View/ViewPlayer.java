@@ -1,7 +1,6 @@
 package Game.View;
 
-import Game.States.GameState;
-import Game.States.Level;
+import Game.GameManagement.StateController;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,13 +12,10 @@ public class ViewPlayer extends ViewSprite {
     public ViewPlayer(){
         loadSprite("/Pics/peng.png");
 
-        level = GameState.getlevel();
+        level = StateController.getlevel();
 
         width = 70;
         height = 63;
-
-        x = level.getPlayer().getx();
-        y = level.getPlayer().gety();
     }
 
     private State getState(){

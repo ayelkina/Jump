@@ -1,11 +1,7 @@
 package Game.Sprites;
 
-import Game.GameManagement.Engine;
 import Game.GameManagement.GamePanel;
 import Game.States.Level;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Player extends Sprite {
 
@@ -75,7 +71,7 @@ public class Player extends Sprite {
         this.maxJump = maxJump;
     }
 
-    private void jump(double downY, long time){
+    private void jump(double downY){
         y-= dy;
 //        System.out.println(time);
 
@@ -103,12 +99,12 @@ public class Player extends Sprite {
         }
     }
 
-    public void update(long time){
+    public void update(){
         changeLocationIfOut();
         checkFallDown();
 
         if(!fall)
-            jump(downY, time);
+            jump(downY);
     }
 
     private void checkFallDown(){

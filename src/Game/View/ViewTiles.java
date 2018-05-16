@@ -1,7 +1,6 @@
 package Game.View;
 
-import Game.States.GameState;
-import Game.States.Level;
+import Game.GameManagement.StateController;
 
 import java.awt.*;
 
@@ -10,7 +9,7 @@ public class ViewTiles extends  ViewSprite {
     public ViewTiles() {
         width = 100;
         height = 25;
-        level = GameState.getlevel();
+        level = StateController.getlevel();
         loadSprite("/Pics/tile.png");
     }
 

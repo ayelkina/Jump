@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public abstract class ViewSprite extends ViewGame {
+public abstract class ViewSprite {
 
     protected BufferedImage image;
     protected Level level;

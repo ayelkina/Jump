@@ -1,28 +1,22 @@
 package Game.GameManagement;
 
-import Game.States.GameState;
-
-import java.awt.*;
-
 public class Engine implements Runnable {
 
     private Thread thread;
     private boolean running;
 
     private long prevTime;
-    public static long deltaTime;// = 30;
+    private static long deltaTime;// = 30;
     private long sleepTime;
 
     private int FPS = 60;
-    private long targetTime = 10000000;//1000 / FPS;
+    private long targetTime = 1000 / FPS;
+    private long target = 8000000;
 
     private long time;
 
-    private static GameState gameState;
+    private StateController stateController;
     private GamePanel gamePanel;
-    private ActionListener actionListener;
-
-    private Image doubleBuffer;
 
     public Engine(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -52,11 +46,9 @@ public class Engine implements Runnable {
     public void run() {
         init();
 
-
-       /* long curTime;
+        /*long curTime;
         while (running) {
             prevTime = System.nanoTime();
-//            System.out.println(time);
 
             update(time);
 
@@ -64,9 +56,10 @@ public class Engine implements Runnable {
             deltaTime = curTime - prevTime;
             time = deltaTime/1000000;
 
-            while (deltaTime < targetTime) {
-                sleepTime = (targetTime - deltaTime) / 1000000;
+            while (deltaTime < target) {
+                sleepTime = (target - deltaTime) / 1000000;
                 try {
+                    if(sleepTime!= 0) System.out.println(sleepTime);
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -75,6 +68,7 @@ public class Engine implements Runnable {
             }
         }*/
 
+        //Klasa Timer do zrobienia pętli
 
         while (running) {
             time = 5;
@@ -86,22 +80,20 @@ public class Engine implements Runnable {
             }
         }
 
- /*
-        long start;
+        /*long start;
         long delta;
         long wait;
 
-        // game loop
         while (running) {
 
             start = System.nanoTime();
 
-            update();
+            update(time);
 
             delta = System.nanoTime() - start;
 
             wait = targetTime - delta / 1000000;
-            if (wait < 0) wait = 5;
+            if (wait < 0) wait = 3;
 
             try {
                 Thread.sleep(wait);
@@ -112,13 +104,12 @@ public class Engine implements Runnable {
     }
 
     private void init() {
-        gameState = new GameState(GameState.State.MENU);
-        actionListener = new ActionListener(gameState);
-        gamePanel.addKeyListener(actionListener);
+        stateController = new StateController();
+
     }
 
     private void update(long time) {
-        gameState.update(time);
+        stateController.update();
         gamePanel.update();
     }
 }

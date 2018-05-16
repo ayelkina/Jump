@@ -1,11 +1,11 @@
 package Game.States;
 
+import Game.GameManagement.GamePanel;
+import Game.GameManagement.StateController;
 import Game.Sprites.Player;
 import Game.Sprites.Tiles;
-import Game.GameManagement.GamePanel;
 import Game.Sprites.Bounce;
 
-import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
@@ -14,7 +14,7 @@ public class Level extends State {
     public static final double GRID = 1.2;
 
     private final Random random;
-    private GameState gameState;
+    private StateController stateController;
 
     private Player player;
     private Vector<Tiles> tiles;
@@ -29,12 +29,12 @@ public class Level extends State {
 
     private int heightFromStart;
     private int playerHeightLimit = GamePanel.HEIGHT/2;
-    private int heightCount;
+    private static int heightCount;
 
     private boolean longJump;
 
-    public Level(GameState gameState) {
-        this.gameState = gameState;
+    public Level() {
+//        this.stateController = stateController;
         random = new Random();
 
         loadEntity();
@@ -108,8 +108,8 @@ public class Level extends State {
         } else setRandomBounce(i);
     }
 
-    public void update(long time) {
-        player.update(time);
+    public void update() {
+        player.update();
 
         if (!player.getFall()) {
             jumpFromTile();
@@ -260,7 +260,7 @@ public class Level extends State {
                 bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
             }
 
-            if (player.getBoundsDown() > GamePanel.HEIGHT) gameState.loadState(GameState.GAMEOVER);
+            if (player.getBoundsDown() > GamePanel.HEIGHT) StateController.loadState(StateController.GAMEOVER);
         }
     }
 
@@ -276,17 +276,9 @@ public class Level extends State {
         return bounces;
     }
 
-    public int getCount() {
+    public static int getCount() {
         return heightCount;
     }
 
-    public void keyPressed(KeyEvent key) {
-        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
-        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
-    }
 
-    public void keyReleased(KeyEvent key) {
-        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
-        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);
-    }
 }

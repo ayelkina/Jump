@@ -1,24 +1,25 @@
 package Game.GameManagement;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import Game.View.View;
-import Game.View.ViewGame;
+import javax.swing.*;
 
-public class GamePanel extends View {
+public class GamePanel extends JPanel implements KeyListener{
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = 800;
 
     private Image doubleBuffer;
-    private ViewGame viewGame;
+    private ViewController viewController;
 
-    public GamePanel(ViewGame viewGame) {
-        this.viewGame = viewGame;
+    public GamePanel(ViewController viewController) {
+        this.viewController = viewController;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+        addKeyListener(this);
     }
 
     public void update() {
@@ -35,13 +36,24 @@ public class GamePanel extends View {
 
         if (doubleBuffer != null) {
             Graphics2D g2 = (Graphics2D) doubleBuffer.getGraphics();
-            viewGame.draw(g2);
+            viewController.draw(g2);
 
             g.drawImage(doubleBuffer, 0, 0, null);
             g2.dispose();
 
         } else {
-            if (g != null) viewGame.draw(g);
+            if (g != null) viewController.draw(g);
         }
+    }
+
+    public void keyTyped(KeyEvent key) { }
+
+    public void keyPressed(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
+        viewController.keyPressed(key);
+    }
+
+    public void keyReleased(KeyEvent key) {
+        viewController.keyReleased(key);
     }
 }

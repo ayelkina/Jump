@@ -1,16 +1,22 @@
 package Game.View;
 
-import Game.States.Menu;;
 import Game.GameManagement.GamePanel;
+import Game.GameManagement.StateController;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
-abstract class ViewMenu extends ViewGame {
+public class ViewMenu {
 
-    private Font font;
+    protected int currentChoice;
+    protected Font font;
+    protected String[] choice;
+
+    public void update(){}
+    public void draw(Graphics2D graph) {}
 
     protected void loadFont(){
         try {
@@ -31,7 +37,7 @@ abstract class ViewMenu extends ViewGame {
         graph.drawString(text, x, (int)y);
     }
 
-    private  double middleX(Graphics2D graph, String text) {
+    private double middleX(Graphics2D graph, String text) {
         FontRenderContext context = graph.getFontRenderContext();
         Rectangle2D bounds = font.getStringBounds(text, context);
 
@@ -46,9 +52,7 @@ abstract class ViewMenu extends ViewGame {
         font = font.deriveFont(size);
         graph.setFont(font);
 
-        int currentChoice = Menu.getCurrentChoice();
-
-        for(int i = 0; i < Menu.getChoice().length; ++i) {
+        for(int i = 0; i < choice.length; ++i) {
             if (i == currentChoice) {
                 graph.setColor(Color.BLACK);
             }
@@ -56,8 +60,8 @@ abstract class ViewMenu extends ViewGame {
                 graph.setColor(Color.LIGHT_GRAY);
             }
 
-            int x = (int) middleX(graph, Menu.getChoice()[i]);
-            graph.drawString(Menu.getChoice()[i], x, (int)y + i * 70);
+            int x = (int) middleX(graph, choice[i]);
+            graph.drawString(choice[i], x, (int)y + i * 70);
         }
     }
 
@@ -65,16 +69,19 @@ abstract class ViewMenu extends ViewGame {
         font = font.deriveFont(size);
         graph.setFont(font);
 
-        int currentChoice = Menu.getCurrentChoice();
-
-        for(int i = 0; i < Menu.getChoice().length; ++i) {
+        for(int i = 0; i < choice.length; ++i) {
             if (i == currentChoice) {
                 graph.setColor(Color.BLACK);
             }
             else {
                 graph.setColor(Color.LIGHT_GRAY);
             }
-            graph.drawString(Menu.getChoice()[i], (int)x + i * 130, (int)y );
+            graph.drawString(choice[i], (int)x + i * 130, (int)y );
         }
     }
+
+    public void keyTyped(KeyEvent key) {}
+    public void keyPressed(KeyEvent key) {}
+    public void keyReleased(KeyEvent key) {}
+
 }

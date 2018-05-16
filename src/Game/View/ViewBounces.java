@@ -1,7 +1,6 @@
 package Game.View;
 
-import Game.States.GameState;
-import Game.States.Level;
+import Game.GameManagement.StateController;
 import Game.Sprites.Bounce;
 
 import java.awt.*;
@@ -12,7 +11,7 @@ public class ViewBounces extends ViewSprite {
     public ViewBounces(){
         width = 70;
         height = 25;
-        level = GameState.getlevel();
+        level = StateController.getlevel();
         loadSprite("/Pics/bounce.png");
     }
 
