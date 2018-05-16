@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
-public class Level extends GameState {
+public class Level extends State {
 
     public static final double GRID = 1.2;
 
@@ -38,7 +38,7 @@ public class Level extends GameState {
         random = new Random();
 
         loadEntity();
-        loadNew();
+        reload();
     }
 
     private void loadEntity() {
@@ -53,7 +53,7 @@ public class Level extends GameState {
             bounces.addElement(new Bounce());
     }
 
-    public void loadNew() {
+    public void reload() {
         player.setPlayer();
         loadVariables();
 
@@ -260,7 +260,7 @@ public class Level extends GameState {
                 bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
             }
 
-            if (player.getBoundsDown() > GamePanel.HEIGHT) gameState.loadState(State.GAMEOVER);
+            if (player.getBoundsDown() > GamePanel.HEIGHT) gameState.loadState(GameState.GAMEOVER);
         }
     }
 
