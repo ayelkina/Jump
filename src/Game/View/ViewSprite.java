@@ -1,5 +1,6 @@
 package Game.View;
 
+import Game.GameManagement.StateController;
 import Game.States.Level;
 
 import javax.imageio.ImageIO;
@@ -9,7 +10,7 @@ import java.io.IOException;
 public abstract class ViewSprite {
 
     protected BufferedImage image;
-    protected Level level;
+    protected StateController stateController;
 
     protected double x;
     protected double y;

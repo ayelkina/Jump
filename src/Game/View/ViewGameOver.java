@@ -1,5 +1,6 @@
 package Game.View;
 
+import Game.GameManagement.StateController;
 import Game.States.GameOver;
 import Game.States.Level;
 
@@ -12,7 +13,11 @@ public class ViewGameOver extends ViewMenu {
     private String score;
     private String nextTry;
 
-    public ViewGameOver() {
+    private StateController stateController;
+
+    public ViewGameOver(StateController st) {
+        stateController = st;
+
         background = new Background("/Pics/sky1.png");
         loadFont();
 
@@ -34,7 +39,7 @@ public class ViewGameOver extends ViewMenu {
 
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE) {
-            GameOver.select(currentChoice);
+            stateController.getGameOver().select(currentChoice);
         }
 
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) {

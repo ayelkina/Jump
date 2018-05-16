@@ -1,13 +1,13 @@
 package Game.Sprites;
 
+import Game.GameManagement.Constants;
 import Game.GameManagement.GamePanel;
-import Game.States.Level;
 
 public class Player extends Sprite {
 
-    private static boolean up;
-    private static boolean down;
-    private static boolean fall;
+    private boolean up;
+    private boolean down;
+    private boolean fall;
     private boolean left;
     private boolean right;
     private boolean jumpedFromBounce;
@@ -16,18 +16,18 @@ public class Player extends Sprite {
     private double maxJump;
 
     public Player() {
-        width = 70;
-        height = 63;
+        width = Constants.PlayerWidth;
+        height = Constants.PlayerHeight;
     }
 
     public void setPlayer(){
         setUp();
         setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
 
-        maxJump = GamePanel.HEIGHT/4;
+        maxJump = Constants.basicJumpHeight;
         downY = GamePanel.HEIGHT;
 
-        dy = Level.GRID;
+        dy = Constants.GRID;
         dx = dy;
     }
 
@@ -102,6 +102,8 @@ public class Player extends Sprite {
     public void update(){
         changeLocationIfOut();
         checkFallDown();
+
+
 
         if(!fall)
             jump(downY);

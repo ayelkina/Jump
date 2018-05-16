@@ -1,5 +1,6 @@
 package Game.View;
 
+import Game.GameManagement.Constants;
 import Game.States.Level;
 import Game.GameManagement.StateController;
 
@@ -18,32 +19,27 @@ public class ViewLevel {
     private Vector<ViewBounces> bouncesVector;
 
     private Level level;
+    private StateController stateController;
 
-    public ViewLevel() {
-        level = StateController.getlevel();
+    public ViewLevel(StateController st) {
+        stateController = st;
 
         background = new Background("/Pics/sky1.png");
-        viewPlayer = new ViewPlayer();
-
-
+        viewPlayer = new ViewPlayer(stateController);
 
         tilesVector = new Vector<>();
-        for (int i = 0; i < level.getTiles().size(); ++i) {
-            tilesVector.addElement(new ViewTiles());
-            tilesVector.get(i).x = level.getTiles().get(i).getx();
-            tilesVector.get(i).y = level.getTiles().get(i).gety();
+        for (int i = 0; i <= Constants.TilesQuantity; ++i) {
+            tilesVector.addElement(new ViewTiles(stateController));
         }
 
         bouncesVector = new Vector<>();
-        for (int i = 0; i < level.getBounces().size(); ++i) {
-            bouncesVector.addElement(new ViewBounces());
-            bouncesVector.get(i).x = level.getBounces().get(i).getx();
-            bouncesVector.get(i).y = level.getBounces().get(i).gety();
+        for (int i = 0; i <= Constants.BounceQuantity; ++i) {
+            bouncesVector.addElement(new ViewBounces(stateController));
         }
 
         loadFont();
     }
-    public  void drawLevel(Graphics2D graph) {
+    public void draw(Graphics2D graph) {
         background.draw(graph);
 
         for (int i = 0; i < tilesVector.size(); ++i)
@@ -66,7 +62,7 @@ public class ViewLevel {
         }
     }
 
-    private  void drawCount(Graphics2D graph) {
+    private void drawCount(Graphics2D graph) {
         graph.setColor(Color.BLACK);
         font = font.deriveFont(40f);
         graph.setFont(font);
@@ -75,11 +71,15 @@ public class ViewLevel {
     }
 
     public void keyPressed(KeyEvent key) {
+        Level level = stateController.getlevel();
+
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(true);
         if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(true);
     }
 
     public void keyReleased(KeyEvent key) {
+        Level level = stateController.getlevel();
+
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(false);
         if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(false);
     }

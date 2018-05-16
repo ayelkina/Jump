@@ -1,6 +1,8 @@
 package Game.Sprites;
 
 
+import Game.GameManagement.Constants;
+
 public class Tiles extends Sprite {
 
     private boolean withBounce;
@@ -10,8 +12,8 @@ public class Tiles extends Sprite {
     }
 
     private void setVariables(){
-        width = 100;
-        height = 25;
+        width = Constants.TileWidth;
+        height = Constants.TileHeight;
 
         withBounce = false;
     }

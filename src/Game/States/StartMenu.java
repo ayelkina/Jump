@@ -4,11 +4,16 @@ import Game.GameManagement.StateController;
 
 public class StartMenu extends State {
 
-    public StartMenu() { }
+    private StateController stateController;
 
-    public static void select (int currentChoice) {
+    public StartMenu(StateController st) {
+        stateController = st;
+    }
+
+    public void select (int currentChoice) {
         if (currentChoice == 0) {
-            StateController.loadState(StateController.LEVEL);
+            stateController.loadState(StateController.LEVEL);
+
         }
         if (currentChoice == 1) {
             System.exit(0);

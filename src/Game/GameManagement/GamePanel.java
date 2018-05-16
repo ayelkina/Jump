@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class GamePanel extends JPanel implements KeyListener{
+public class GamePanel extends JPanel implements KeyListener {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = 800;
@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements KeyListener{
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+
         addKeyListener(this);
     }
 
@@ -56,4 +57,5 @@ public class GamePanel extends JPanel implements KeyListener{
     public void keyReleased(KeyEvent key) {
         viewController.keyReleased(key);
     }
+
 }

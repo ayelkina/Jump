@@ -1,6 +1,7 @@
 package Game.View;
 
 import Game.GameManagement.GamePanel;
+import Game.GameManagement.StateController;
 import Game.States.StartMenu;
 
 import java.awt.*;
@@ -10,8 +11,11 @@ public class ViewStartMenu extends ViewMenu {
 
     private String gameTitle;
     private Background background;
+    private StateController stateController;
 
-    public ViewStartMenu() {
+    public ViewStartMenu(StateController st) {
+        stateController = st;
+
         background = new Background("/Pics/sky1.png");
         loadFont();
         gameTitle = "Jump!";
@@ -29,7 +33,7 @@ public class ViewStartMenu extends ViewMenu {
 
     public void keyPressed(KeyEvent key) {
         if(key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE){
-            StartMenu.select(currentChoice);
+            stateController.getStartMenu().select(currentChoice);
         }
         if(key.getKeyCode() == KeyEvent.VK_UP) {
             if(currentChoice != 0) {

@@ -16,10 +16,14 @@ public class Engine implements Runnable {
     private long time;
 
     private StateController stateController;
+    private ViewController viewController;
     private GamePanel gamePanel;
 
-    public Engine(GamePanel gamePanel) {
+    public Engine(GamePanel gamePanel, StateController st) {
         this.gamePanel = gamePanel;
+        stateController = st;
+
+
 
 //        time = 5;
 
@@ -104,8 +108,9 @@ public class Engine implements Runnable {
     }
 
     private void init() {
-        stateController = new StateController();
-
+//        stateController = new StateController();
+        /*ActionListener actionListener = new ActionListener(viewController);
+        gamePanel.addKeyListener(actionListener);*/
     }
 
     private void update(long time) {

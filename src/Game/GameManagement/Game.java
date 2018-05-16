@@ -9,9 +9,11 @@ public class Game extends Canvas{
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
-        ViewController viewGame = new ViewController();
-        GamePanel gamePanel = new GamePanel(viewGame);
-        Engine engine = new Engine(gamePanel);
+        StateController stateController = new StateController();
+        ViewController viewController = new ViewController(stateController);
+        GamePanel gamePanel = new GamePanel(viewController);
+
+        Engine engine = new Engine(gamePanel, stateController);
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;

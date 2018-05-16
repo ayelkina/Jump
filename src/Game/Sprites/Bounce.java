@@ -1,29 +1,20 @@
 package Game.Sprites;
 
-import Game.Sprites.Sprite;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import Game.GameManagement.Constants;
 
 public class Bounce extends Sprite{
 
     public enum State {STAY, DOWN, UP};
 
-    private static final int downHeight = 25;
-    private static final int upHeight = 65;
-
     private boolean stay;
     private boolean down;
     private boolean up;
 
-    public static int position;
-
     public Bounce(){
         down = false;
-        position = 1;
 
-        width = 70;
-        height = downHeight;
+        width = Constants.BounceWidth;
+        height = Constants.BounceDownHeight;
     }
 
     public State getState(){
@@ -47,24 +38,21 @@ public class Bounce extends Sprite{
     }
 
     public void setDown(boolean b) {
-        position = 1;
         down = b;
         up = stay = !b;
     }
 
     public void setStay(boolean b) {
         stay = b;
-        position = 1;
-        height = downHeight;
-        y += height - downHeight;
+        height = Constants.BounceDownHeight;
+        y += height - Constants.BounceDownHeight;
         up = down = !b;
     }
 
     public void setUp (boolean b) {
         up = b;
-        position = 2;
-        height = upHeight;
-        y -= height - downHeight;
+        height = Constants.BounceUpHeight;
+        y -= height - Constants.BounceDownHeight;
         down = stay = !b;
     }
 }

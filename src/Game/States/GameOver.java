@@ -4,12 +4,15 @@ import Game.GameManagement.StateController;
 
 public class GameOver extends State {
 
-    public GameOver() {
+    private StateController stateController;
+
+    public GameOver(StateController st) {
+        stateController = st;
     }
 
-    public static void select(int currentChoice) {
+    public void select(int currentChoice) {
         if(currentChoice == 0) {
-            StateController.reloadState(StateController.LEVEL);
+            stateController.reloadState(StateController.LEVEL);
         }
         if(currentChoice == 1) {
             System.exit(0);

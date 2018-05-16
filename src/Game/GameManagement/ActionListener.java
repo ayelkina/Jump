@@ -1,15 +1,15 @@
+/*
 package Game.GameManagement;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ActionListener extends JComponent implements KeyListener {
+public class ActionListener implements KeyListener {
 
     private ViewController viewController;
 
-    public ActionListener(ViewController vc){
-        this.viewController = vc;
+    public ActionListener(ViewController viewController) {
+        this.viewController = viewController;
     }
 
     public void keyTyped(KeyEvent key) { }
@@ -23,3 +23,4 @@ public class ActionListener extends JComponent implements KeyListener {
         viewController.keyReleased(key);
     }
 }
+*/

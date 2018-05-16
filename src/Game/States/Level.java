@@ -1,5 +1,6 @@
 package Game.States;
 
+import Game.GameManagement.Constants;
 import Game.GameManagement.GamePanel;
 import Game.GameManagement.StateController;
 import Game.Sprites.Player;
@@ -11,10 +12,7 @@ import java.util.Vector;
 
 public class Level extends State {
 
-    public static final double GRID = 1.2;
-
-    private final Random random;
-    private StateController stateController;
+    private int playerHeightLimit = GamePanel.HEIGHT/2;
 
     private Player player;
     private Vector<Tiles> tiles;
@@ -28,32 +26,35 @@ public class Level extends State {
     private double nearestTileY;
 
     private int heightFromStart;
-    private int playerHeightLimit = GamePanel.HEIGHT/2;
     private static int heightCount;
-
     private boolean longJump;
 
-    public Level() {
-//        this.stateController = stateController;
+    private final Random random;
+
+    private StateController stateController;
+
+    public Level(StateController st) {
+        stateController = st;
+
         random = new Random();
 
         loadEntity();
-        reload();
+        loadNew();
     }
 
     private void loadEntity() {
         player = new Player();
 
         tiles = new Vector<Tiles>();
-        for (int i = 0; i <= 15; ++i)
+        for (int i = 0; i <= Constants.TilesQuantity; ++i)
             tiles.addElement(new Tiles());
 
         bounces = new Vector<Bounce>();
-        for (int i = 0; i <= 2; ++i)
+        for (int i = 0; i <= Constants.BounceQuantity; ++i)
             bounces.addElement(new Bounce());
     }
 
-    public void reload() {
+    public void loadNew() {
         player.setPlayer();
         loadVariables();
 
@@ -63,13 +64,13 @@ public class Level extends State {
 
     private void loadVariables() {
         heightCount = 0;
-        nearestTileY = 820;
+        nearestTileY = GamePanel.HEIGHT;
         heightFromStart = 0;
         currNearestTile = null;
     }
 
     private void setTilesPositions() {
-        tiles.get(0).setPosition(random(100, 200), 700);
+        tiles.get(0).setPosition(random(Constants.TileWidth, Constants.minFirstTileX), Constants.halfBasicJump);
         for (int i = 1; i < tiles.size(); ++i) {
             setRandomTile(i);
         }
@@ -88,9 +89,11 @@ public class Level extends State {
         else prevTile = currentTile - 1;
 
         double prevY = tiles.get(prevTile).gety();
+        double maxDistance = prevY - Constants.maxTilesDistance;
+        int addBound = Constants.maxTilesDistance - Constants.minTilesDistance;
 
-        double newX = random(500, 0);
-        double newY = random(100, prevY - 150);
+        double newX = random(Constants.maxTileX, 0);
+        double newY = random(addBound, maxDistance);
 
         tiles.get(currentTile).setPosition(newX, newY);
     }
@@ -160,7 +163,7 @@ public class Level extends State {
         setCountInFirstJump();
 
         if (prevJumpedTile != null) {
-            if (prevJumpedTile.gety() - currNearestTile.gety() > -200) {
+            if (shortJump()) {
                 heightFromStart += prevJumpedTile.gety() - currNearestTile.gety();
                 heightCount = maxCount(heightCount, heightFromStart);
             }
@@ -169,8 +172,12 @@ public class Level extends State {
 
     private void setCountInFirstJump() {
         if (prevJumpedTile == null) {
-            if (player.getDown()) heightCount = heightFromStart = 100;
+            if (player.getDown()) heightCount = heightFromStart = Constants.basicJumpHeight/2;
         }
+    }
+
+    private boolean shortJump() {
+        return prevJumpedTile.gety() - currNearestTile.gety() > -Constants.basicJumpHeight;
     }
 
     private int maxCount(int first, int sec) {
@@ -260,7 +267,7 @@ public class Level extends State {
                 bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
             }
 
-            if (player.getBoundsDown() > GamePanel.HEIGHT) StateController.loadState(StateController.GAMEOVER);
+            if (player.getBoundsDown() > GamePanel.HEIGHT/2) stateController.loadState(StateController.GAMEOVER);
         }
     }
 

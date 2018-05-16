@@ -1,5 +1,6 @@
 package Game.Sprites;
 
+import Game.GameManagement.Constants;
 import Game.States.Level;
 
 import static java.lang.Math.abs;
@@ -51,7 +52,7 @@ public abstract class Sprite {
     }
 
     public boolean intersectsY (Sprite s2){
-        return ((getBoundsDown() <= s2.y + Level.GRID/2) && (getBoundsDown() >= s2.y - Level.GRID/2));
+        return ((getBoundsDown() <= s2.y + Constants.GRID/2) && (getBoundsDown() >= s2.y - Constants.GRID/2));
     }
 
     public boolean intersects(Sprite s2) {
