@@ -1,8 +1,6 @@
 package Game.GameManagement;
 
 import Game.States.GameState;
-import Game.States.Level;
-import Game.View.View;
 
 import java.awt.*;
 
@@ -122,6 +120,5 @@ public class Engine implements Runnable {
     private void update(long time) {
         gameState.update(time);
         gamePanel.update();
-
     }
 }

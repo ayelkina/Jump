@@ -14,8 +14,7 @@ public class ActionListener extends View implements KeyListener {
         this.gameState = gs;
     }
 
-    public void keyTyped(KeyEvent key) {
-    }
+    public void keyTyped(KeyEvent key) { }
 
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);

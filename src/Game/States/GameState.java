@@ -5,10 +5,10 @@ import java.awt.event.KeyEvent;
 public class GameState {
 
     public enum State {MENU, LEVEL, GAMEOVER}
-    private  static  GameState currentState;
-    private  static  StartMenu startMenu;
-    private  static  Level level;
-    private  static  GameOver gameOver;
+    private static GameState currentState;
+    private static StartMenu startMenu;
+    private static Level level;
+    private static GameOver gameOver;
 
     public GameState() {}
 

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.Vector;
 
-public class ViewLevel extends View {
+public class ViewLevel extends ViewGame {
 
     private ViewPlayer viewPlayer;
 

@@ -8,7 +8,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
-abstract class ViewMenu extends View {
+abstract class ViewMenu extends ViewGame {
 
     private Font font;
 

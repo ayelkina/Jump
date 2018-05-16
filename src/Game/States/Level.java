@@ -28,7 +28,7 @@ public class Level extends GameState {
     private double nearestTileY;
 
     private int heightFromStart;
-    private int playerHeightLimit = 400;
+    private int playerHeightLimit = GamePanel.HEIGHT/2;
     private int heightCount;
 
     private boolean longJump;

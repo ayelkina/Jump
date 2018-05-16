@@ -1,6 +1,6 @@
 package Game.GameManagement;
 
-import Game.View.View;
+import Game.View.ViewGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +11,8 @@ public class Game extends Canvas{
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
-        View view = new View();
-        GamePanel gamePanel = new GamePanel(view);
-
+        ViewGame viewGame = new ViewGame();
+        GamePanel gamePanel = new GamePanel(viewGame);
         Engine engine = new Engine(gamePanel);
 
         int screenWidth = screenSize.width;
