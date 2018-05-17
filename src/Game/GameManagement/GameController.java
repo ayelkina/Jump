@@ -17,8 +17,8 @@ public class GameController {
     private ViewState[] viewStates;
     private  int current;
 
-    public static final int NUMBERSTATES = 3;
-    public static final int STARTMENU = 0;
+    private static final int NUMBERSTATES = 3;
+    private static final int STARTMENU = 0;
     public static final int LEVEL = 1;
     public static final int GAMEOVER = 2;
 

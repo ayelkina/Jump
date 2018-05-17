@@ -19,6 +19,7 @@ public class ViewMenu extends ViewState {
         this.menu = menu;
     }
 
+    @Override
     public void draw(Graphics2D graph) {}
 
     protected void loadFont(){

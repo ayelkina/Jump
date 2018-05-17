@@ -22,14 +22,7 @@ public class StartMenu extends Menu {
         }
     }
 
-    public int getCurrentChoice() {
-        return currentChoice;
-    }
-
-    public String[] getChoice() {
-        return choice;
-    }
-
+    @Override
     public void keyPressed(KeyEvent key) {
         if(key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE){
             select();

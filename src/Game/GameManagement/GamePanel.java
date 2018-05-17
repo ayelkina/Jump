@@ -22,10 +22,6 @@ public class GamePanel extends JPanel{
     }
 
     public void update() {
-        paint();
-    }
-
-    private void paint() {
         Graphics2D graph = (Graphics2D) getGraphics();
 
         if (doubleBuffer == null || doubleBuffer.getWidth(this) != GamePanel.WIDTH || doubleBuffer.getHeight(this) != GamePanel.HEIGHT) {

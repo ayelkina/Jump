@@ -16,12 +16,11 @@ public class Engine implements Runnable {
     private long time;
 
     private GameController gameController;
-    private GameController viewController;
     private GamePanel gamePanel;
 
-    public Engine(GamePanel gamePanel, GameController st) {
+    public Engine(GamePanel gamePanel, GameController gameController) {
         this.gamePanel = gamePanel;
-        gameController = st;
+        this.gameController = gameController;
         createThread();
     }
 

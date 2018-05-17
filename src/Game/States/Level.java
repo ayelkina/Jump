@@ -40,6 +40,13 @@ public class Level extends State {
         loadNew();
     }
 
+    public Level() {
+        random = new Random();
+
+        loadEntity();
+        loadNew();
+    }
+
     private void loadEntity() {
         player = new Player();
 
@@ -52,6 +59,7 @@ public class Level extends State {
             bounces.addElement(new Bounce());
     }
 
+    @Override
     public void loadNew() {
         player.setPlayer();
         loadVariables();
@@ -109,6 +117,7 @@ public class Level extends State {
         } else setRandomBounce(i);
     }
 
+    @Override
     public void update() {
         player.update();
 
@@ -285,11 +294,13 @@ public class Level extends State {
         return heightCount;
     }
 
+    @Override
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
         if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
     }
 
+    @Override
     public void keyReleased(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
         if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);

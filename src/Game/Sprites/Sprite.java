@@ -19,8 +19,6 @@ public abstract class Sprite {
 
     public Sprite(){}
 
-    private void setVariables(){}
-
     public double getx() { return x; }
     public double gety() { return y; }
     public double getdx() { return dx; }
@@ -52,7 +50,7 @@ public abstract class Sprite {
     }
 
     public boolean intersectsY (Sprite s2){
-        return ((getBoundsDown() <= s2.y + Constants.GRID/2) && (getBoundsDown() >= s2.y - Constants.GRID/2));
+        return ((getBoundsDown() <= s2.y + Constants.GRID/2) && (getBoundsDown() > s2.y - Constants.GRID/2));
     }
 
     public boolean intersects(Sprite s2) {

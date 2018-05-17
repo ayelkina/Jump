@@ -22,7 +22,7 @@ public class Player extends Sprite {
 
     public void setPlayer(){
         setUp();
-        setPosition(GamePanel.WIDTH/2 - width /2, GamePanel.HEIGHT - height);
+        setPosition(Constants.PlayermiddleOfPanel, Constants.PlayerBeginY);
 
         maxJump = Constants.basicJumpHeight;
         downY = GamePanel.HEIGHT;

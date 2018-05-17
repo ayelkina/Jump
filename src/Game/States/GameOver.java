@@ -22,6 +22,7 @@ public class GameOver extends Menu {
         }
     }
 
+    @Override
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE) {
             select();

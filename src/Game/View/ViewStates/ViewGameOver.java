@@ -26,6 +26,7 @@ public class ViewGameOver extends ViewMenu {
 
     }
 
+    @Override
     public void draw(Graphics2D graph) {
         background.draw(graph);
         drawText(graph, gameOver, 100f, 250);

@@ -20,6 +20,7 @@ public class ViewStartMenu extends ViewMenu {
         gameTitle = "Jump!";
     }
 
+    @Override
     public void draw(Graphics2D graph) {
         background.draw(graph);
         drawText(graph, gameTitle, 120f, 300);

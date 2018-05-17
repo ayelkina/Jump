@@ -6,10 +6,12 @@ public class Constants {
 
     public static final int PlayerWidth = 70;
     public static final int PlayerHeight = 63;
+    public static final int PlayermiddleOfPanel = GamePanel.WIDTH/2 - PlayerWidth /2;
+    public static final int PlayerBeginY = GamePanel.HEIGHT - PlayerHeight;
     public static final int basicJumpHeight = GamePanel.HEIGHT/4;
 
-    public static final int BounceDownHeight = 25;
-    public static final int BounceUpHeight = 65;
+    public static final int BounceDownHeight = 15;
+    public static final int BounceUpHeight = 35;
     public static final int BounceWidth = 70;
     public static final int BouncesNumber = 3;
 
