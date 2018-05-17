@@ -1,21 +1,42 @@
 package Game.States;
 
-import Game.GameManagement.StateController;
+import Game.GameManagement.GameController;
 
-public class GameOver extends State {
+import java.awt.event.KeyEvent;
 
-    private StateController stateController;
+public class GameOver extends Menu {
 
-    public GameOver(StateController st) {
-        stateController = st;
+    private GameController gameController;
+
+    public GameOver(GameController st) {
+        gameController = st;
+        choice = new String[]{"YES", "NO"};
     }
 
-    public void select(int currentChoice) {
+    private void select() {
         if(currentChoice == 0) {
-            stateController.reloadState(StateController.LEVEL);
+            gameController.reloadState(GameController.LEVEL);
         }
         if(currentChoice == 1) {
             System.exit(0);
+        }
+    }
+
+    public void keyPressed(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_SPACE) {
+            select();
+        }
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+            if (currentChoice != (choice.length - 1)) {
+                ++currentChoice;
+            }
+        }
+
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (currentChoice != 0) {
+                --currentChoice;
+            }
         }
     }
 }

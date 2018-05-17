@@ -1,26 +1,24 @@
-/*
 package Game.GameManagement;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ActionListener implements KeyListener {
+public class ActionListener implements KeyListener{
 
-    private ViewController viewController;
+    private GameController gameController;
 
-    public ActionListener(ViewController viewController) {
-        this.viewController = viewController;
+    public ActionListener(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public void keyTyped(KeyEvent key) { }
 
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
-        viewController.keyPressed(key);
+         gameController.keyPressed(key);
     }
 
     public void keyReleased(KeyEvent key) {
-        viewController.keyReleased(key);
+        gameController.keyReleased(key);
     }
 }
-*/

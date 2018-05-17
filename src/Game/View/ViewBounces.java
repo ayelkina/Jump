@@ -1,7 +1,7 @@
 package Game.View;
 
 import Game.GameManagement.Constants;
-import Game.GameManagement.StateController;
+import Game.GameManagement.GameController;
 import Game.Sprites.Bounce;
 import Game.States.Level;
 
@@ -10,8 +10,10 @@ import java.awt.image.BufferedImage;
 
 public class ViewBounces extends ViewSprite {
 
-    public ViewBounces(StateController st) {
-        stateController = st;
+    private Bounce bounce;
+
+    public ViewBounces(Bounce bounce) {
+        this.bounce = bounce;
 
         width = Constants.BounceWidth;
         height = Constants.BounceDownHeight;
@@ -31,11 +33,9 @@ public class ViewBounces extends ViewSprite {
    }
 
     public void draw(Graphics2D graph, int i) {
-        Level level = stateController.getlevel();
-
-        x = level.getBounces().get(i).getx();
-        y = level.getBounces().get(i).gety();
-        graph.drawImage(loadImage(level.getBounces().get(i).getState()),  (int)x,  (int)y, width, height,null);
+        x = bounce.getx();
+        y = bounce.gety();
+        graph.drawImage(loadImage(bounce.getState()),  (int)x,  (int)y, width, height,null);
     }
 
 }

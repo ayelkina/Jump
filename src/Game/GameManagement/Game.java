@@ -3,17 +3,17 @@ package Game.GameManagement;
 import javax.swing.*;
 import java.awt.*;
 
-public class Game extends Canvas{
+public class Game extends Canvas {
 
     public static void main(String[] args) {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
-        StateController stateController = new StateController();
-        ViewController viewController = new ViewController(stateController);
-        GamePanel gamePanel = new GamePanel(viewController);
+        GameController gameController = new GameController();
+        View view = new View(gameController);
 
-        Engine engine = new Engine(gamePanel, stateController);
+        GamePanel gamePanel = new GamePanel(view);
+        Engine engine = new Engine(gamePanel, gameController);
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;

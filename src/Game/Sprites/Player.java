@@ -103,8 +103,6 @@ public class Player extends Sprite {
         changeLocationIfOut();
         checkFallDown();
 
-
-
         if(!fall)
             jump(downY);
     }

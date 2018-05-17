@@ -1,7 +1,7 @@
 package Game.View;
 
-import Game.GameManagement.StateController;
-import Game.States.Level;
+import Game.GameManagement.GameController;
+import Game.GameManagement.Vars.Variables;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,7 +10,8 @@ import java.io.IOException;
 public abstract class ViewSprite {
 
     protected BufferedImage image;
-    protected StateController stateController;
+    protected GameController gameController;
+    protected Variables variables;
 
     protected double x;
     protected double y;

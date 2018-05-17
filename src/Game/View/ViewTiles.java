@@ -1,15 +1,19 @@
 package Game.View;
 
 import Game.GameManagement.Constants;
-import Game.GameManagement.StateController;
+import Game.GameManagement.GameController;
+import Game.Sprites.Tiles;
 import Game.States.Level;
 
 import java.awt.*;
+import java.util.Vector;
 
 public class ViewTiles extends  ViewSprite {
 
-    public ViewTiles(StateController st) {
-        stateController = st;
+    private Tiles tiles;
+
+    public ViewTiles(Tiles tiles) {
+        this.tiles = tiles;
 
         width = Constants.TileWidth;
         height = Constants.TileHeight;
@@ -18,10 +22,8 @@ public class ViewTiles extends  ViewSprite {
     }
 
     public void draw(Graphics2D graph, int i) {
-        Level level = stateController.getlevel();
-
-        x = level.getTiles().get(i).getx();
-        y = level.getTiles().get(i).gety();
+        x = tiles.getx();
+        y = tiles.gety();
         graph.drawImage(image,  (int)x,  (int)y, width, height,null);
     }
 }

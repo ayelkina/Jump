@@ -1,15 +1,20 @@
-package Game.View;
+package Game.View.ViewStates;
 
 import Game.GameManagement.Constants;
+import Game.Sprites.Bounce;
+import Game.Sprites.Player;
+import Game.Sprites.Tiles;
 import Game.States.Level;
-import Game.GameManagement.StateController;
+import Game.View.Background;
+import Game.View.ViewBounces;
+import Game.View.ViewPlayer;
+import Game.View.ViewTiles;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Vector;
 
-public class ViewLevel {
+public class ViewLevel extends ViewState {
 
     private ViewPlayer viewPlayer;
     private Background background;
@@ -19,26 +24,34 @@ public class ViewLevel {
     private Vector<ViewBounces> bouncesVector;
 
     private Level level;
-    private StateController stateController;
 
-    public ViewLevel(StateController st) {
-        stateController = st;
+    public ViewLevel(Level level) {
+        super(level);
+        this.level = level;
 
         background = new Background("/Pics/sky1.png");
-        viewPlayer = new ViewPlayer(stateController);
+        createEntityView();
+        loadFont();
+    }
+
+    private void createEntityView(){
+        Player player = level.getPlayer();
+        Vector<Tiles> tiles = level.getTiles();
+        Vector<Bounce> bounces = level.getBounces();
+
+        viewPlayer = new ViewPlayer(player);
 
         tilesVector = new Vector<>();
-        for (int i = 0; i <= Constants.TilesQuantity; ++i) {
-            tilesVector.addElement(new ViewTiles(stateController));
+        for (int i = 0; i <= Constants.TilesNumber; ++i) {
+            tilesVector.addElement(new ViewTiles(tiles.get(i)));
         }
 
         bouncesVector = new Vector<>();
-        for (int i = 0; i <= Constants.BounceQuantity; ++i) {
-            bouncesVector.addElement(new ViewBounces(stateController));
+        for (int i = 0; i <= Constants.BouncesNumber; ++i) {
+            bouncesVector.addElement(new ViewBounces(bounces.get(i)));
         }
-
-        loadFont();
     }
+
     public void draw(Graphics2D graph) {
         background.draw(graph);
 
@@ -53,7 +66,7 @@ public class ViewLevel {
         graph.dispose();
     }
 
-    private  void loadFont() {
+    private void loadFont() {
         try {
             File fontFile = new File("Res/Fonts/orange.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -69,21 +82,4 @@ public class ViewLevel {
 
         graph.drawString(Integer.toString(Level.getCount()), 10, 40);
     }
-
-    public void keyPressed(KeyEvent key) {
-        Level level = stateController.getlevel();
-
-        if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(true);
-        if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(true);
-    }
-
-    public void keyReleased(KeyEvent key) {
-        Level level = stateController.getlevel();
-
-        if (key.getKeyCode() == KeyEvent.VK_RIGHT) level.getPlayer().setRight(false);
-        if (key.getKeyCode() == KeyEvent.VK_LEFT) level.getPlayer().setLeft(false);
-    }
-
-
-
 }

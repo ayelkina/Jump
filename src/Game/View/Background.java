@@ -21,7 +21,7 @@ public class Background {
         }
     }
 
-    /*public void draw(Graphics2D graph) {
+    /*public void setDraw(Graphics2D graph) {
 
         x += 0.2;
         if(x > GamePanel.WIDTH)

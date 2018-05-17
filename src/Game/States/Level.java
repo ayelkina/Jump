@@ -1,12 +1,11 @@
 package Game.States;
 
-import Game.GameManagement.Constants;
-import Game.GameManagement.GamePanel;
-import Game.GameManagement.StateController;
+import Game.GameManagement.*;
 import Game.Sprites.Player;
 import Game.Sprites.Tiles;
 import Game.Sprites.Bounce;
 
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
@@ -31,11 +30,10 @@ public class Level extends State {
 
     private final Random random;
 
-    private StateController stateController;
+    private GameController gameController;
 
-    public Level(StateController st) {
-        stateController = st;
-
+    public Level(GameController st) {
+        gameController = st;
         random = new Random();
 
         loadEntity();
@@ -46,11 +44,11 @@ public class Level extends State {
         player = new Player();
 
         tiles = new Vector<Tiles>();
-        for (int i = 0; i <= Constants.TilesQuantity; ++i)
+        for (int i = 0; i <= Constants.TilesNumber; ++i)
             tiles.addElement(new Tiles());
 
         bounces = new Vector<Bounce>();
-        for (int i = 0; i <= Constants.BounceQuantity; ++i)
+        for (int i = 0; i <= Constants.BouncesNumber; ++i)
             bounces.addElement(new Bounce());
     }
 
@@ -267,7 +265,7 @@ public class Level extends State {
                 bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
             }
 
-            if (player.getBoundsDown() > GamePanel.HEIGHT/2) stateController.loadState(StateController.GAMEOVER);
+            if (player.getBoundsDown() > GamePanel.HEIGHT/2) gameController.loadState(GameController.GAMEOVER);
         }
     }
 
@@ -285,6 +283,16 @@ public class Level extends State {
 
     public static int getCount() {
         return heightCount;
+    }
+
+    public void keyPressed(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(true);
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(true);
+    }
+
+    public void keyReleased(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
+        if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);
     }
 
 

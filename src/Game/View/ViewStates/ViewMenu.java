@@ -1,7 +1,7 @@
-package Game.View;
+package Game.View.ViewStates;
 
 import Game.GameManagement.GamePanel;
-import Game.GameManagement.StateController;
+import Game.States.Menu;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,13 +9,16 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
-public class ViewMenu {
+public class ViewMenu extends ViewState {
 
-    protected int currentChoice;
     protected Font font;
-    protected String[] choice;
+    protected Menu menu;
 
-    public void update(){}
+    public ViewMenu(Menu menu) {
+        super(menu);
+        this.menu = menu;
+    }
+
     public void draw(Graphics2D graph) {}
 
     protected void loadFont(){
@@ -52,6 +55,9 @@ public class ViewMenu {
         font = font.deriveFont(size);
         graph.setFont(font);
 
+        int currentChoice = menu.getCurrentChoice();
+        String []choice = menu.getChoice();
+
         for(int i = 0; i < choice.length; ++i) {
             if (i == currentChoice) {
                 graph.setColor(Color.BLACK);
@@ -68,6 +74,9 @@ public class ViewMenu {
     protected void drawOptionsHorizontal(Graphics2D graph, float size, double x, double y){
         font = font.deriveFont(size);
         graph.setFont(font);
+
+        int currentChoice = menu.getCurrentChoice();
+        String []choice = menu.getChoice();
 
         for(int i = 0; i < choice.length; ++i) {
             if (i == currentChoice) {

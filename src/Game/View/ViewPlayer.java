@@ -1,8 +1,8 @@
 package Game.View;
 
 import Game.GameManagement.Constants;
-import Game.GameManagement.StateController;
-import Game.States.Level;
+import Game.GameManagement.GameController;
+import Game.Sprites.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,9 +10,13 @@ import java.awt.image.BufferedImage;
 public class ViewPlayer extends ViewSprite {
 
     public enum State {UP, DOWN, FALL};
+    private Player player;
 
-    public ViewPlayer(StateController st) {
-        stateController = st;
+    public ViewPlayer(Player player) {
+//        gameController = vr;
+//        player = gameController.getlevel().getPlayer();
+
+        this.player = player;
 
         loadSprite("/Pics/peng.png");
 
@@ -23,11 +27,9 @@ public class ViewPlayer extends ViewSprite {
     private State getState(){
         State state;
 
-        Level level = stateController.getlevel();
-
         state = State.valueOf("DOWN");
-        if(level.getPlayer().getUp()) { state = State.valueOf("UP"); }
-        if(level.getPlayer().getFall()) { state = State.valueOf("FALL"); }
+        if(player.getUp()) { state = State.valueOf("UP"); }
+        if(player.getFall()) { state = State.valueOf("FALL"); }
 
         return state;
     }
@@ -40,11 +42,8 @@ public class ViewPlayer extends ViewSprite {
     }
 
     public void drawPlayer(Graphics2D graph) {
-        Level level = stateController.getlevel();
-
-
-        x = level.getPlayer().getx();
-        y = level.getPlayer().gety();
+        x = player.getx();
+        y = player.gety();
 ;
         graph.drawImage(loadImage(getState()),  (int)x, (int) y, width, height,null);
     }

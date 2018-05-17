@@ -15,20 +15,13 @@ public class Engine implements Runnable {
 
     private long time;
 
-    private StateController stateController;
-    private ViewController viewController;
+    private GameController gameController;
+    private GameController viewController;
     private GamePanel gamePanel;
 
-    public Engine(GamePanel gamePanel, StateController st) {
+    public Engine(GamePanel gamePanel, GameController st) {
         this.gamePanel = gamePanel;
-        stateController = st;
-
-
-
-//        time = 5;
-
-//        prevTime = System.nanoTime();
-//        deltaTime = 5000000;
+        gameController = st;
         createThread();
     }
 
@@ -108,13 +101,12 @@ public class Engine implements Runnable {
     }
 
     private void init() {
-//        stateController = new StateController();
-        /*ActionListener actionListener = new ActionListener(viewController);
-        gamePanel.addKeyListener(actionListener);*/
+        ActionListener actionListener = new ActionListener(gameController);
+        gamePanel.addKeyListener(actionListener);
     }
 
     private void update(long time) {
-        stateController.update();
+        gameController.update();
         gamePanel.update();
     }
 }
