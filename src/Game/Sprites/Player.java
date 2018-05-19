@@ -73,12 +73,11 @@ public class Player extends Sprite {
 
     private void jump(double downY){
         y-= dy;
-//        System.out.println(time);
 
         if (right) {x += dx;}
         if (left) {x -= dx; }
 
-        if((getBoundsDown() - downY > 0 && down) || (downY-getBoundsDown() > maxJump && up)) {
+        if((getBoundsDown() - downY >= 0 && down) || (downY-getBoundsDown() >= maxJump && up)) {
             dy *= -1;
         }
 
@@ -90,12 +89,10 @@ public class Player extends Sprite {
 
         if (x + width/2 > GamePanel.WIDTH){
             x = (-width/2);
-            setPosition((int)x, (int)y);
         }
 
         if (x + width/2 < 0){
             x += GamePanel.WIDTH;
-            setPosition((int)x, (int)y);
         }
     }
 

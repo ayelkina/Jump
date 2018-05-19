@@ -6,20 +6,30 @@ import java.awt.event.KeyEvent;
 
 public class GameOver extends Menu {
 
-    private GameController gameController;
+    private boolean changeState;
 
-    public GameOver(GameController st) {
-        gameController = st;
+    public GameOver() {
         choice = new String[]{"YES", "NO"};
     }
 
     private void select() {
         if(currentChoice == 0) {
-            gameController.reloadState(GameController.LEVEL);
+            changeState = true;
         }
         if(currentChoice == 1) {
             System.exit(0);
         }
+    }
+
+    @Override
+    public boolean changeState() {
+        return changeState;
+    }
+
+    @Override
+    public void loadNew() {
+        currentChoice = 0;
+        changeState = false;
     }
 
     @Override

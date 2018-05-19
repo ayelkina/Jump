@@ -32,7 +32,7 @@ public class GameController {
 
     public void loadState(int state) {
         if (state == STARTMENU) {
-            StartMenu startMenu = new StartMenu(this);
+            StartMenu startMenu = new StartMenu();
             gameStates[state] = startMenu;
             viewStates[state] = new ViewStartMenu(startMenu);
 
@@ -40,7 +40,7 @@ public class GameController {
         }
 
         if (state == LEVEL) {
-            Level level = new Level(this);
+            Level level = new Level();
             viewStates[state] = new ViewLevel(level);
             gameStates[state] = level;
 
@@ -48,7 +48,7 @@ public class GameController {
         }
 
         if (state == GAMEOVER) {
-            GameOver gameOver = new GameOver(this);
+            GameOver gameOver = new GameOver();
             viewStates[state]  = new ViewGameOver(gameOver);
             gameStates[state] = gameOver;
 
@@ -56,13 +56,27 @@ public class GameController {
         }
     }
 
-    public  void reloadState(int state){
+    public void reloadState(int state){
         current = state;
         gameStates[current].loadNew();
     }
 
     public void update() {
-        if(gameStates[current] != null) gameStates[current].update();
+        if(gameStates[current] != null)
+            gameStates[current].update();
+
+        if(gameStates[current].changeState()) {
+            if (current == STARTMENU)
+                loadState(LEVEL);
+
+            else if (current == GAMEOVER)
+                reloadState(LEVEL);
+
+            else if (current == LEVEL) {
+                if (gameStates[GAMEOVER] == null) loadState(GAMEOVER);
+                else reloadState(GAMEOVER);
+            }
+        }
     }
 
     public ViewState getViewState(){

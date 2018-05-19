@@ -3,6 +3,8 @@ import java.awt.event.KeyEvent;
 
 public abstract class State {
 
+    public boolean changeState(){return false;}
+
     public void update() {}
     public void loadNew() {}
 

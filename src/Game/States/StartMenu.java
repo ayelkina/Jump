@@ -6,20 +6,32 @@ import java.awt.event.KeyEvent;
 
 public class StartMenu extends Menu {
 
-    public StartMenu(GameController st) {
-        this.gameController = st;
+    private boolean changeState;
+
+    public StartMenu() {
         choice = new String []{"Start", "Quit"};
         currentChoice = 0;
     }
 
-    public void select () {
+    private void select () {
         if (currentChoice == 0) {
-            gameController.loadState(GameController.LEVEL);
+            changeState = true;
 
         }
         if (currentChoice == 1) {
             System.exit(0);
         }
+    }
+
+    @Override
+    public boolean changeState() {
+        return changeState;
+    }
+
+    @Override
+    public void loadNew() {
+        currentChoice = 0;
+        changeState = false;
     }
 
     @Override

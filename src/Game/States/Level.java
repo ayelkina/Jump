@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class Level extends State {
 
-    private int playerHeightLimit = GamePanel.HEIGHT/2;
+    private int playerHeightLimit = GamePanel.HEIGHT / 2;
 
     private Player player;
     private Vector<Tiles> tiles;
@@ -21,24 +21,15 @@ public class Level extends State {
     private Tiles prevJumpedTile;
 
     private double playerSuspendedTime;
-    private double offset;;
+    private double offset;
+    ;
     private double nearestTileY;
 
     private int heightFromStart;
     private static int heightCount;
     private boolean longJump;
-
+    private boolean changeState;
     private final Random random;
-
-    private GameController gameController;
-
-    public Level(GameController st) {
-        gameController = st;
-        random = new Random();
-
-        loadEntity();
-        loadNew();
-    }
 
     public Level() {
         random = new Random();
@@ -73,10 +64,11 @@ public class Level extends State {
         nearestTileY = GamePanel.HEIGHT;
         heightFromStart = 0;
         currNearestTile = null;
+        changeState = false;
     }
 
     private void setTilesPositions() {
-        tiles.get(0).setPosition(random(Constants.TileWidth, Constants.minFirstTileX), Constants.halfBasicJump);
+        tiles.get(0).setPosition(random(Constants.TileWidth, Constants.minFirstTileX), Constants.firstTileY);
         for (int i = 1; i < tiles.size(); ++i) {
             setRandomTile(i);
         }
@@ -84,8 +76,9 @@ public class Level extends State {
 
     private void setBouncePosition() {
         bounces.get(0).setPosition(tiles.get(3).getx(), tiles.get(3).gety() - bounces.get(0).getHeight());
-        for (int i = 1; i < bounces.size(); ++i)
+        for (int i = 1; i < bounces.size(); ++i) {
             setRandomBounce(i);
+        }
     }
 
     private void setRandomTile(int currentTile) {
@@ -95,26 +88,53 @@ public class Level extends State {
         else prevTile = currentTile - 1;
 
         double prevY = tiles.get(prevTile).gety();
-        double maxDistance = prevY - Constants.maxTilesDistance;
-        int addBound = Constants.maxTilesDistance - Constants.minTilesDistance;
+        double prevX = tiles.get(prevTile).getx();
+        double maxDistanceY = prevY - Constants.maxTilesDistance;
+        double minDistanceX = prevX - Constants.maxTilesDistance - tiles.get(0).getWidth();
+        if(minDistanceX < 0) minDistanceX = 0;
 
-        double newX = random(Constants.maxTileX, 0);
-        double newY = random(addBound, maxDistance);
+        int addBoundY = Constants.maxTilesDistance - Constants.minTilesDistance;
+        int addBoundX = (tiles.get(0).getWidth() + Constants.maxTilesDistance)*2;
+
+        double newY = random(addBoundY, maxDistanceY);
+        double newX = random(addBoundX, minDistanceX);
+
+        if(newX + tiles.get(0).getWidth() > GamePanel.WIDTH)
+            newX -= newX+tiles.get(0).getWidth();
+
+        else if(newX < 0)
+            newX += tiles.get(0).getWidth();
 
         tiles.get(currentTile).setPosition(newX, newY);
+        System.out.println(newX);
+
     }
 
-    private double random(int bound, double min) {
-        return random.nextInt(bound) + min;
+    public double random(int max, double min) {
+        return random.nextInt(max) + min;
     }
 
-    private void setRandomBounce(int i) {
-        int k = random.nextInt(14);
+    private void setRandomBounce(int index) {
+        int tilesOutOfRange[] = new int[Constants.TilesNumber];
+        int j = 0;
 
-        if (tiles.get(k).gety() < 0 && !tiles.get(k).getWithBounce()) {
-            bounces.get(i).setPosition(tiles.get(k).getx(), tiles.get(k).gety() - bounces.get(i).getHeight());
-            tiles.get(k).setWithBounce(true);
-        } else setRandomBounce(i);
+        for (int i = tiles.size() - 1; i >= 0; --i) {
+            if (tiles.get(i).gety() < 0 && !tiles.get(i).getWithBounce()) {
+                tilesOutOfRange[j] = i;
+                ++j;
+            }
+        }
+
+        for (j = 0; j < 15; ++j) {
+            if (tilesOutOfRange[j] == 0) break;
+        }
+
+        if(j == 0) return;
+        int rand = random.nextInt(j);
+        int newPosition = tilesOutOfRange[rand];
+
+        bounces.get(index).setPosition(tiles.get(newPosition).getx(), tiles.get(newPosition).gety() - bounces.get(index).getHeight());
+        tiles.get(newPosition).setWithBounce(true);
     }
 
     @Override
@@ -179,7 +199,8 @@ public class Level extends State {
 
     private void setCountInFirstJump() {
         if (prevJumpedTile == null) {
-            if (player.getDown()) heightCount = heightFromStart = Constants.basicJumpHeight/2;
+            if (player.getDown())
+                heightCount = heightFromStart = Constants.basicJumpHeight + GamePanel.HEIGHT - Constants.firstTileY;
         }
     }
 
@@ -195,7 +216,8 @@ public class Level extends State {
         nearestTileY = GamePanel.HEIGHT + 20;
 
         for (int i = tiles.size() - 1; i >= 0; --i)
-            if (player.intersects(tiles.get(i))) { ;
+            if (player.intersects(tiles.get(i))) {
+                ;
                 prevJumpedTile = currNearestTile;
                 currNearestTile = tiles.get(i);
                 setCount();
@@ -274,8 +296,14 @@ public class Level extends State {
                 bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
             }
 
-            if (player.getBoundsDown() > GamePanel.HEIGHT/2) gameController.loadState(GameController.GAMEOVER);
+            if (player.getBoundsDown() > GamePanel.HEIGHT / 2)
+                changeState = true;//gameController.loadState(GameController.GAMEOVER);
         }
+    }
+
+    @Override
+    public boolean changeState() {
+        return changeState;
     }
 
     public Player getPlayer() {
@@ -305,6 +333,4 @@ public class Level extends State {
         if (key.getKeyCode() == KeyEvent.VK_RIGHT) player.setRight(false);
         if (key.getKeyCode() == KeyEvent.VK_LEFT) player.setLeft(false);
     }
-
-
 }
