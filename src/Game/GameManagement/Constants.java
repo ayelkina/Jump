@@ -18,7 +18,6 @@ public class Constants {
     public static final int TileHeight = 25;
     public static final int TileWidth = 100;
     public static final int TilesNumber = 13;
-//    public static final int maxTileX = GamePanel.WIDTH - TileWidth;
     public static final int maxTilesDistance = basicJumpHeight *3/4;
     public static final int minTilesDistance = basicJumpHeight /4;
     public static final int minFirstTileX = GamePanel.WIDTH/2 - TileWidth;

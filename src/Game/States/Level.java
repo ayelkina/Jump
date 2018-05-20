@@ -67,14 +67,14 @@ public class Level extends State {
         changeState = false;
     }
 
-    private void setTilesPositions() {
+    public void setTilesPositions() {
         tiles.get(0).setPosition(random(Constants.TileWidth, Constants.minFirstTileX), Constants.firstTileY);
         for (int i = 1; i < tiles.size(); ++i) {
             setRandomTile(i);
         }
     }
 
-    private void setBouncePosition() {
+    public void setBouncePosition() {
         bounces.get(0).setPosition(tiles.get(3).getx(), tiles.get(3).gety() - bounces.get(0).getHeight());
         for (int i = 1; i < bounces.size(); ++i) {
             setRandomBounce(i);
@@ -82,32 +82,39 @@ public class Level extends State {
     }
 
     private void setRandomTile(int currentTile) {
-        int prevTile;
+        int prevTile;;
 
         if (currentTile == 0) prevTile = tiles.size() - 1;
         else prevTile = currentTile - 1;
 
         double prevY = tiles.get(prevTile).gety();
         double prevX = tiles.get(prevTile).getx();
-        double maxDistanceY = prevY - Constants.maxTilesDistance;
-        double minDistanceX = prevX - Constants.maxTilesDistance - tiles.get(0).getWidth();
-        if(minDistanceX < 0) minDistanceX = 0;
+        int maxDistanceX = Constants.maxTilesDistance + Constants.TileWidth;
 
         int addBoundY = Constants.maxTilesDistance - Constants.minTilesDistance;
-        int addBoundX = (tiles.get(0).getWidth() + Constants.maxTilesDistance)*2;
+        int addBoundX = maxDistanceX*2;
 
-        double newY = random(addBoundY, maxDistanceY);
-        double newX = random(addBoundX, minDistanceX);
+        double newY = random(addBoundY, prevY - Constants.maxTilesDistance);
+        double newX = random(addBoundX, prevX - maxDistanceX);
 
-        if(newX + tiles.get(0).getWidth() > GamePanel.WIDTH)
-            newX -= newX+tiles.get(0).getWidth();
-
-        else if(newX < 0)
-            newX += tiles.get(0).getWidth();
+        newX = changeIfOutOfPanel(newX);
 
         tiles.get(currentTile).setPosition(newX, newY);
-        System.out.println(newX);
+    }
 
+    private double changeIfOutOfPanel(double x){
+        if(x < 0) {
+            if (x + Constants.TileWidth < 0) {
+                return x + GamePanel.WIDTH;
+            } else return x + Constants.TileWidth;
+        }
+
+        if(x + Constants.TileWidth > GamePanel.WIDTH) {
+            if (x  > GamePanel.WIDTH) {
+                return x -GamePanel.WIDTH;
+            } else return x -Constants.TileWidth;
+        }
+        return x;
     }
 
     public double random(int max, double min) {
