@@ -16,7 +16,7 @@ public class LevelTest {
         level.getTiles().get(0).setPosition(Constants.minFirstTileX, Constants.firstTileY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update(100000);
+            level.update(10000000);
             if (level.getPlayer().intersects(level.getTiles().get(0)))
                 intersects = true;
         }
@@ -135,11 +135,10 @@ public class LevelTest {
         level.getPlayer().setLeft(true);
 
         for (int i = 0; i < ticks; ++i) {
-            level.update(1000000);
+            level.update(10000000);
             if (level.getPlayer().intersects(level.getTiles().get(1))) intersects = true;
         }
 
         assertTrue(intersects);
     }
-
 }
