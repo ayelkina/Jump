@@ -4,7 +4,6 @@ import Game.GameManagement.GameController;
 
 public class Menu extends State {
 
-    protected GameController gameController;
     protected int currentChoice;
     protected String[] choice;
 

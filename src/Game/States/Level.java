@@ -22,7 +22,7 @@ public class Level extends State {
 
     private double playerSuspendedTime;
     private double offset;
-    ;
+
     private double nearestTileY;
 
     private int heightFromStart;
@@ -145,8 +145,9 @@ public class Level extends State {
     }
 
     @Override
-    public void update() {
-        player.update();
+    public void update(long time) {
+        player.update(time);
+
 
         if (!player.getFall()) {
             jumpFromTile();
@@ -268,7 +269,7 @@ public class Level extends State {
 
     private void moveTiles() {
         for (int i = 0; i < tiles.size(); ++i) {
-            tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy());
+            tiles.get(i).setPosition(tiles.get(i).getx(), tiles.get(i).gety() + player.getdy()*player.getSpeed());
             if (tiles.get(i).gety() > GamePanel.HEIGHT) {
                 tiles.get(i).setWithBounce(false);
                 setRandomTile(i);
@@ -278,7 +279,7 @@ public class Level extends State {
 
     private void moveBounces() {
         for (int i = 0; i < bounces.size(); ++i) {
-            bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy());
+            bounces.get(i).setPosition(bounces.get(i).getx(), bounces.get(i).gety() + player.getdy()*player.getSpeed());
             if (bounces.get(i).getBoundsDown() > GamePanel.HEIGHT) {
                 bounces.get(i).setStay(true);
                 setRandomBounce(i);

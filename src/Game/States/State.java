@@ -5,7 +5,7 @@ public abstract class State {
 
     public boolean changeState(){return false;}
 
-    public void update() {}
+    public void update(long time) {}
     public void loadNew() {}
 
     public void keyPressed(KeyEvent key) { }

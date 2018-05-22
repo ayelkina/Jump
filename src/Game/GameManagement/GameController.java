@@ -61,9 +61,9 @@ public class GameController {
         gameStates[current].loadNew();
     }
 
-    public void update() {
+    public void update(long time) {
         if(gameStates[current] != null)
-            gameStates[current].update();
+            gameStates[current].update(time);
 
         if(gameStates[current].changeState()) {
             if (current == STARTMENU)

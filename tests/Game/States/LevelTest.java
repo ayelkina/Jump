@@ -16,7 +16,7 @@ public class LevelTest {
         level.getTiles().get(0).setPosition(Constants.minFirstTileX, Constants.firstTileY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update();
+            level.update(100000);
             if (level.getPlayer().intersects(level.getTiles().get(0)))
                 intersects = true;
         }
@@ -33,7 +33,7 @@ public class LevelTest {
         level.getTiles().get(0).setPosition(Constants.TileWidth + Constants.minFirstTileX, Constants.firstTileY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update();
+            level.update(1000000);
             if (level.getPlayer().intersects(level.getTiles().get(0)))
                 intersects = true;
         }
@@ -58,7 +58,7 @@ public class LevelTest {
         level.getPlayer().setDownY(prevY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update();
+            level.update(1000000);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -81,7 +81,7 @@ public class LevelTest {
         level.getPlayer().setDownY(prevY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update();
+            level.update(1000000);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -108,7 +108,7 @@ public class LevelTest {
         level.getPlayer().setRight(true);
 
         for(int i =0; i<ticks; ++i) {
-            level.update();
+            level.update(1000000);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -135,23 +135,11 @@ public class LevelTest {
         level.getPlayer().setLeft(true);
 
         for (int i = 0; i < ticks; ++i) {
-            level.update();
+            level.update(1000000);
             if (level.getPlayer().intersects(level.getTiles().get(1))) intersects = true;
         }
 
         assertTrue(intersects);
-    }
-
-    @Test
-    public void noTileIsOutOfPanel(){
-        Level level = new Level();
-
-        for(int i = 0; i <1000000; ++i) {
-            level.setTilesPositions();
-            for(int j = 0; j< level.getTiles().size(); ++j)
-                assertFalse(level.getTiles().get(0).getx() < 0 ||
-                        level.getTiles().get(0).getx() + Constants.TileWidth > GamePanel.WIDTH);
-        }
     }
 
 }

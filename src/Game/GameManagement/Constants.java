@@ -2,7 +2,7 @@ package Game.GameManagement;
 
 public class Constants {
 
-    public static final double GRID = 1.2;
+    public static final double GRID = 7;
 
     public static final int PlayerWidth = 70;
     public static final int PlayerHeight = 63;

@@ -15,6 +15,9 @@ public class Player extends Sprite {
     private double downY;
     private double maxJump;
 
+
+    private double speed;
+
     public Player() {
         width = Constants.PlayerWidth;
         height = Constants.PlayerHeight;
@@ -27,8 +30,8 @@ public class Player extends Sprite {
         maxJump = Constants.basicJumpHeight;
         downY = GamePanel.HEIGHT;
 
-        dy = Constants.GRID;
-        dx = dy;
+        speed = Constants.GRID;
+        dx = dy = 1;
     }
 
     public double getDownY(){return downY;}
@@ -71,8 +74,8 @@ public class Player extends Sprite {
         this.maxJump = maxJump;
     }
 
-    private void jump(double downY){
-        y-= dy;
+    private void jump(double downY, long time){
+       y-= dy*speed;
 
         if (right) {x += dx;}
         if (left) {x -= dx; }
@@ -96,12 +99,14 @@ public class Player extends Sprite {
         }
     }
 
-    public void update(){
+    public void update(long time){
         changeLocationIfOut();
         checkFallDown();
 
+        speed = Constants.GRID*time/10000000;
+
         if(!fall)
-            jump(downY);
+            jump(downY, time);
     }
 
     private void checkFallDown(){
@@ -117,5 +122,10 @@ public class Player extends Sprite {
 
     public void setJumpedFromBounce(boolean jumpedFromBounce) {
         this.jumpedFromBounce = jumpedFromBounce;
+    }
+
+
+    public double getSpeed() {
+        return speed;
     }
 }

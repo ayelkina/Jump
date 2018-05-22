@@ -17,7 +17,7 @@ public class PlayerTest {
         int ticks = 3;
 
         for(int i =0; i<ticks; ++i) {
-            player.update();
+            player.update(1000000);
         }
         assertEquals(y - ticks * dy, player.y);
         assertTrue(player.getUp());
@@ -37,7 +37,7 @@ public class PlayerTest {
         player.setPosition(100,downY-player.getBoundsDown());
 
         for(int i =0; i < ticks; ++i)
-            player.update();
+            player.update(1000000);
 
         assertEquals(100 - (maxJump-dy), player.getBoundsDown());
         assertTrue(player.getDown());

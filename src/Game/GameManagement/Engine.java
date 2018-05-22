@@ -30,7 +30,7 @@ public class Engine implements Runnable {
     @Override
     public void run() {
         long prevTime;
-        long deltaTime;
+        long deltaTime = 0;
         long currentTime;
 
         init();
@@ -38,7 +38,7 @@ public class Engine implements Runnable {
         while (running) {
             prevTime = System.nanoTime();
 
-            update();
+            update(deltaTime);
 
             currentTime = System.nanoTime();
             deltaTime = currentTime - prevTime;
@@ -78,8 +78,8 @@ public class Engine implements Runnable {
         gamePanel.addKeyListener(actionListener);
     }
 
-    private void update() {
-        gameController.update();
+    private void update(long time) {
+        gameController.update(time);
         gamePanel.update();
     }
 }
