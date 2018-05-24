@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpriteTest {
     @Test
-    public void intersect() throws Exception {
+    public void intersect() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -18,7 +18,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectXLeftTrue() throws Exception {
+    public void intersectXLeftTrue() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -29,7 +29,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectXRightTrue() throws Exception {
+    public void intersectXRightTrue() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -51,7 +51,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectXRightFalse() throws Exception {
+    public void intersectXRightFalse() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -62,7 +62,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectYUpTrue() throws Exception {
+    public void intersectYUpTrue() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -73,7 +73,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectYUpFalse() throws Exception {
+    public void intersectYUpFalse() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -84,7 +84,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectYDownTrue() throws Exception {
+    public void intersectYDownTrue() {
         Player player = new Player();
         Tiles tile = new Tiles();
 
@@ -95,7 +95,7 @@ public class SpriteTest {
     }
 
     @Test
-    public void intersectYDownFalse() throws Exception {
+    public void intersectYDownFalse() {
         Player player = new Player();
         Tiles tile = new Tiles();
 

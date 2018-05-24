@@ -51,26 +51,6 @@ public class Engine implements Runnable {
                 }
             }
         }
-
-        /*
-        while (running) {
-            prevTime = System.nanoTime();
-
-            update();
-
-            currentTime = System.nanoTime();
-            deltaTime = currentTime - prevTime;
-
-            if (deltaTime < target) {
-                sleepTime = (target - deltaTime) / 1000000;
-                try {
-                    if(sleepTime!= 0) System.out.println(sleepTime);
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
     }
 
     private void init() {

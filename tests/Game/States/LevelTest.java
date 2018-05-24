@@ -8,15 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LevelTest {
 
+    private long time = 10000000;
+    private double ticks = Constants.basicJumpHeight / Constants.GRID;
+
     @Test
-    public void firstJumpPlayerIntersectsTileRight() throws Exception{
-        double ticks = 166;
+    public void firstJumpPlayerIntersectsTileRight(){
         boolean intersects = false;
         Level level = new Level();
         level.getTiles().get(0).setPosition(Constants.minFirstTileX, Constants.firstTileY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update(10000000);
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(0)))
                 intersects = true;
         }
@@ -25,15 +27,14 @@ public class LevelTest {
     }
 
     @Test
-    public void firstJumpPlayerIntersectsTileLeft() throws Exception{
-        double ticks = 166;
+    public void firstJumpPlayerIntersectsTileLeft() {
         boolean intersects = false;
 
         Level level = new Level();
         level.getTiles().get(0).setPosition(Constants.TileWidth + Constants.minFirstTileX, Constants.firstTileY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update(1000000);
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(0)))
                 intersects = true;
         }
@@ -42,23 +43,20 @@ public class LevelTest {
     }
 
     @Test
-    public void playerAchieveTileMinDistanceUp() throws Exception{
+    public void playerAchieveTileMinDistanceUp() {
         Level level = new Level();
         int x = 100;
         int prevY = 700;
-        int ticks = 166;
         boolean intersects = false;
-        double maxDistance = prevY - Constants.maxTilesDistance;
         int minDistance = prevY - Constants.minTilesDistance;
-        double newY = minDistance;
 
         level.getTiles().get(0).setPosition(x, prevY);
-        level.getTiles().get(1).setPosition(x, newY);
+        level.getTiles().get(1).setPosition(x, minDistance);
         level.getPlayer().setPosition(x, prevY - level.getPlayer().getHeight());
         level.getPlayer().setDownY(prevY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update(1000000);
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -67,11 +65,10 @@ public class LevelTest {
     }
 
     @Test
-    public void playerAchieveTileMaxDistanceUp() throws Exception{
+    public void playerAchieveTileMaxDistanceUp() {
         Level level = new Level();
         int x = 100;
         int prevY = 700;
-        int ticks = 200;
         boolean intersects = false;
         int maxDistance = prevY - Constants.maxTilesDistance;
 
@@ -81,7 +78,7 @@ public class LevelTest {
         level.getPlayer().setDownY(prevY);
 
         for(int i =0; i<ticks; ++i) {
-            level.update(1000000);
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -90,11 +87,11 @@ public class LevelTest {
     }
 
     @Test
-    public void playerAchieveTileMaxDistanceRight() throws Exception{
+    public void playerAchieveTileMaxDistanceRight() {
         Level level = new Level();
         int prevX = 0;
         int prevY = 700;
-        int ticks = 166*2;
+        double doubleticks = ticks*2;
         boolean intersects = false;
 
         int playerX = prevX + level.getTiles().get(0).getWidth()+ level.getPlayer().getWidth()/3;
@@ -107,8 +104,8 @@ public class LevelTest {
         level.getPlayer().setDownY(prevY);
         level.getPlayer().setRight(true);
 
-        for(int i =0; i<ticks; ++i) {
-            level.update(1000000);
+        for(int i = 0; i< doubleticks; ++i) {
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(1)))
                 intersects = true;
         }
@@ -117,11 +114,11 @@ public class LevelTest {
     }
 
     @Test
-    public void playerAchieveTileMaxDistanceLeft() throws Exception {
+    public void playerAchieveTileMaxDistanceLeft() {
         Level level = new Level();
         int prevX = 700;
         int prevY = 700;
-        int ticks = 166 * 2;
+        double doubleticks = ticks*2;
         boolean intersects = false;
 
         int playerX = prevX - level.getTiles().get(0).getWidth() - level.getPlayer().getWidth() / 3;
@@ -129,16 +126,32 @@ public class LevelTest {
 
         level.getTiles().get(0).setPosition(prevX, prevY);
         level.getTiles().get(1).setPosition(prevX - Constants.TileWidth - Constants.maxTilesDistance, prevY - Constants.maxTilesDistance);
-
         level.getPlayer().setPosition(playerX, playerY);
         level.getPlayer().setDownY(prevY);
         level.getPlayer().setLeft(true);
 
         for (int i = 0; i < ticks; ++i) {
-            level.update(10000000);
+            level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(1))) intersects = true;
         }
 
         assertTrue(intersects);
+    }
+
+    @Test
+    public void playerInTheMiddleOfTheScreen() {
+        int ticks = 166;
+        double x = 100;
+        double y = GamePanel.HEIGHT/2 + 100;
+
+        Level level = new Level();
+        level.getPlayer().setDownY(y);
+        level.getPlayer().setPosition(x,y);
+
+        for (int i = 5; i < ticks; ++i){
+            level.update(time);
+        }
+
+        assertEquals(GamePanel.HEIGHT/2, level.getPlayer().gety());
     }
 }

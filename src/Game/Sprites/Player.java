@@ -10,6 +10,7 @@ public class Player extends Sprite {
     private boolean fall;
     private boolean left;
     private boolean right;
+    private boolean animationLeft;
     private boolean jumpedFromBounce;
 
     private double downY;
@@ -35,8 +36,12 @@ public class Player extends Sprite {
     }
 
     public double getDownY(){return downY;}
+    public boolean getLeft() {return left; }
+    public boolean getRight() {return right;}
+    public boolean getAnimationLeft() {return  animationLeft;}
+
     public void setLeft(boolean b) {left = b; }
-    public void setRight(boolean b) {right = b; }
+    public void setRight(boolean b) {right = b;}
     public boolean getFall() {return fall;}
 
     public void setUp () {
@@ -77,8 +82,8 @@ public class Player extends Sprite {
     private void jump(double downY, long time){
        y-= dy*speed;
 
-        if (right) {x += dx;}
-        if (left) {x -= dx; }
+        if (right) {x += dx*speed; animationLeft = false;}
+        if (left) {x -= dx*speed; animationLeft = true;}
 
         if((getBoundsDown() - downY >= 0 && down) || (downY-getBoundsDown() >= maxJump && up)) {
             dy *= -1;
