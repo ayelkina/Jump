@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public abstract class ViewSprite {
+public abstract class SpriteView {
 
     protected BufferedImage image;
 
@@ -12,6 +12,8 @@ public abstract class ViewSprite {
     protected double y;
     protected int width;
     protected int height;
+    protected int imageWidth;
+    protected int imageHeight;
 
     protected void loadSprite(String path){
         try {

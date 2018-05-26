@@ -1,7 +1,5 @@
 package Game.States;
 
-import Game.GameManagement.GameController;
-
 public class Menu extends State {
 
     protected int currentChoice;

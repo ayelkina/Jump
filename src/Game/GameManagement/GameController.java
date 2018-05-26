@@ -4,44 +4,44 @@ import Game.States.GameOver;
 import Game.States.Level;
 import Game.States.StartMenu;
 import Game.States.State;
-import Game.View.ViewStates.ViewGameOver;
-import Game.View.ViewStates.ViewLevel;
-import Game.View.ViewStates.ViewStartMenu;
-import Game.View.ViewStates.ViewState;
+import Game.View.ViewStates.GameOverView;
+import Game.View.ViewStates.LevelView;
+import Game.View.ViewStates.StartMenuView;
+import Game.View.ViewStates.StateView;
 
 import java.awt.event.KeyEvent;
 
 public class GameController {
 
     private  State[] gameStates;
-    private ViewState[] viewStates;
+    private StateView[] stateViews;
     private  int current;
 
     private static final int NUMBERSTATES = 3;
     private static final int STARTMENU = 0;
-    public static final int LEVEL = 1;
-    public static final int GAMEOVER = 2;
+    private static final int LEVEL = 1;
+    private static final int GAMEOVER = 2;
 
     public GameController() {
         gameStates = new State[NUMBERSTATES];
-        viewStates = new ViewState[NUMBERSTATES];
+        stateViews = new StateView[NUMBERSTATES];
 
         current = STARTMENU;
         loadState(current);
     }
 
-    public void loadState(int state) {
+    private void loadState(int state) {
         if (state == STARTMENU) {
             StartMenu startMenu = new StartMenu();
             gameStates[state] = startMenu;
-            viewStates[state] = new ViewStartMenu(startMenu);
+            stateViews[state] = new StartMenuView(startMenu);
 
             current = STARTMENU;
         }
 
         if (state == LEVEL) {
             Level level = new Level();
-            viewStates[state] = new ViewLevel(level);
+            stateViews[state] = new LevelView(level);
             gameStates[state] = level;
 
             current = LEVEL;
@@ -49,14 +49,14 @@ public class GameController {
 
         if (state == GAMEOVER) {
             GameOver gameOver = new GameOver();
-            viewStates[state]  = new ViewGameOver(gameOver);
+            stateViews[state]  = new GameOverView(gameOver);
             gameStates[state] = gameOver;
 
             current = GAMEOVER;
         }
     }
 
-    public void reloadState(int state){
+    private void reloadState(int state){
         current = state;
         gameStates[current].loadNew();
     }
@@ -79,8 +79,8 @@ public class GameController {
         }
     }
 
-    public ViewState getViewState(){
-        return viewStates[current];
+    public StateView getViewState(){
+        return stateViews[current];
     }
 
     public void keyPressed(KeyEvent key) {

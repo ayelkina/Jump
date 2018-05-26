@@ -7,14 +7,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
 
-public class ViewMenu extends ViewState {
+public class MenuView extends StateView {
 
     protected Font font;
     protected Menu menu;
 
-    public ViewMenu(Menu menu) {
+    public MenuView(Menu menu) {
         super(menu);
         this.menu = menu;
     }
@@ -24,15 +23,13 @@ public class ViewMenu extends ViewState {
 
     protected void loadFont(){
         try {
-            File fontFile = new File("Res/Fonts/orange.ttf");
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        } catch (Exception e) {
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Res/Fonts/orange.ttf"));
+        } catch (Exception e) { ;
             e.printStackTrace();
         }
     }
 
     protected void drawText(Graphics2D graph, String text, float size, double y){
-        Color color = new Color(187, 128,68);
         graph.setColor(Color.BLACK);
         font = font.deriveFont(size);
         graph.setFont(font);
@@ -68,7 +65,7 @@ public class ViewMenu extends ViewState {
             }
 
             int x = (int) middleX(graph, choice[i]);
-            graph.drawString(choice[i], x, (int)y + i * 70);
+            graph.drawString(choice[i], x, (int)y + i * GamePanel.HEIGHT/10);
         }
     }
 
@@ -86,7 +83,7 @@ public class ViewMenu extends ViewState {
             else {
                 graph.setColor(Color.LIGHT_GRAY);
             }
-            graph.drawString(choice[i], (int)x + i * 130, (int)y );
+            graph.drawString(choice[i], (int)x + i * GamePanel.WIDTH/5, (int)y );
         }
     }
 

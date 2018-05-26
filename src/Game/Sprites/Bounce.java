@@ -20,9 +20,9 @@ public class Bounce extends Sprite{
     public State getState(){
         State state;
 
-        state = State.valueOf("DOWN");
-        if(up) { state = State.valueOf("UP"); }
-        if(stay) { state = State.valueOf("DOWN"); }
+        state = State.DOWN;
+        if(up) { state = State.UP; }
+        if(stay) { state = State.DOWN; }
 
         return state;
     }

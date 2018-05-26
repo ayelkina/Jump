@@ -305,7 +305,7 @@ public class Level extends State {
             }
 
             if (player.getBoundsDown() > GamePanel.HEIGHT / 2)
-                changeState = true;//gameController.loadState(GameController.GAMEOVER);
+                changeState = true;
         }
     }
 
@@ -328,6 +328,11 @@ public class Level extends State {
 
     public static int getCount() {
         return heightCount;
+    }
+
+
+    public static void setHeightCount(int heightCount) {
+        Level.heightCount = heightCount;
     }
 
     @Override

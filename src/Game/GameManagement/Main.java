@@ -2,8 +2,10 @@ package Game.GameManagement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
-public class Game extends Canvas {
+public class Main extends Canvas {
 
     public static void main(String[] args) {
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -13,7 +15,7 @@ public class Game extends Canvas {
         View view = new View(gameController);
         GamePanel gamePanel = new GamePanel(view);
 
-        Engine engine = new Engine(gamePanel, gameController);
+        new Engine(gamePanel, gameController);
 
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
@@ -23,6 +25,15 @@ public class Game extends Canvas {
 
         frame.setLayout(new BorderLayout());
         frame.setBounds(screenWidth/3, screenHeight/10, WIDTH, HEIGHT);
+
+//        Image image = Toolkit.getDefaultToolkit().getImage(
+//                "/Res/Pics/icon2.png");
+//        frame.setIconImage(image);
+
+        ImageIcon icon = new ImageIcon("/Res/Pics/icon2.png");
+        frame.setIconImage(icon.getImage());
+
+//        frame.setIconImage(Toolkit.getDefaultToolkit().getImage("/Res/Pics/icon.png"));
 
         frame.setResizable(false);
         frame.pack();

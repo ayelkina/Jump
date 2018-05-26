@@ -1,8 +1,8 @@
 package Game.States;
 
 import Game.GameManagement.Constants;
-
 import Game.GameManagement.GamePanel;
+
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -130,7 +130,7 @@ public class LevelTest {
         level.getPlayer().setDownY(prevY);
         level.getPlayer().setLeft(true);
 
-        for (int i = 0; i < ticks; ++i) {
+        for (int i = 0; i < doubleticks; ++i) {
             level.update(time);
             if (level.getPlayer().intersects(level.getTiles().get(1))) intersects = true;
         }
@@ -140,7 +140,6 @@ public class LevelTest {
 
     @Test
     public void playerInTheMiddleOfTheScreen() {
-        int ticks = 166;
         double x = 100;
         double y = GamePanel.HEIGHT/2 + 100;
 
@@ -148,7 +147,7 @@ public class LevelTest {
         level.getPlayer().setDownY(y);
         level.getPlayer().setPosition(x,y);
 
-        for (int i = 5; i < ticks; ++i){
+        for (int i = 0; i < ticks; ++i){
             level.update(time);
         }
 

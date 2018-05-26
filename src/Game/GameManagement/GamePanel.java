@@ -1,15 +1,13 @@
 package Game.GameManagement;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.*;
 
 public class GamePanel extends JPanel{
 
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 800;
+
+    public static final int HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()*3/4;
+    public static final int WIDTH = HEIGHT*3/4;
 
     private Image doubleBuffer;
     private View view;

@@ -1,9 +1,6 @@
 package Game.Sprites;
 
 import Game.GameManagement.Constants;
-import Game.States.Level;
-
-import static java.lang.Math.abs;
 
 public abstract class Sprite {
     protected double x;

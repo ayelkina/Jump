@@ -1,34 +1,36 @@
 package Game.View;
 
 import Game.GameManagement.Constants;
-import Game.GameManagement.GameController;
 import Game.Sprites.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ViewPlayer extends ViewSprite {
+public class PlayerView extends SpriteView {
 
     public enum State {UPRIGHT, DOWNRIGHT, FALL, UPLEFT, DOWNLEFT}
     private Player player;
 
-    public ViewPlayer(Player player) {
+    public PlayerView(Player player) {
         this.player = player;
-
-        loadSprite("/Pics/peng.png");
 
         width = Constants.PlayerWidth;
         height = Constants.PlayerHeight;
+
+        imageHeight = Constants.PlayerImageHeight;
+        imageWidth = Constants.PlayerImageWidth;
+
+        loadSprite("/Res/Pics/peng.png");
     }
 
     private State getState() {
         State state;
 
-        state = State.valueOf("DOWNRIGHT");
-        if (player.getDown() && player.getAnimationLeft()) state = State.valueOf("DOWNLEFT");
-        if (player.getUp() && !player.getAnimationLeft()) state = State.valueOf("UPRIGHT");
-        if (player.getUp() && player.getAnimationLeft()) state = State.valueOf("UPLEFT");
-        if (player.getFall()) state = State.valueOf("FALL");
+        state = State.DOWNRIGHT;
+        if (player.getDown() && player.getAnimationLeft()) state = State.DOWNLEFT;
+        if (player.getUp() && !player.getAnimationLeft()) state = State.UPRIGHT;
+        if (player.getUp() && player.getAnimationLeft()) state = State.UPLEFT;
+        if (player.getFall()) state = State.FALL;
 
         return state;
     }
@@ -37,7 +39,7 @@ public class ViewPlayer extends ViewSprite {
         int row = 0;
         int col = state.ordinal();
 
-        return image.getSubimage(col * width, row * height, width, height);
+        return image.getSubimage(col * imageWidth, row * imageHeight, imageWidth, imageHeight);
     }
 
     public void drawPlayer(Graphics2D graph) {

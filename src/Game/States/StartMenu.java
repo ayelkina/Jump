@@ -1,7 +1,5 @@
 package Game.States;
 
-import Game.GameManagement.GameController;
-
 import java.awt.event.KeyEvent;
 
 public class StartMenu extends Menu {
