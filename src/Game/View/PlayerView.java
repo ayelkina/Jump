@@ -20,7 +20,7 @@ public class PlayerView extends SpriteView {
         imageHeight = Constants.PlayerImageHeight;
         imageWidth = Constants.PlayerImageWidth;
 
-        loadSprite("/Res/Pics/peng.png");
+        loadSprite("/Res/Pics/peng2.png");
     }
 
     private State getState() {

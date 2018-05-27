@@ -2,11 +2,11 @@ package Game.GameManagement;
 
 public class Constants {
 
-    public static final double GRID = 8;
+    public static final double GRID = 4;
 
-    public static final int PlayerSetWidth = 700;
+    public static final int PlayerSetWidth = 350;
     public static final int PlayerImageWidth = PlayerSetWidth/5;
-    public static final int PlayerImageHeight = 125;
+    public static final int PlayerImageHeight = 63;
 
     public static final int PlayerHeight = GamePanel.WIDTH/10;
     public static final int PlayerWidth = PlayerHeight*7/6;
